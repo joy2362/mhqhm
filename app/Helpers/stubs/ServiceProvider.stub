@@ -1,0 +1,36 @@
+<?php
+
+namespace $PROVIDER$;
+//@dev: abdullah zahid joy
+
+use Illuminate\Support\ServiceProvider;
+use App\Http\Controllers\Backend\$CONTROLLER$;
+use App\Crud\$CLASS_NAME$Operation;
+use App\Helpers\Interface\CrudOperation;
+
+
+class $CLASS_NAME$ServiceProvider extends ServiceProvider
+{
+    /**
+        * Register services.
+        *
+        * @return void
+        */
+       public function register()
+       {
+            $this->app->when( $CONTROLLER$::class )
+                ->needs( CrudOperation::class )
+                ->give( $CLASS_NAME$Operation::class );
+       }
+
+       /**
+        * Bootstrap services.
+        *
+        * @return void
+        */
+       public function boot()
+       {
+           //
+       }
+
+}
