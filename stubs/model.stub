@@ -1,5 +1,5 @@
 <?php
-//@dev: abdullah zahid joy
+//@abdullah zahid joy
 namespace {{ namespace }};
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;

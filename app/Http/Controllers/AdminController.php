@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Base\BaseController;
 use Illuminate\Support\Facades\Artisan;
 
-class AdminController extends Controller
+class AdminController extends BaseController
 {
     public function dashboard(){
-        Artisan::call('make:crud ',['name',"Test"]);
         return view('admin.pages.dashboard');
     }
     public function Profile(){

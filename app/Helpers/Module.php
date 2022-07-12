@@ -7,6 +7,7 @@ use App\Helpers\Trait\CreateFrontEnd;
 use App\Helpers\Trait\CreateServiceProvider;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 class Module
 {
@@ -28,9 +29,22 @@ class Module
 
         self::create_crud_provider($name,self::ucFirst($name)."Controller");
 
+        self::import_controller_in_config_app($name);
+
         self::create_crud_route($name);
+
+        self::import_controller_in_route($name);
+
+        self::create_module_recode($name);
+
+
     }
 
+    public static function create_module_recode($name){
+        DB::table('modules')->insert([
+            'name'=> self::ucFirst($name)
+        ]);
+    }
     /**
      * @param $name
      */
@@ -67,6 +81,7 @@ class Module
 
     /**
      * @param $name
+     * @param $controller
      */
     public static function create_crud_provider($name,$controller){
         $module = new Module();
@@ -116,7 +131,7 @@ class Module
 
     public static function create_crud_route($name){
 
-        $search = "Route::group(['as'=>'admin.'],function() {";
+        $search = "Route::group(['as'=>'admin.','prefix'=>'admin'],function() {";
 
         $url = self::lcFirst($name);
 
@@ -126,7 +141,36 @@ class Module
 
         $replace = $search. "\n \t".  $route;
 
-        file_put_contents(base_path('routes/Backend.php'), str_replace($search, $replace, file_get_contents(base_path('routes/Backend.php'))));
+        self::add_content($search,$replace,base_path('routes/Backend.php'));
+
     }
+
+    public static function import_controller_in_route($name){
+        $search = "use Illuminate\Support\Facades\Route;";
+
+        $controller = self::ucFirst($name)."Controller";
+        $import = 'use App\Http\Controllers\Backend\\'.$controller.";";
+
+        $replace = $search. "\n".  $import;
+
+        self::add_content($search,$replace,base_path('routes/Backend.php'));
+    }
+
+    public static function import_controller_in_config_app($name){
+        $search = "//@abdullah zahid joy";
+
+        $provider = self::ucFirst($name)."ServiceProvider";
+        $import = 'App\Providers\Crud\\'.$provider."::class,";
+
+        $replace = $search. "\n \t \t".  $import;
+
+        self::add_content($search,$replace,base_path('config/app.php'));
+    }
+
+    public static function add_content($search,$replace,$path){
+        file_put_contents( $path , str_replace($search, $replace, file_get_contents( $path)));
+    }
+
+
 
 }

@@ -1,22 +1,17 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
-        <a class="sidebar-brand" href="#">
-            <span class="align-middle">AdminKit</span>
-        </a>
-
+        <p class="sidebar-brand" >
+            <span class="align-middle">CMS</span>
+        </p>
         <ul class="sidebar-nav">
-
-            <li class="sidebar-item active">
-                <a class="sidebar-link" href=" {{ route('dashboard') }}  ">
-                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+            @foreach( $menus as $menu )
+            <li class="sidebar-item {{ request()->routeIs($menu->route) ? 'active' : '' }}">
+                <a class="sidebar-link" href=" {{ route($menu->route) }}  ">
+                    <i class="align-middle" data-feather="{{ $menu->icon }}"></i> <span class="align-middle">{{$menu->title}}</span>
                 </a>
             </li>
+            @endforeach
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ route('profile') }}">
-                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
-                </a>
-            </li>
         </ul>
     </div>
 </nav>

@@ -1,14 +1,14 @@
 <?php
-//@dev: abdullah zahid joy
+//@abdullah zahid joy
 namespace {{ namespace }};
 
-use {{ rootNamespace }}Http\Controllers\Controller;
+use App\Http\Controllers\Base\BaseController;
 use Illuminate\Http\Request;
 use App\Helpers\Interface\CrudOperation;
 use Illuminate\Support\Facades\Validator;
 
 
-class {{ class }} extends Controller
+class {{ class }} extends BaseController
 {
 
     /**
@@ -20,6 +20,7 @@ class {{ class }} extends Controller
      * @param CrudOperation $crud
      */
      public function __construct(CrudOperation $crud){
+        parent::__construct();
         $this->crud = $crud;
      }
 

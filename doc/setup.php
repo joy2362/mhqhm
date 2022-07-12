@@ -1,6 +1,6 @@
 <?php
 
-// git clone
+// git clone https://github.com/joy2362/cms
 
 // copy .env to project directory (env file present in doc folder)
 

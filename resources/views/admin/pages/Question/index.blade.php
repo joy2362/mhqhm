@@ -4,7 +4,7 @@
 <main class="content">
 	<div class="container-fluid p-0">
 
-		<h1 class="h3 mb-3">$MODEL$
+		<h1 class="h3 mb-3">Question
 			<a href="#" class="float-end btn btn-sm btn-success rounded" data-bs-toggle="modal" data-bs-target="#add">Add New</a>
 		</h1>
 
@@ -13,7 +13,7 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="add_Label">Add $MODEL$</h5>
+						<h5 class="modal-title" id="add_Label">Add Question</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<form method="post" enctype="multipart/form-data" id="addForm">
@@ -39,7 +39,7 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="edit_Label">Edit $MODEL$</h5>
+						<h5 class="modal-title" id="edit_Label">Edit Question</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<form method="post" enctype="multipart/form-data" id="editForm">
@@ -90,7 +90,7 @@
 @endsection
 @section('script')
 	<script>
-		const model = "$NAME$";
+		const model = "question";
 		$(document).ready(function(){
 			fetch();
 
@@ -107,7 +107,7 @@
 					},
 					processing: true,
 					serverSide:true,
-					ajax:"{{route('admin.$NAME$.index')}}",
+					ajax:"{{route('admin.question.index')}}",
 					columns:[
 						{data:"id",name:'ID'},
 						{data:"title",name:'Name'},
@@ -125,7 +125,7 @@
 			$.ajax({
 				type:'post',
 				enctype: 'multipart/form-data',
-				  url:"{{route('admin.$NAME$.store')}}",
+				  url:"{{route('admin.question.store')}}",
 				data:formData,
 				processData: false,
 				contentType: false,
@@ -173,7 +173,7 @@
 			$.ajax({
 				type:'post',
 				enctype: 'multipart/form-data',
-				url:"/admin/$NAME$/"+id,
+				url:"/question/"+id,
 				data: editFormData,
 				contentType:false,
 				processData:false,
@@ -215,7 +215,7 @@
 			ajaxsetup();
 			$.ajax({
 				type:'get',
-				url:"/admin/$NAME$/"+id+"/edit",
+				url:"/question/"+id+"/edit",
 				dataType:'json',
 				success: function(response){
 					if(response.status === 200){
@@ -242,7 +242,7 @@
 					ajaxsetup();
 					$.ajax({
 						type:'DELETE',
-						url:"/admin/$NAME$/"+id,
+						url:"/question/"+id,
 						dataType:'json',
 						success: function(response){
 							if(response.status === 404){
