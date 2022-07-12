@@ -1,41 +1,45 @@
 <?php
-//@dev: abdullah zahid joy
+//@abdullah zahid joy
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
-    use HasFactory;
-
-
-    /**
-     * @var string[]
-     */
-    protected $guarded = ['id'];
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
      */
-    public function createdBy()
-    {
-        return $this->belongsTo(Admin::class,'created_by');
-    }
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        "avatar"
+    ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
      */
-    public function updatedBy()
-    {
-        return $this->belongsTo(Admin::class,'updated_by');
-    }
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
      */
-    public function deletedBy()
-    {
-        return $this->belongsTo(Admin::class,'deleted_by');
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }

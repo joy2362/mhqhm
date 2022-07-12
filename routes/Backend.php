@@ -6,8 +6,7 @@ use App\Http\Controllers\Backend\ModuleController;
 use App\Http\Controllers\Backend\System\ModuleHandlerController;
 use App\Http\Controllers\Backend\System\SystemController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\QuestionController;
-use App\Http\Controllers\Backend\ProductController;
+
 
 
 
@@ -23,8 +22,7 @@ use App\Http\Controllers\Backend\ProductController;
 |
 */
 Route::group(['as'=>'admin.','prefix'=>'admin'],function() {
- 	Route::resource('question', QuestionController::Class);
- 	Route::resource('product', ProductController::Class);
+
     //mandatory route
     Route::get('dashboard', DashboardController::class)->name('dashboard');
     Route::get('module', ModuleController::class)->name('module');

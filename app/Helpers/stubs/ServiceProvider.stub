@@ -1,7 +1,6 @@
 <?php
-
+//@abdullah zahid joy
 namespace $PROVIDER$;
-//@dev: abdullah zahid joy
 
 use Illuminate\Support\ServiceProvider;
 use App\Http\Controllers\Backend\$CONTROLLER$;

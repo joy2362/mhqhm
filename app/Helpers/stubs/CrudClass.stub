@@ -1,7 +1,7 @@
 <?php
-
+//@abdullah zahid joy
 namespace $NAMESPACE$;
-//@dev: abdullah zahid joy
+
 //crud skeleton for $CLASS_NAME$
 
 use App\Helpers\Interface\CrudOperation;

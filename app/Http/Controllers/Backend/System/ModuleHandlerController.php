@@ -1,12 +1,11 @@
 <?php
-
+//@abdullah zahid joy
 namespace App\Http\Controllers\Backend\System;
 
 use App\Helpers\Module;
 use App\Http\Controllers\Base\BaseController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
+
 
 class ModuleHandlerController extends BaseController
 {
