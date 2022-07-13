@@ -18,7 +18,7 @@
 
 // npm run dev
 
-// visit your local inv
+// visit your local env
 
 // go to '/admin/system-update'
 

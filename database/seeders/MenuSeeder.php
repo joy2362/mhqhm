@@ -25,5 +25,10 @@ class MenuSeeder extends Seeder
             ['route' => 'admin.module']
         );
 
+        DB::table('menus')->updateOrInsert(
+            ['title' => 'Menu', 'icon' => "check-circle"],
+            ['route' => 'admin.menu.index']
+        );
+
     }
 }

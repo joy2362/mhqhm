@@ -2,6 +2,7 @@
 //@abdullah zahid joy
 
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\ModuleController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\System\ModuleHandlerController;
@@ -46,4 +47,8 @@ Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],funct
         ->middleware(['password.confirm:admin.password.confirm']);
     Route::post('/two-factor-recovery-codes', [RecoveryCodeController::class, 'store'])
         ->middleware(['password.confirm:admin.password.confirm']);
+    Route::get('menu', [MenuController::class,'index'])->name('menu.index');
+    Route::get('menu/{id}/edit', [MenuController::class,'edit'])->name('menu.edit');
+    Route::post('menu/{id}/update', [MenuController::class,'update'])->name('menu.update');
+
 });
