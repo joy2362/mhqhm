@@ -1,5 +1,8 @@
 <!-- @ abdullah zahid joy-->
 @extends('admin.layout.master')
+@section('title')
+    <title>$MODEL$</title>
+@endsection
 @section('content')
 <main class="content">
 	<div class="container-fluid p-0">

@@ -1,4 +1,7 @@
 @extends('admin.layout.master')
+@section('title')
+    <title>Module Instruction</title>
+@endsection
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">

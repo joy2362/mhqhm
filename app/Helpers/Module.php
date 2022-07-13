@@ -131,7 +131,7 @@ class Module
 
     public static function create_crud_route($name){
 
-        $search = "Route::group(['as'=>'admin.','prefix'=>'admin'],function() {";
+        $search = "Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],function() {";
 
         $url = self::lcFirst($name);
 

@@ -4,10 +4,10 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @yield('meta')
 
+
 <link rel="shortcut icon" href="{{asset('admin/img/icons/icon-48x48.png')}}" />
 
-
-<title>Admin</title>
+@yield('title')
 
 <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ asset('admin/css/app.css') }}" rel="stylesheet">
