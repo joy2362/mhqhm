@@ -1,15 +1,15 @@
 <?php
 //@abdullah zahid joy
-namespace {{ namespace }};
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Base\BaseController;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use App\Interface\CrudOperation;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 
-class {{ class }} extends BaseController
+class ProductController extends BaseController
 {
 
     /**
@@ -23,7 +23,7 @@ class {{ class }} extends BaseController
      public function __construct(CrudOperation $crud){
         parent::__construct();
         $this->crud = $crud;
-        $this->model_name = str_replace("Controller", "", "{{class}}");
+        $this->model_name = str_replace("Controller", "", "ProductController");
      }
 
     /**

@@ -1,13 +1,13 @@
-<!-- @abdullah zahid joy-->
+<!-- @ abdullah zahid joy-->
 @extends('admin.layout.master')
 @section('title')
-    <title>$MODEL$</title>
+    <title>Product</title>
 @endsection
 @section('content')
 <main class="content">
 	<div class="container-fluid p-0">
 
-		<h1 class="h3 mb-3">$MODEL$
+		<h1 class="h3 mb-3">Product
 			<a href="#" class="float-end btn btn-sm btn-success rounded" data-bs-toggle="modal" data-bs-target="#add">Add New</a>
 		</h1>
 
@@ -16,7 +16,7 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="add_Label">Add $MODEL$</h5>
+						<h5 class="modal-title" id="add_Label">Add Product</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<form method="post" enctype="multipart/form-data" id="addForm">
@@ -42,7 +42,7 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="edit_Label">Edit $MODEL$</h5>
+						<h5 class="modal-title" id="edit_Label">Edit Product</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<form method="post" enctype="multipart/form-data" id="editForm">
@@ -92,7 +92,7 @@
 @section('script')
 	<script>
 	    //url for edit ,fetch ,delete
-		const model = "/admin/$NAME$";
+		const model = "/admin/product";
 		$(document).ready(function(){
 			fetch();
 
@@ -109,7 +109,7 @@
 					},
 					processing: true,
 					serverSide:true,
-					ajax:"{{route('admin.$NAME$.index')}}",
+					ajax:"{{route('admin.product.index')}}",
 					columns:[
 						{data:"id",name:'ID'},
 						{data:"title",name:'Name'},
@@ -124,7 +124,7 @@
             e.preventDefault();
             let formData = new FormData($('#addForm')[0]);
 
-            store_handler( "{{route('admin.$NAME$.store')}}" ,formData );
+            store_handler( "{{route('admin.product.store')}}" ,formData );
         });
 
         //edit form handle

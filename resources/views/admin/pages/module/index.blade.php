@@ -21,7 +21,7 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="name">Name</label>
-                                            <input type="text" class="form-control" id="name" name="name"  placeholder="Enter module name" value="{{old('name')}}">
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter module name" value="{{old('name')}}">
                                             <ul class="text-danger d-none" id="errorList"></ul>
                                             <p class="text-danger d-none" id="errors"></p>
                                             <p class="text-success d-none" id="message"></p>

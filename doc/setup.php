@@ -4,7 +4,7 @@
 
 // copy .env to project directory (env file present in doc folder)
 
-// change app_url , app_name and other necessary config
+// change app_url , app_name and other necessary config in .env file
 
 // composer install (install required dependency)
 
