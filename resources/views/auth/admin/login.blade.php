@@ -47,7 +47,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Password</label>
-                                        <input class="form-control form-control-lg @error('password') is-invalid @enderror" required id="password"  type="password" name="password" placeholder="Enter your password" value="1234" />
+                                        <input class="form-control form-control-lg @error('password') is-invalid @enderror" required id="password"  type="password" name="password" placeholder="Enter your password" value="12345678" />
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

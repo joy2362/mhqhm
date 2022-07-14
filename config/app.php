@@ -196,9 +196,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        //@abdullah zahid joy
-
-
     ],
 
     /*

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Crud\Crud;
+use App\Interface\CrudOperation;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(CrudOperation::class,Crud::class);
     }
 
     /**
