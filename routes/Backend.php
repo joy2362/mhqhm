@@ -5,11 +5,13 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\ModuleController;
 use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\System\ActivityController;
 use App\Http\Controllers\Backend\System\ModuleHandlerController;
 use App\Http\Controllers\Backend\System\SystemController;
+use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\ProductController;
-use App\Http\Controllers\Backend\CategoryController;
+
 use Laravel\Fortify\Http\Controllers\ConfirmablePasswordController;
 use Laravel\Fortify\Http\Controllers\PasswordController;
 use Laravel\Fortify\Http\Controllers\ProfileInformationController;
@@ -28,8 +30,16 @@ use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
 |
 */
 Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],function() {
- 	Route::resource('product', ProductController::Class);
- 	Route::resource('category', CategoryController::Class);
+    Route::get('test', function(){
+        if (Admin::count() < 1){
+           $admin = Admin::updateOrCreate(
+                ['name' => "Abdullah zahid joy",
+                    'password' => Hash::make('1234')],
+                ['email' => "abdullahzahidjoy@gmail.com"]);
+           dd($admin);
+        }
+        dd(\App\Models\Admin::count());
+    });
 
     //mandatory route
     Route::get('dashboard', DashboardController::class)->name('dashboard');
@@ -54,5 +64,5 @@ Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],funct
     Route::get('menu', [MenuController::class,'index'])->name('menu.index');
     Route::get('menu/{id}/edit', [MenuController::class,'edit'])->name('menu.edit');
     Route::post('menu/{id}/update', [MenuController::class,'update'])->name('menu.update');
-
+    Route::get('activities', ActivityController::class)->name('activities');
 });

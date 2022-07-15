@@ -10,16 +10,15 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-border" id="data">
-                                    <thead>
+                            <table class="table table-border" id="data">
+                                <thead>
                                     <tr>
                                         <th>Name</th>
                                         <th>Icon</th>
                                         <th>Actions</th>
                                     </tr>
-                                    </thead>
-                                    <tbody>
+                                </thead>
+                                <tbody>
                                     @foreach($menus as $row)
                                         <tr>
                                             <td><a href="{{route($row->route)}}" class="fw-bold ">{{$row->title}}</a></td>
@@ -29,9 +28,8 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

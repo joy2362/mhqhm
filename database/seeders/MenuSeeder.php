@@ -30,5 +30,11 @@ class MenuSeeder extends Seeder
             ['route' => 'admin.menu.index']
         );
 
+
+        DB::table('menus')->updateOrInsert(
+            ['title' => 'Activity Log', 'icon' => "server"],
+            ['route' => 'admin.activities']
+        );
+
     }
 }
