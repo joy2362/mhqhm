@@ -3,6 +3,9 @@
     <script src="{{asset('admin/js/custom.js')}}"></script>
     <script src="{{asset('admin/js/datatables.min.js')}}"></script>
     <script src="{{asset('admin/js/toastr.min.js')}}"></script>
+    <script src="{{asset('admin/js/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('admin/js/additional-methods.min.js')}}"></script>
+
     @vite('resources/js/app.js')
 
 <script>
@@ -24,7 +27,6 @@
 
         @if(Session::has('messege'))
         const type = "{{Session::get('alert-type','info')}}";
-
         notification(type,'{{Session::get('messege')}}')
 
         @endif

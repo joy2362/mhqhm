@@ -5,14 +5,11 @@
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
-
-            <h1 class="h3 mb-3"><strong>Module</strong> </h1>
-
             <div class="row d-flex justify-content-center">
                 <div class="col-xl-6 col-xxl-5 ">
                     <div class="w-100">
                         <div class="row">
-                            <form action="{{route('admin.module.store')}}" method="POST">
+                            <form action="{{route('admin.module.store')}}" method="POST" id="module">
                                 @csrf
                                 <div class="card ">
                                     <div class="card-header text-center">
@@ -43,6 +40,20 @@
 @endsection
 @section('script')
     <script>
+        //custom validation that check is name start with capital letter or not
+        $.validator.addMethod("ucFirst", function(value, element) {
+            return this.optional(element) || /^[A-Z][a-zA-Z0-9_-]{1,198}$/.test(value);
+        }, "Name must be start with capital letter");
 
+
+        $( "#module" ).validate({
+            errorClass: "error text-danger fw-bold",
+            rules: {
+                name: {
+                    required : true,
+                    ucFirst : true
+                }
+            },
+        });
     </script>
 @endsection

@@ -14,6 +14,7 @@
 <link href="{{ asset('admin/css/custom.css') }}" rel="stylesheet">
 <link href="{{ asset('admin/css/datatables.min.css') }}" rel="stylesheet">
 <link href="{{ asset('admin/css/toastr.min.css') }}" rel="stylesheet">
+<script src="{{asset('admin/js/fontawesome.min.js')}}"></script>
 @vite('resources/css/app.css')
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">

@@ -20,7 +20,14 @@ class ModuleHandlerController extends BaseController
             "name" => 'required|max:191|regex:/^\S*$/u|unique:modules',
         ]);
 
-        Module::create(trim($request->name));
+       $module = Module::create(trim($request->name));
+       if(!$module){
+           $notification = array(
+               'messege' => 'Something went wrong.check manually!',
+               'alert-type' => 'error'
+           );
+           return redirect()->back()->with($notification);
+       }
         $notification = array(
             'messege' => 'Module Create Successfully!',
             'alert-type' => 'success'

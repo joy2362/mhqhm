@@ -8,9 +8,10 @@ use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\System\ActivityController;
 use App\Http\Controllers\Backend\System\ModuleHandlerController;
 use App\Http\Controllers\Backend\System\SystemController;
-use App\Models\Admin;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\SubcategoryController;
+use App\Http\Controllers\Backend\CategoryController;
 
 use Laravel\Fortify\Http\Controllers\ConfirmablePasswordController;
 use Laravel\Fortify\Http\Controllers\PasswordController;
@@ -30,16 +31,9 @@ use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
 |
 */
 Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],function() {
-    Route::get('test', function(){
-        if (Admin::count() < 1){
-           $admin = Admin::updateOrCreate(
-                ['name' => "Abdullah zahid joy",
-                    'password' => Hash::make('1234')],
-                ['email' => "abdullahzahidjoy@gmail.com"]);
-           dd($admin);
-        }
-        dd(\App\Models\Admin::count());
-    });
+ 	Route::resource('product', ProductController::Class);
+ 	Route::resource('subcategory', SubcategoryController::Class);
+ 	Route::resource('category', CategoryController::Class);
 
     //mandatory route
     Route::get('dashboard', DashboardController::class)->name('dashboard');

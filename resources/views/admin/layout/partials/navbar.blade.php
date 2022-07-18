@@ -44,9 +44,9 @@
                     <img src="{{ Auth::guard('admin')->user()->avatar  }}" class="avatar img-fluid rounded me-1" alt="{{Auth::guard('admin')->user()->name}}" /> <span class="text-dark">{{auth()->guard('admin')->user()->name}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item" href="{{route('admin.profile')}}"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+                    <a class="dropdown-item" href="{{route('admin.profile')}}"><i class="align-middle me-1 fa-solid fa-user-tie" ></i> Profile</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{route('admin.profile.privacy')}}"><i class="align-middle me-1" data-feather="shield"></i> Privacy</a>
+                    <a class="dropdown-item" href="{{route('admin.profile.privacy')}}"><i class="align-middle me-1 fa-solid fa-shield" ></i> Privacy</a>
                     <div class="dropdown-divider"></div>
                     <form method="POST" action="{{ route('admin.logout')  }}">
                         @csrf
@@ -54,7 +54,7 @@
                            class="dropdown-item"
                            onclick="event.preventDefault();
                                 this.closest('form').submit();">
-                            <i class="align-middle me-1" data-feather="log-out"></i>{{ __('Log Out') }}
+                            <i class="align-middle me-1 fa-solid fa-arrow-right-from-bracket"></i>{{ __('Log Out') }}
                         </a>
                     </form>
                 </div>

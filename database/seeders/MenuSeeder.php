@@ -16,23 +16,23 @@ class MenuSeeder extends Seeder
     public function run()
     {
         DB::table('menus')->updateOrInsert(
-            ['title' => 'Dashboard',  'icon' => "home"],
+            ['title' => 'Dashboard',  'icon' => "fa-solid fa-house"],
             ['route' => 'admin.dashboard']
         );
 
         DB::table('menus')->updateOrInsert(
-            ['title' => 'Module', 'icon' => "command"],
+            ['title' => 'Module', 'icon' => "fa-solid fa-star"],
             ['route' => 'admin.module']
         );
 
         DB::table('menus')->updateOrInsert(
-            ['title' => 'Menu', 'icon' => "check-circle"],
+            ['title' => 'Menu', 'icon' => "fa-solid fa-circle-check"],
             ['route' => 'admin.menu.index']
         );
 
 
         DB::table('menus')->updateOrInsert(
-            ['title' => 'Activity Log', 'icon' => "server"],
+            ['title' => 'Activity Log', 'icon' => "fa-solid fa-clock-rotate-left"],
             ['route' => 'admin.activities']
         );
 

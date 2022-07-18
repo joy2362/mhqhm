@@ -9,7 +9,7 @@ trait CreateFrontEnd
      * @return string
      *
      */
-    public function getPath()
+    public function getPath(): string
     {
         return  __DIR__ .'/../stubs/FrontEnd.stub';
     }
@@ -19,7 +19,7 @@ trait CreateFrontEnd
      *
      * @return string
      */
-    public function getSourceFrontEndPath($name)
+    public function getSourceFrontEndPath($name): string
     {
         return base_path('resources\\views\\admin\\pages') .'\\' .$name.'\\' . 'index.blade.php';
     }
@@ -28,10 +28,10 @@ trait CreateFrontEnd
      * Replace the stub variables(key) with the desire value
      *
      * @param $stub
-     * @param array $stubVariables
-     * @return bool|mixed|string
+     * @param  $stubVariables
+     * @return string|array|bool
      */
-    public function getContents($stub , $stubVariables = [])
+    public function getContents($stub , $stubVariables = []): string|array|bool
     {
         $contents = file_get_contents($stub);
 
@@ -46,10 +46,11 @@ trait CreateFrontEnd
     /**
      * Get the stub path and the stub variables
      *
-     * @return bool|mixed|string
-     *
+     * @param $name
+     * @param $model
+     * @return string|array|bool
      */
-    public function getSourceFrontEnd($name,$model)
+    public function getSourceFrontEnd($name,$model): string|array|bool
     {
         return $this->getContents($this->getPath(), $this->getVariables($name,$model));
     }

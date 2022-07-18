@@ -28,9 +28,9 @@ class Crud implements CrudOperation
             ->addIndexColumn()
             ->addColumn('actions', function($row){
 
-                $btn = '<button class="m-2 btn btn-sm btn-primary edit_button" value="'.$row->id.'"> Edit</button>';
+                $btn = '<button class="m-2 btn btn-sm btn-success edit_button rounded" value="'.$row->id.'"> <i class="fa-solid fa-pen-to-square"></i></button>';
 
-                $btn = $btn.'<button class="m-2 btn btn-sm btn-danger delete_button" value="'.$row->id.'">Delete</button>';
+                $btn = $btn.'<button class="m-2 btn btn-sm btn-danger delete_button rounded" value="'.$row->id.'"><i class="fa-solid fa-trash"></i></button>';
 
                 return $btn;
             })

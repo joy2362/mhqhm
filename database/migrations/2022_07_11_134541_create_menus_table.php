@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('route');
-            $table->string('icon')->default('grid');
+            $table->string('icon')->default('fa-solid fa-grip');
             $table->timestamps();
 
         });
