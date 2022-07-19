@@ -91,7 +91,7 @@ class Module
        return DB::table('modules')->insert([
             'name' => self::ucFirst($name),
             'controller' => self::ucFirst($name)."Controller",
-            'route' => self::lcFirst($name)."index",
+            'route' => self::lcFirst($name).".index",
             'migration' => $migration,
         ]);
     }

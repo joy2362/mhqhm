@@ -1,11 +1,12 @@
 <?php
 //@abdullah zahid joy
 
+use App\Http\Controllers\Backend\Core\RecycleBinController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\ModuleController;
 use App\Http\Controllers\Backend\ProfileController;
-use App\Http\Controllers\Backend\System\ActivityController;
+use App\Http\Controllers\Backend\Core\ActivityController;
 use App\Http\Controllers\Backend\System\ModuleHandlerController;
 use App\Http\Controllers\Backend\System\SystemController;
 use Illuminate\Support\Facades\Route;
@@ -46,8 +47,6 @@ Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],funct
     Route::get('/profile/privacy/recovery', [ProfileController::class,'recovery'])->name('profile.recovery');
     Route::put('/profile-image', [ProfileController::class, 'changeProfile'])->name('profile-image.update');
     Route::put('/password/change', [PasswordController::class, 'update'])->name('password.change');
-    Route::get('/confirm-password',[ProfileController::class, 'confirmPassword'])->name('password.confirm');
-    Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']);
     Route::put('/profile-information', [ProfileInformationController::class, 'update'])->name('profile-information.update');
     Route::post('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])->name('two-factor.enable');
     Route::delete('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])->name('two-factor.disable');
@@ -59,4 +58,7 @@ Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],funct
     Route::get('menu/{id}/edit', [MenuController::class,'edit'])->name('menu.edit');
     Route::post('menu/{id}/update', [MenuController::class,'update'])->name('menu.update');
     Route::get('activities', ActivityController::class)->name('activities');
+    Route::get('recycle', [RecycleBinController::class,'index'])->name('recycle.index');
+    Route::get('recycle/delete/{model}/{id}', [RecycleBinController::class,'delete'])->name('recycle.delete');
+    Route::get('recycle/recover/{model}/{id}', [RecycleBinController::class,'recover'])->name('recycle.recover');
 });

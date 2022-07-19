@@ -132,16 +132,51 @@ $(document).on("click", "#delete", function(e){
     e.preventDefault();
     const link = $(this).attr("href");
     Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
+        title: 'Confirm Your password',
+        input: 'password',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Confirm!',
+        showLoaderOnConfirm: true,
+        allowOutsideClick:false,
+        preConfirm: (password) => {
+            const formData =new FormData();
+            formData.append('password',password);
+            //formData.append('_csrf',password);
+            return fetch(`/admin/confirm-password`,{
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            })
+                .then(response => response.json()
+                )
+                .then(data => {
+                    if(data.message){
+                        return data;
+                    }
+                    if(data.error){
+                        Swal.showValidationMessage(
+                            `${data.errors}`
+                        )
+                    }
+                }
+
+                )
+                .catch(error => {
+                    Swal.showValidationMessage(
+                        `Request failed: ${error}`
+                    )
+                })
+        },
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = link;
+           window.location.href = link;
         }
     })
 });

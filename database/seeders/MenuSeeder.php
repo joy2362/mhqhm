@@ -36,5 +36,10 @@ class MenuSeeder extends Seeder
             ['route' => 'admin.activities']
         );
 
+        DB::table('menus')->updateOrInsert(
+            ['title' => 'Recycle Bin', 'icon' => "fa-solid fa-trash-can"],
+            ['route' => 'admin.recycle.index']
+        );
+
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\System\SystemController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\ConfirmablePasswordController;
@@ -62,4 +63,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             'guest:admin',
             $twoFactorLimiter ? 'throttle:'.$twoFactorLimiter : null,
         ]));
+
+    Route::post('/confirm-password', [SystemController::class, 'password_check'])
+        ->name('password.confirm');
 });
