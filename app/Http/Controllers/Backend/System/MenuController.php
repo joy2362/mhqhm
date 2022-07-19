@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend\System;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -26,6 +26,7 @@ class MenuController extends Controller
         $validator = Validator::make($request->all(),[
             'title' => 'required|max:191',
             'icon' => 'required|max:191',
+            'sorting' => 'required',
         ]);
 
         if ($validator->fails()){

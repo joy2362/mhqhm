@@ -2,10 +2,11 @@
 //@abdullah zahid joy
 
 use App\Http\Controllers\Backend\Core\RecycleBinController;
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\MenuController;
-use App\Http\Controllers\Backend\ModuleController;
-use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\Core\DashboardController;
+use App\Http\Controllers\Backend\Core\UserController;
+use App\Http\Controllers\Backend\System\MenuController;
+use App\Http\Controllers\Backend\System\ModuleController;
+use App\Http\Controllers\Backend\Core\ProfileController;
 use App\Http\Controllers\Backend\Core\ActivityController;
 use App\Http\Controllers\Backend\System\ModuleHandlerController;
 use App\Http\Controllers\Backend\System\SystemController;
@@ -14,7 +15,6 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SubcategoryController;
 use App\Http\Controllers\Backend\CategoryController;
 
-use Laravel\Fortify\Http\Controllers\ConfirmablePasswordController;
 use Laravel\Fortify\Http\Controllers\PasswordController;
 use Laravel\Fortify\Http\Controllers\ProfileInformationController;
 use Laravel\Fortify\Http\Controllers\RecoveryCodeController;
@@ -61,4 +61,5 @@ Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],funct
     Route::get('recycle', [RecycleBinController::class,'index'])->name('recycle.index');
     Route::get('recycle/delete/{model}/{id}', [RecycleBinController::class,'delete'])->name('recycle.delete');
     Route::get('recycle/recover/{model}/{id}', [RecycleBinController::class,'recover'])->name('recycle.recover');
+    Route::resource('user', UserController::Class)->only(['index','destroy']);
 });

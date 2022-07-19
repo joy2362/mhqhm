@@ -128,6 +128,7 @@ function store_handler(url,formData){
         }
     })
 }
+
 $(document).on("click", "#delete", function(e){
     e.preventDefault();
     const link = $(this).attr("href");

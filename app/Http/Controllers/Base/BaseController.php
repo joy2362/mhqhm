@@ -11,7 +11,7 @@ class BaseController extends Controller
 {
     public function __construct()
     {
-        $menus = DB::table('menus')->get();
+        $menus = DB::table('menus')->orderBy('sorting','asc')->get();
         // Sharing is caring
         View::share('menus', $menus );
     }

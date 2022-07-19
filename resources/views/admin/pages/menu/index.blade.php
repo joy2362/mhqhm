@@ -16,6 +16,7 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Icon</th>
+                                        <th>Sorting</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -25,6 +26,7 @@
                                             <td> {{ $loop->index + 1 }}</td>
                                             <td><a href="{{route($row->route)}}" class="fw-bold ">{{$row->title}}</a></td>
                                             <td><i class=" {{ $row->icon }}" style="font-size: 20px"></i>  </td>
+                                            <td>{{$row->sorting}}</td>
                                             <td>
                                                 <button class="m-2 edit_button rounded btn btn-sm btn-success" value="{{$row->id}}"><i class="fa-solid fa-pen-to-square"></i></button>
                                             </td>
@@ -57,6 +59,10 @@
                                 <label for="icon" class="form-label">Icon</label>
                                 <input type="text" class="form-control" id="icon" name="icon" aria-describedby="iconHelp">
                                 <small id="iconHelp" class="form-text text-danger">Only support Feather Icons. Available Feather icons list <a href="https://feathericons.com/" target="_blank">here</a></small>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="sorting" class="form-label">Sorting</label>
+                                <input type="text" class="form-control" id="sorting" name="sorting" >
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -91,6 +97,7 @@
                             $('#edit_id').val(res.data.id);
                             $('#name').val(res.data.title);
                             $('#icon').val(res.data.icon);
+                            $('#sorting').val(res.data.sorting);
                             $('#edit').modal('show');
                         }
                     }

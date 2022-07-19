@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('route');
             $table->string('icon')->default('fa-solid fa-grip');
+            $table->integer('sorting');
             $table->timestamps();
 
         });

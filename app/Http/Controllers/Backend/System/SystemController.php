@@ -19,12 +19,15 @@ class SystemController extends Controller
     public function update(): string
     {
         $modules = DB::table('modules')->get();
+        $sorting = DB::table('menus')->max('sorting') +1;
+
         foreach ($modules as $module){
             if (class_exists("App\\Models\\" . ucfirst($module->name)) && Route::has("admin.".lcfirst($module->name) .".index") ) {
                 DB::table('menus')->updateOrInsert(
-                    ['title' => ucfirst($module->name),],
+                    ['title' => ucfirst($module->name),'sorting'=>$sorting],
                     ['route' => "admin.".lcfirst($module->name) .".index"]
                 );
+                $sorting++;
             }
         }
         return "System update successfully";
