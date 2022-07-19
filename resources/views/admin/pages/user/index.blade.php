@@ -16,7 +16,8 @@
                                     <th>#</th>
                                     <th>Avatar</th>
                                     <th>Name</th>
-                                    <th>email</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -27,12 +28,24 @@
                                         <td><a href="{{$row->avatar}}"><img src="{{$row->avatar}}" alt="{{$row->name}}" width="100" height="70"></a> </td>
                                         <td> {{ $row->name }}</td>
                                         <td> {{ $row->email }}</td>
+                                        <td> <span @class(["badge", "bg-success"=>$row->status == "active" , "bg-danger"=>$row->status == "inactive" ]) >{{ ucfirst($row->status) }}</span></td>
                                         <td>
-                                            <form method="post" action="{{ route('admin.user.destroy', $row->id) }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" id="destroy" class="m-2 rounded btn btn-sm btn-danger">Delete</button>
-                                            </form>
+                                            <div class="dropdown">
+                                                <span class="btn btn-success rounded btn-sm px-3 " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                </span>
+                                                <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton1">
+                                                    <li><a class="dropdown-item" href="{{route('admin.user.status',['id'=>$row->id,'status'=>"active"])}}">Mark as Active</a></li>
+                                                    <li><a class="dropdown-item" href="{{route('admin.user.status',['id'=>$row->id,'status'=>"inactive"])}}">Mark as Inactive</a></li>
+                                                    <li>
+                                                        <form method="post" action="{{ route('admin.user.destroy', $row->id) }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <span type="submit" id="destroy" class="m-2">Delete</span>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

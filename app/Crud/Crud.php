@@ -21,18 +21,22 @@ class Crud implements CrudOperation
      */
     public function getAll($model): JsonResponse
     {
-
         $data = App::make( 'App\\Models\\'.$model )->where('is_deleted','no')->get();
 
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('actions', function($row){
+                return '<div class="dropdown">
+                            <span class="btn btn-success rounded btn-sm px-3 " type="button" id="action" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </span>
+                            <ul class="dropdown-menu text-center" aria-labelledby="action">
+                                <li><button class="m-2 btn btn-sm btn-success edit_button rounded" value="'.$row->id.'"> Edit</button></li>
+                                <li><button class="m-2 btn btn-sm btn-danger delete_button rounded" value="'.$row->id.'">Delete</button></li>
+                            </ul>
+                        </div>';
 
-                $btn = '<button class="m-2 btn btn-sm btn-success edit_button rounded" value="'.$row->id.'"> <i class="fa-solid fa-pen-to-square"></i></button>';
 
-                $btn = $btn.'<button class="m-2 btn btn-sm btn-danger delete_button rounded" value="'.$row->id.'"><i class="fa-solid fa-trash"></i></button>';
-
-                return $btn;
             })
             ->rawColumns(['actions'])
             ->make(true);

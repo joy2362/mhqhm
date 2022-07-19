@@ -89,4 +89,17 @@ class UserController extends BaseController
         );
         return redirect()->back()->with($notification);
     }
+
+    public function toggle_status($id , $status){
+        $user = User::find($id);
+        $user->status = $status;
+        $user->save();
+
+
+        $notification = array(
+            'messege' => 'User Status Changed!',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
 }

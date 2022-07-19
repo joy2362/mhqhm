@@ -62,4 +62,5 @@ Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],funct
     Route::get('recycle/delete/{model}/{id}', [RecycleBinController::class,'delete'])->name('recycle.delete');
     Route::get('recycle/recover/{model}/{id}', [RecycleBinController::class,'recover'])->name('recycle.recover');
     Route::resource('user', UserController::Class)->only(['index','destroy']);
+    Route::get('user/{id}/status/{status}', [UserController::class,'toggle_status'])->name('user.status');
 });

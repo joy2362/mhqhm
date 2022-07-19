@@ -70,10 +70,9 @@
 				<table class="table table-border " id="data" style="width:100%">
 					<thead>
 					<tr>
-						<th>ID</th>
-						<th >Name</th>
-
-						<th>Actions</th>
+						<th width="5%">ID</th>
+						<th width="90%">Name</th>
+						<th width="5%">Actions</th>
 					</tr>
 					</thead>
 					<tbody>
