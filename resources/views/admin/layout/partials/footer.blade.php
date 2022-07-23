@@ -3,11 +3,11 @@
         <div class="row text-muted">
             <div class="col-6 text-start">
                 <p class="mb-0">
-                    <strong>CMS</strong> &copy;
+                    <strong>{{$setting->name}}</strong> &copy;
                 </p>
             </div>
             <div class="col-6 text-end">
-                <p>v0.0.2</p>
+                <p>v0.0.11</p>
             </div>
         </div>
     </div>

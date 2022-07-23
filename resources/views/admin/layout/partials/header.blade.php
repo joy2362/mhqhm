@@ -4,8 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @yield('meta')
 
-
-<link rel="shortcut icon" href="{{asset('admin/img/icons/icon-48x48.png')}}" />
+<link rel="shortcut icon" href="{{$setting->favicon}}" />
 
 @yield('title')
 

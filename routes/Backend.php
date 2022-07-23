@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\System\ModuleController;
 use App\Http\Controllers\Backend\Core\ProfileController;
 use App\Http\Controllers\Backend\Core\ActivityController;
 use App\Http\Controllers\Backend\System\ModuleHandlerController;
+use App\Http\Controllers\Backend\System\SettingController;
 use App\Http\Controllers\Backend\System\SystemController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\ProductController;
@@ -63,4 +64,6 @@ Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],funct
     Route::get('recycle/recover/{model}/{id}', [RecycleBinController::class,'recover'])->name('recycle.recover');
     Route::resource('user', UserController::Class)->only(['index','destroy']);
     Route::get('user/{id}/status/{status}', [UserController::class,'toggle_status'])->name('user.status');
+    Route::resource('setting', SettingController::Class)->only('index','update');
+    Route::post('setting/icon/change/{type}',[SettingController::class,'iconChange'])->name('setting.icon.change');
 });

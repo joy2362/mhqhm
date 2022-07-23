@@ -1,7 +1,7 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <p class="sidebar-brand" >
-            <span class="align-middle">CMS</span>
+            <span class="align-middle">{{$setting->name}}</span>
         </p>
         <ul class="sidebar-nav">
             @foreach( $menus as $menu )

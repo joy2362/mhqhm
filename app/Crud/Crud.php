@@ -40,6 +40,7 @@ class Crud implements CrudOperation
             })
             ->rawColumns(['actions'])
             ->make(true);
+
     }
 
     /**

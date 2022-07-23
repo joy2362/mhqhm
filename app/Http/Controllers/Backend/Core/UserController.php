@@ -95,7 +95,6 @@ class UserController extends BaseController
         $user->status = $status;
         $user->save();
 
-
         $notification = array(
             'messege' => 'User Status Changed!',
             'alert-type' => 'success'

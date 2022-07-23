@@ -6,14 +6,14 @@
     <main class="content">
         <div class="container-fluid p-0">
             <div class="row d-flex justify-content-center">
-                <div class="col-xl-6 col-xxl-5 ">
+                <div class="col-6  ">
                     <div class="w-100">
                         <div class="row">
                             <form action="{{route('admin.module.store')}}" method="POST" id="module">
                                 @csrf
                                 <div class="card ">
                                     <div class="card-header text-center">
-                                        <h1 class="card-title ">Add new module</h1>
+                                        <h3>Add new module</h3>
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group">
@@ -24,9 +24,9 @@
                                             <p class="text-success d-none" id="message"></p>
                                         </div>
                                     </div>
-                                    <div class="card-footer">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                    <div class="card-footer ">
+                                        <div class="form-group float-end">
+                                            <button type="submit" class="btn btn-success">Submit</button>
                                         </div>
                                     </div>
                                 </div>

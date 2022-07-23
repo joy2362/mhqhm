@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Base;
 
 use App\Http\Controllers\Controller;
+use App\Models\System\Setting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
@@ -11,12 +12,12 @@ class BaseController extends Controller
 {
     public function __construct()
     {
+        $setting = Setting::first();
         $menus = DB::table('menus')->orderBy('sorting','asc')->get();
         // Sharing is caring
-        View::share('menus', $menus );
+        View::share(['menus' => $menus, 'setting'=> $setting ]);
     }
 
-    //FILE UPLOAD
     protected function upload( $file, $path, $old = null ) {
 
         $code = date( 'ymdhis' ) . '-' . rand( 1111, 9999 );

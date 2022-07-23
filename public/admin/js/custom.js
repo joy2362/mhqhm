@@ -170,9 +170,7 @@ $(document).on("click", "#delete", function(e){
 
                 )
                 .catch(error => {
-                    Swal.showValidationMessage(
-                        `Request failed: ${error}`
-                    )
+                    console.log(error)
                 })
         },
     }).then((result) => {

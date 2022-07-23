@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Backend\System;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Base\BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class MenuController extends Controller
+class MenuController extends BaseController
 {
     public function index(){
         $menus = DB::table('menus')->get();

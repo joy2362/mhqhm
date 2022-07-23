@@ -40,8 +40,6 @@ class RecycleBinController extends BaseController
         App::make( 'App\\Models\\'. ucfirst( $model) )->where('id',$id)->update([
             'status' => "Active",
             'is_deleted' => "no",
-            "deleted_by" =>  null,
-            "deleted_at" => null,
         ]);
         $notification = array(
             'messege' => 'Recode recover Successfully!',

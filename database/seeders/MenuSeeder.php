@@ -47,5 +47,11 @@ class MenuSeeder extends Seeder
 
         );
 
+        DB::table('menus')->updateOrInsert(
+            ['title' => 'Setting', 'icon' => "fa-solid fa-gears",'sorting' => 6],
+            ['route' => 'admin.setting.index']
+
+        );
+
     }
 }
