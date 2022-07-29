@@ -7,8 +7,6 @@
     <script src="{{asset('admin/js/jquery.validate.min.js')}}"></script>
     <script src="{{asset('admin/js/additional-methods.min.js')}}"></script>
 
-
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         @if ($errors->any())
@@ -27,9 +25,8 @@
         @endif
 
         @if(Session::has('messege'))
-        const type = "{{Session::get('alert-type','info')}}";
-        notification(type,'{{Session::get('messege')}}')
-
+            const type = "{{Session::get('alert-type','info')}}";
+            notification(type,'{{Session::get('messege')}}')
         @endif
 
     });

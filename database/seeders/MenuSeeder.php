@@ -53,5 +53,10 @@ class MenuSeeder extends Seeder
 
         );
 
+        DB::table('menus')->updateOrInsert(
+            ['title' => 'Admin Role', 'icon' => "fa-solid fa-user-gear",'sorting' => 7],
+            ['route' => 'admin.adminrole.index']
+        );
+
     }
 }

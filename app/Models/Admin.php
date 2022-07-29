@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\Traits\CausesActivity;
+use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,TwoFactorAuthenticatable,CausesActivity ;
+    use HasApiTokens, HasFactory, Notifiable,TwoFactorAuthenticatable,CausesActivity,HasRoles ;
 
     /**
      * The attributes that are mass assignable.

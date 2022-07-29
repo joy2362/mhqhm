@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Backend\Core\RecycleBinController;
 use App\Http\Controllers\Backend\Core\DashboardController;
+use App\Http\Controllers\Backend\Core\RoleController;
 use App\Http\Controllers\Backend\Core\UserController;
 use App\Http\Controllers\Backend\System\MenuController;
 use App\Http\Controllers\Backend\System\ModuleController;
@@ -66,4 +67,5 @@ Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],funct
     Route::get('user/{id}/status/{status}', [UserController::class,'toggle_status'])->name('user.status');
     Route::resource('setting', SettingController::Class)->only('index','update');
     Route::post('setting/icon/change/{type}',[SettingController::class,'iconChange'])->name('setting.icon.change');
+    Route::resource('adminrole', RoleController::Class);
 });

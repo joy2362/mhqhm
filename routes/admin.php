@@ -52,10 +52,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         ->middleware(['guest:admin'])
         ->name('password.update');
 
-    //two-factor-challenge
-    Route::get('/two-factor-challenge', [ProfileController::class,'twoFactorChallenge'])
-        ->middleware('guest:admin',)
-        ->name('two-factor.login');
+//    //two-factor-challenge
+//    Route::get('/two-factor-challenge', [ProfileController::class,'twoFactorChallenge'])
+//        ->middleware('guest:admin',)
+//        ->name('two-factor.login');
 
     $twoFactorLimiter = config('fortify.limiters.two-factor');
     Route::post('/two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'store'])

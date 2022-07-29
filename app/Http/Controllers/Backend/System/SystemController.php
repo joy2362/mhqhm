@@ -23,10 +23,15 @@ class SystemController extends Controller
 
         foreach ($modules as $module){
             if (class_exists("App\\Models\\" . ucfirst($module->name)) && Route::has("admin.".lcfirst($module->name) .".index") ) {
-                DB::table('menus')->updateOrInsert(
-                    ['title' => ucfirst($module->name),'sorting'=>$sorting],
-                    ['route' => "admin.".lcfirst($module->name) .".index"]
-                );
+               $menu = DB::table('menus')->where('route',"admin.".lcfirst($module->name) .".index")->first();
+                if(empty($menu)){
+                    DB::table('menus')->insert([
+                        'route' => "admin.".lcfirst($module->name) .".index",
+                        'title' => ucfirst($module->name),
+                        'sorting'=>$sorting,
+                    ]);
+                }
+
                 $sorting++;
             }
         }

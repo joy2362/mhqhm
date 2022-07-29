@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\System;
 use App\Http\Controllers\Base\BaseController;
  use App\Models\System\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SettingController extends BaseController
 {
@@ -15,6 +16,9 @@ class SettingController extends BaseController
      */
     public function index()
     {
+        if(!Auth::guard('admin')->user()->can('View All Setting')) {
+            return abort(403, "You Dont have Permission");
+        }
         return view('admin.pages.setting.index');
     }
 
@@ -29,6 +33,9 @@ class SettingController extends BaseController
      */
     public function update(Request $request, $id)
     {
+        if(!Auth::guard('admin')->user()->can('Update Setting')) {
+            return abort(403, "You Dont have Permission");
+        }
         $data = $request->all();
 
         Setting::find($id)->update($data);
@@ -42,6 +49,10 @@ class SettingController extends BaseController
 
     public function iconChange($type , Request $request){
 
+        if(!Auth::guard('admin')->user()->can('Update Logos')) {
+            return abort(403, "You Dont have Permission");
+        }
+
         $request->validate([
            'image' => 'required | image'
         ]);
@@ -50,12 +61,8 @@ class SettingController extends BaseController
         $oldImg = Setting::select($type)->first();
         if(!empty($oldImg->$type)){
             $this->deleteFile($oldImg);
-            $data[$type] = $this->upload($file, 'setting');
-            dd($data);
-        }else{
-            $this->upload($file, 'setting');
-            $data[$type] = $this->upload($file, 'setting');
         }
+        $data[$type] = $this->upload($file, 'setting');
         Setting::first()->update($data);
         $notification = array(
             'messege' => 'Setting updated Successfully!',

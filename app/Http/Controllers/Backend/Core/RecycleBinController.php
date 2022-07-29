@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Core;
 use App\Http\Controllers\Base\BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class RecycleBinController extends BaseController
@@ -12,10 +13,12 @@ class RecycleBinController extends BaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
+        if(!Auth::guard('admin')->user()->can('View All Recycle Bin')) {
+            return abort(403, "You Dont have Permission");
+        }
         $data = [];
         $modules = DB::table('modules')->get();
         foreach($modules as $module){
@@ -26,6 +29,9 @@ class RecycleBinController extends BaseController
     }
 
     public function delete($model , $id){
+        if(!Auth::guard('admin')->user()->can('Destroy From Recycle Bin')) {
+            return abort(403, "You Dont have Permission");
+        }
         App::make( 'App\\Models\\'. ucfirst( $model) )->destroy($id);
         $notification = array(
             'messege' => 'Recode Delete Successfully!',
@@ -36,6 +42,9 @@ class RecycleBinController extends BaseController
     }
 
     public function recover($model , $id){
+        if(!Auth::guard('admin')->user()->can('Recover From Recycle Bin')) {
+            return abort(403, "You Dont have Permission");
+        }
        // dd(App::make( 'App\\Models\\'. ucfirst( $model) )->where('id',$id)->get());
         App::make( 'App\\Models\\'. ucfirst( $model) )->where('id',$id)->update([
             'status' => "Active",

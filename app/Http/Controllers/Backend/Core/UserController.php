@@ -5,16 +5,19 @@ namespace App\Http\Controllers\Backend\Core;
 use App\Http\Controllers\Base\BaseController;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends BaseController
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
+        if(!Auth::guard('admin')->user()->can('View All User')) {
+            return abort(403, "You Dont have Permission");
+        }
         $users = User::all();
         return view('admin.pages.user.index',['users'=>$users]);
     }
@@ -78,10 +81,13 @@ class UserController extends BaseController
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+
      */
     public function destroy($id)
     {
+        if(!Auth::guard('admin')->user()->can('Delete User')) {
+            return abort(403, "You Dont have Permission");
+        }
         User::destroy($id);
         $notification = array(
             'messege' => 'User Account delete Successfully!',
@@ -91,6 +97,9 @@ class UserController extends BaseController
     }
 
     public function toggle_status($id , $status){
+        if(!Auth::guard('admin')->user()->can('Update User Status')) {
+            return abort(403, "You Dont have Permission");
+        }
         $user = User::find($id);
         $user->status = $status;
         $user->save();
