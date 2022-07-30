@@ -35,8 +35,8 @@
                                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                                 </span>
                                                 <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item" href="{{route('admin.user.status',['id'=>$row->id,'status'=>"active"])}}">Mark as Active</a></li>
-                                                    <li><a class="dropdown-item" href="{{route('admin.user.status',['id'=>$row->id,'status'=>"inactive"])}}">Mark as Inactive</a></li>
+                                                    <li><a class="dropdown-item" href="{{route('admin.user.status.update',['id'=>$row->id,'status'=>"active"])}}">Mark as Active</a></li>
+                                                    <li><a class="dropdown-item" href="{{route('admin.user.status.update',['id'=>$row->id,'status'=>"inactive"])}}">Mark as Inactive</a></li>
                                                     <li>
                                                         <form method="post" action="{{ route('admin.user.destroy', $row->id) }}">
                                                             @csrf

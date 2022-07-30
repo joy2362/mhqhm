@@ -27,6 +27,9 @@
         @if(Session::has('messege'))
             const type = "{{Session::get('alert-type','info')}}";
             notification(type,'{{Session::get('messege')}}')
+        @php
+            Illuminate\Support\Facades\Session::forget('messege');
+        @endphp
         @endif
 
     });

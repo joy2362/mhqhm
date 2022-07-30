@@ -29,7 +29,7 @@
                 <div class="modal fade" id="changeImage" tabindex="-1" aria-labelledby="changeImageLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
-                            <form method="post" action="{{route('admin.profile-image.update')}}" enctype="multipart/form-data">
+                            <form method="post" action="{{route('admin.profile.image.update')}}" enctype="multipart/form-data">
                                 @method('put')
                                 @csrf
                                 <div class="modal-header">
@@ -58,7 +58,7 @@
                         <div class="card-body h-100">
 
                             <div class="d-flex align-items-start">
-                                <form class="flex-grow-1" method="POST" action="{{ route('admin.profile-information.update') }}">
+                                <form class="flex-grow-1" method="POST" action="{{ route('admin.profile.information.update') }}">
                                     @csrf
                                     @method('put')
                                     <div class="form-group g-2">

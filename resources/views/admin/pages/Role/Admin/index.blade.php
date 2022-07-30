@@ -1,13 +1,13 @@
 @extends('admin.layout.master')
 @section('title')
-    <title>Role</title>
+    <title>Admin Role</title>
 @endsection
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
-            <h1 class="h3 mb-3">Role
-                @if(Auth::guard('admin')->user()->can('Create Role'))
-                    <a href="{{route('admin.adminrole.create')}}" class="float-end rounded btn btn-sm btn-success" >Add Role</a>
+            <h1 class="h3 mb-3">Admin Role
+                @if(Auth::guard('admin')->user()->can('create admin-role'))
+                    <a href="{{route('admin.admin-role.create')}}" class="float-end rounded btn btn-sm btn-success" >Add Role</a>
                 @endif
             </h1>
             <div class="row">
@@ -30,7 +30,24 @@
                                         <td>{{$row->name}}</td>
                                         <td>{{ucfirst($row->guard_name)}}</td>
                                         <td>
-                                            <a class="m-2 edit_button rounded btn btn-sm btn-success" href="{{route('admin.adminrole.edit',$row->id)}}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                           <div class="dropdown">
+
+                                                <span class="btn btn-success rounded btn-sm px-3 " type="button" id="action" data-bs-toggle="dropdown" aria-expanded="false" @if($row->name == "Super Admin") disabled @endif>
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                </span>
+                                                <ul class="dropdown-menu text-center" aria-labelledby="action">
+                                                    <li>
+                                                        <a class="dropdown-item" href="{{route('admin.admin-role.edit',$row->id)}}">Edit</a>
+                                                    </li>
+                                                    <li>
+                                                        <form method="post" action="{{ route('admin.admin-role.destroy', $row->id) }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <span type="submit" id="destroy" class="dropdown-item">Delete</span>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -46,10 +63,28 @@
 @endsection
 @section('script')
     <script>
-        $(document).ready(function() {
+        $(document).ready(function(){
             $('#data').DataTable({
-                "order": false
+                "order":false
             });
+            $(document).on("click", "#destroy", function(e){
+                e.preventDefault();
+                var form = $(this).parents('form');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {form.submit();}
+                });
+
+            });
+
         });
+
     </script>
 @endsection

@@ -16,9 +16,6 @@ class DashboardController extends BaseController
      */
     public function __invoke(Request $request)
     {
-        if(!Auth::guard('admin')->user()->can('View All Dashboard')) {
-            return abort(403, "You Dont have Permission");
-        }
         return view('admin.pages.dashboard.index');
     }
 }

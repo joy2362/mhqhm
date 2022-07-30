@@ -20,7 +20,6 @@
                             </tr>
                         </thead>
                         <tbody>
-
                             @foreach($dates as $key => $data)
                                 @if($key == $row->name)
                                 @foreach($data as $value)
@@ -29,8 +28,17 @@
                                     <td>{{$value->id}}</td>
                                     <td>{{$value->deletedBy->name}}</td>
                                     <td>
-                                        <a class="m-2 edit_button rounded btn btn-sm btn-success" href="{{route('admin.recycle.recover',[ 'model' =>$row->name , 'id' => $value->id ])}}" id="delete"><i class="fa-solid fa-trash-arrow-up"></i></a>
-                                        <a class="m-2 rounded btn btn-sm btn-danger" href="{{route('admin.recycle.delete',[ 'model' =>$row->name , 'id' => $value->id ])}}"  id="delete"><i class="fa-solid fa-trash"></i></a>
+                                        <div class="dropdown">
+                                                <span class="btn btn-success rounded btn-sm px-3 " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                </span>
+                                            <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton1">
+                                                <li>
+                                                    <a class="m-2 edit_button  btn  " href="{{route('admin.recycle.recover',[ 'model' =>$row->name , 'id' => $value->id ])}}" id="delete">Recover</a>
+                                                </li>
+                                                <li><a class="m-2  btn " href="{{route('admin.recycle.delete',[ 'model' =>$row->name , 'id' => $value->id ])}}"  id="delete">Permanently Delete</a></li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach

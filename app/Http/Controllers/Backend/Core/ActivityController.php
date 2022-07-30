@@ -21,9 +21,6 @@ class ActivityController extends BaseController
      */
     public function __invoke(Request $request)
     {
-        if(!Auth::guard('admin')->user()->can('View All Activity Log')) {
-            return abort(403, "You Dont have Permission");
-        }
         $logs = Activity::all();
         return view('admin.pages.activities.index' , [ 'logs' => $logs ]);
     }

@@ -5,9 +5,9 @@
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
-            <h1 class="h3 mb-3">Edit Role
-                @if(auth()->user()->can('View All Role'))
-                    <a href="{{route('admin.adminrole.index')}}" class="float-end rounded btn btn-sm btn-success">View Admin Role</a>
+            <h1 class="h3 mb-3">Edit Admin Role
+                @if(auth()->user()->can('index admin-role'))
+                    <a href="{{route('admin.admin-role.index')}}" class="float-end rounded btn btn-sm btn-success">View Admin Role</a>
                 @endif
             </h1>
 
@@ -15,7 +15,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" action="{{route('admin.adminrole.update',$role->id)}}">
+                            <form method="post" action="{{route('admin.admin-role.update',$role->id)}}">
                                 @csrf
                                 @method('put')
                                 <div class="form-group mb-3">
@@ -28,17 +28,24 @@
                                         </span>
                                     @enderror
                                 </div>
-
                                 <div class="row mb-3">
-                                    @foreach($permissions as $row)
-                                        <div class="col-md-6 col-lg-4 g-2">
-                                            <div class="form-check form-check-inline form-switch">
-                                                <input class="form-control form-control-lg form-check-input" type="checkbox" role="switch" @if( $role->permissions->contains($row->id) ) {{'checked'}}  @endif  id="permissions_{{$row->id}}" name="permissions[]" value="{{$row->id}}">
-                                                <label class="fs-4 form-control-lg form-check-label" for="permissions_{{$row->id}}">{{$row->name}}</label>
-                                            </div>
+                                    @foreach($permissions as $group => $values)
+                                        <div class="mb-3 fw-bold ">
+                                            <span>{{ucfirst($group)}}</span>
                                         </div>
+                                        @foreach( $values as $row)
+                                            <div class="col-md-6 col-lg-4 g-2 mb-3 ">
+                                                <div class="form-check ">
+                                                    <input class="form-check-input " type="checkbox" id="permissions_{{$row->id}}" @if( $role->permissions->contains($row->id) ) {{'checked'}}  @endif name="permissions[]" value="{{$row->id}}" >
+                                                    <label class="form-check-label" for="permissions_{{$row->id}}">
+                                                        {{ucfirst($row->name)}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     @endforeach
                                 </div>
+
                                 <button type="submit" class="btn btn-primary float-end">Update</button>
                             </form>
                         </div>
@@ -51,6 +58,8 @@
 @endsection
 @section('script')
     <script>
+        $(document).ready(function(){
 
+        });
     </script>
 @endsection

@@ -21,24 +21,27 @@ class PermissionSeeder extends Seeder
         $modules = DB::table('modules')->get();
 
         $permissions = [
-          ['name'=>'Create Module','guard_name'=>'admin'],
-          ['name'=>'View All Menu','guard_name'=>'admin'],
-          ['name'=>'View All Dashboard','guard_name'=>'admin'],
-          ['name'=>'Edit Menu','guard_name'=>'admin'],
-          ['name'=>'View All Activity Log','guard_name'=>'admin'],
-          ['name'=>'View All User','guard_name'=>'admin'],
-          ['name'=>'Delete User','guard_name'=>'admin'],
-          ['name'=>'Update User Status','guard_name'=>'admin'],
-          ['name'=>'View All Recycle Bin','guard_name'=>'admin'],
-          ['name'=>'Recover From Recycle Bin','guard_name'=>'admin'],
-          ['name'=>"Destroy From Recycle Bin",'guard_name'=>'admin'],
-          ['name'=>"View All Setting",'guard_name'=>'admin'],
-          ['name'=>"Update Setting",'guard_name'=>'admin'],
-          ['name'=>"Update Logos",'guard_name'=>'admin'],
-          ['name'=>"View All Role",'guard_name'=>'admin'],
-          ['name'=>"Create Role",'guard_name'=>'admin'],
-          ['name'=>"Edit Role",'guard_name'=>'admin'],
-          ['name'=>"Delete Role",'guard_name'=>'admin'],
+            ['name'=>'index dashboard','guard_name'=>'admin','group_name' => 'dashboard'],
+            ['name'=>'index module','guard_name'=>'admin','group_name' => 'module'],
+            ['name'=>'index menu','guard_name'=>'admin','group_name' => 'menu'],
+            ['name'=>'edit menu','guard_name'=>'admin','group_name' => 'menu'],
+            ['name'=>'update menu','guard_name'=>'admin','group_name' => 'menu'],
+            ['name'=>'index activity-log','guard_name'=>'admin','group_name' => 'activity-log'],
+            ['name'=>'index user','guard_name'=>'admin','group_name' => 'user'],
+            ['name'=>'destroy user','guard_name'=>'admin','group_name' => 'user'],
+            ['name'=>'update status user','guard_name'=>'admin','group_name' => 'user'],
+            ['name'=>'index recycle','guard_name'=>'admin','group_name' => 'recycle'],
+            ['name'=>'recover recycle','guard_name'=>'admin','group_name' => 'recycle'],
+            ['name'=>"delete recycle",'guard_name'=>'admin','group_name' => 'recycle'],
+            ['name'=>"index setting",'guard_name'=>'admin','group_name' => 'setting'],
+            ['name'=>"update setting",'guard_name'=>'admin','group_name' => 'setting'],
+            ['name'=>"update logos",'guard_name'=>'admin','group_name' => 'setting'],
+            ['name'=>"index admin-role",'guard_name'=>'admin','group_name' => 'admin-role'],
+            ['name'=>"create admin-role",'guard_name'=>'admin','group_name' => 'admin-role'],
+            ['name'=>"store admin-role",'guard_name'=>'admin','group_name' => 'admin-role'],
+            ['name'=>"edit admin-role",'guard_name'=>'admin','group_name' => 'admin-role'],
+            ['name'=>"update admin-role",'guard_name'=>'admin','group_name' => 'admin-role'],
+            ['name'=>"destroy admin-role",'guard_name'=>'admin','group_name' => 'admin-role'],
         ];
         foreach($permissions as $permission){
             Permission::updateOrCreate(
@@ -48,28 +51,28 @@ class PermissionSeeder extends Seeder
 
         foreach ($modules as $module){
             Permission::updateOrCreate(
-                ['name' => 'View ' .ucfirst($module->name)] ,
-                ['guard_name'=>'admin']
+                ['name' => 'view ' .lcfirst($module->name)] ,
+                ['guard_name'=>'admin','group_name'=>lcfirst($module->name)]
             );
 
             Permission::updateOrCreate(
-                ['name' => 'View All ' .ucfirst($module->name)] ,
-                ['guard_name'=>'admin']
+                ['name' => 'index ' .lcfirst($module->name)] ,
+                ['guard_name'=>'admin','group_name'=>lcfirst($module->name)]
             );
 
             Permission::updateOrCreate(
-                ['name' => 'Create ' .ucfirst($module->name)] ,
-                ['guard_name'=>'admin']
+                ['name' => 'create ' .lcfirst($module->name)] ,
+                ['guard_name'=>'admin','group_name'=>lcfirst($module->name)]
             );
 
             Permission::updateOrCreate(
-                ['name' => 'Edit ' .ucfirst($module->name)] ,
-                ['guard_name'=>'admin']
+                ['name' => 'edit ' .lcfirst($module->name)] ,
+                ['guard_name'=>'admin','group_name'=>lcfirst($module->name)]
             );
 
             Permission::updateOrCreate(
-                ['name' => 'Delete ' .ucfirst($module->name)] ,
-                ['guard_name'=>'admin']
+                ['name' => 'destroy ' .lcfirst($module->name)] ,
+                ['guard_name'=>'admin','group_name'=>lcfirst($module->name)]
             );
         }
 

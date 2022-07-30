@@ -40,7 +40,7 @@
                 <div class="modal fade" id="changeImage" tabindex="-1" aria-labelledby="changeImageLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
-                            <form method="post" action="{{route('admin.setting.icon.change','logo')}}"  enctype="multipart/form-data">
+                            <form method="post" action="{{route('admin.logos.update','logo')}}"  enctype="multipart/form-data">
                                 @csrf
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="changeImageLabel">Change Logo</h5>
@@ -65,7 +65,7 @@
                 <div class="modal fade" id="changeFaviconImage" tabindex="-1" aria-labelledby="changeFaviconImageLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
-                            <form method="post" action="{{route('admin.setting.icon.change','favicon')}}" enctype="multipart/form-data">
+                            <form method="post" action="{{route('admin.logos.update','favicon')}}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="changeFaviconImageLabel">Change Favicon Image</h5>

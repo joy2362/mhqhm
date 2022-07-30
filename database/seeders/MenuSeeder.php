@@ -17,12 +17,12 @@ class MenuSeeder extends Seeder
     {
         DB::table('menus')->updateOrInsert(
             ['title' => 'Dashboard',  'icon' => "fa-solid fa-house" , 'sorting' => 1 ],
-            ['route' => 'admin.dashboard']
+            ['route' => 'admin.dashboard.index']
         );
 
         DB::table('menus')->updateOrInsert(
             ['title' => 'Module', 'icon' => "fa-solid fa-star",'sorting' => 2],
-            ['route' => 'admin.module']
+            ['route' => 'admin.module.index']
         );
 
         DB::table('menus')->updateOrInsert(
@@ -32,12 +32,12 @@ class MenuSeeder extends Seeder
 
 
         DB::table('menus')->updateOrInsert(
-            ['title' => 'Activity Log', 'icon' => "fa-solid fa-clock-rotate-left",'sorting' => 4],
-            ['route' => 'admin.activities']
+            ['title' => 'Activity-log', 'icon' => "fa-solid fa-clock-rotate-left",'sorting' => 4],
+            ['route' => 'admin.activity-log.index']
         );
 
         DB::table('menus')->updateOrInsert(
-            ['title' => 'Recycle Bin', 'icon' => "fa-solid fa-trash-can",'sorting' => 6],
+            ['title' => 'Recycle', 'icon' => "fa-solid fa-trash-can",'sorting' => 6],
             ['route' => 'admin.recycle.index']
         );
 
@@ -54,8 +54,8 @@ class MenuSeeder extends Seeder
         );
 
         DB::table('menus')->updateOrInsert(
-            ['title' => 'Admin Role', 'icon' => "fa-solid fa-user-gear",'sorting' => 7],
-            ['route' => 'admin.adminrole.index']
+            ['title' => 'Admin-role', 'icon' => "fa-solid fa-user-gear",'sorting' => 7],
+            ['route' => 'admin.admin-role.index']
         );
 
     }

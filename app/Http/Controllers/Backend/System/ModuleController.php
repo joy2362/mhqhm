@@ -17,9 +17,6 @@ class ModuleController extends BaseController
      */
     public function __invoke(Request $request)
     {
-        if(!Auth::guard('admin')->user()->can('Create Module')) {
-            return abort(403, "You Dont have Permission");
-        }
         return view('admin.pages.module.index');
     }
 }

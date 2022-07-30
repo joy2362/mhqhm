@@ -34,38 +34,51 @@ use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
 |
 */
 Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],function() {
- 	Route::resource('product', ProductController::Class);
- 	Route::resource('subcategory', SubcategoryController::Class);
- 	Route::resource('category', CategoryController::Class);
+ 	Route::resource('product', ProductController::Class)->middleware('permission:admin');
+ 	Route::resource('subcategory', SubcategoryController::Class)->middleware('permission:admin');
+ 	Route::resource('category', CategoryController::Class)->middleware('permission:admin');
 
     //mandatory route
-    Route::get('dashboard', DashboardController::class)->name('dashboard');
-    Route::get('module', ModuleController::class)->name('module');
-    Route::post('module/create', [ModuleHandlerController::class,'store'])->name('module.store');
-    Route::get('module/instruction/{name}', [ModuleHandlerController::class,'instruction'])->name('module.instruction');
     Route::get('system-update', [SystemController::class,'update'])->name('system.update');
-    Route::get('/profile', [ProfileController::class,'profile'])->name('profile');
-    Route::get('/profile/privacy', [ProfileController::class,'privacy'])->name('profile.privacy');
-    Route::get('/profile/privacy/recovery', [ProfileController::class,'recovery'])->name('profile.recovery');
-    Route::put('/profile-image', [ProfileController::class, 'changeProfile'])->name('profile-image.update');
+    Route::get('dashboard', DashboardController::class)->name('dashboard.index')->middleware('permission:admin');
+    Route::group(['as'=>'module','prefix'=>'module','middleware'=>'permission:admin'],function (){
+        Route::get('/', ModuleController::class)->name('.index');
+        Route::post('create', [ModuleHandlerController::class,'store'])->name('.store');
+        Route::get('instruction/{name}', [ModuleHandlerController::class,'instruction'])->name('.instruction');
+    });
+    Route::group(['as'=>'profile','prefix'=>'profile'],function (){
+        Route::get('/', [ProfileController::class,'profile']);
+        Route::get('/privacy', [ProfileController::class,'privacy'])->name('.privacy');
+        Route::get('/privacy/recovery', [ProfileController::class,'recovery'])->name('.recovery');
+        Route::put('/image', [ProfileController::class, 'changeProfile'])->name('.image.update');
+        Route::put('/information', [ProfileInformationController::class, 'update'])->name('.information.update');
+    });
+    Route::group(['as'=>'menu','prefix'=>'menu','middleware'=>'permission:admin'],function (){
+        Route::get('/', [MenuController::class,'index'])->name('.index');
+        Route::get('/{id}/edit', [MenuController::class,'edit'])->name('.edit');
+        Route::post('/{id}/update', [MenuController::class,'update'])->name('.update');
+    });
+
+    Route::group(['as'=>'recycle','prefix'=>'recycle','middleware'=>'permission:admin'],function (){
+        Route::get('/', [RecycleBinController::class,'index'])->name('.index');
+        Route::get('/delete/{model}/{id}', [RecycleBinController::class,'delete'])->name('.delete');
+        Route::get('/recover/{model}/{id}', [RecycleBinController::class,'recover'])->name('.recover');
+    });
+
     Route::put('/password/change', [PasswordController::class, 'update'])->name('password.change');
-    Route::put('/profile-information', [ProfileInformationController::class, 'update'])->name('profile-information.update');
+
     Route::post('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])->name('two-factor.enable');
     Route::delete('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])->name('two-factor.disable');
     Route::get('/two-factor-recovery-codes', [RecoveryCodeController::class, 'index']) ->name('two-factor.recovery-codes')
         ->middleware(['password.confirm:admin.password.confirm']);
     Route::post('/two-factor-recovery-codes', [RecoveryCodeController::class, 'store'])
         ->middleware(['password.confirm:admin.password.confirm']);
-    Route::get('menu', [MenuController::class,'index'])->name('menu.index');
-    Route::get('menu/{id}/edit', [MenuController::class,'edit'])->name('menu.edit');
-    Route::post('menu/{id}/update', [MenuController::class,'update'])->name('menu.update');
-    Route::get('activities', ActivityController::class)->name('activities');
-    Route::get('recycle', [RecycleBinController::class,'index'])->name('recycle.index');
-    Route::get('recycle/delete/{model}/{id}', [RecycleBinController::class,'delete'])->name('recycle.delete');
-    Route::get('recycle/recover/{model}/{id}', [RecycleBinController::class,'recover'])->name('recycle.recover');
-    Route::resource('user', UserController::Class)->only(['index','destroy']);
-    Route::get('user/{id}/status/{status}', [UserController::class,'toggle_status'])->name('user.status');
-    Route::resource('setting', SettingController::Class)->only('index','update');
-    Route::post('setting/icon/change/{type}',[SettingController::class,'iconChange'])->name('setting.icon.change');
-    Route::resource('adminrole', RoleController::Class);
+
+    Route::get('activities', ActivityController::class)->name('activity-log.index')->middleware('permission:admin');
+
+    Route::resource('user', UserController::Class)->only(['index','destroy'])->middleware('permission:admin');
+    Route::get('user/{id}/status/{status}', [UserController::class,'toggle_status'])->name('user.status.update')->middleware('permission:admin');
+    Route::resource('setting', SettingController::Class)->only('index','update')->middleware('permission:admin');
+    Route::post('setting/icon/change/{type}',[SettingController::class,'iconChange'])->name('logos.update')->middleware('permission:admin');
+    Route::resource('admin-role', RoleController::Class)->middleware('permission:admin');
 });

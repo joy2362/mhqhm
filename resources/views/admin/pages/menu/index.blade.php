@@ -52,13 +52,13 @@
                             <ul class="alert alert-danger d-none" id="errorList"></ul>
                             <div class="form-group mb-3">
                                 <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" name="title" >
+                                <input type="text" class="form-control" id="name" name="title" readonly>
                                 <input type="hidden" id="edit_id" name="id" >
                             </div>
                             <div class="form-group mb-3">
                                 <label for="icon" class="form-label">Icon</label>
                                 <input type="text" class="form-control" id="icon" name="icon" aria-describedby="iconHelp">
-                                <small id="iconHelp" class="form-text text-danger">Only support Feather Icons. Available Feather icons list <a href="https://feathericons.com/" target="_blank">here</a></small>
+                                <small id="iconHelp" class="form-text text-danger">Currently support Feather Icons <a href="https://feathericons.com/" target="_blank">here</a> and Font-awesome <a target="_blank" href="https://fontawesome.com/search?s=solid%2Cbrands">here</a></small>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="sorting" class="form-label">Sorting</label>
@@ -100,6 +100,18 @@
                             $('#sorting').val(res.data.sorting);
                             $('#edit').modal('show');
                         }
+                    },
+                    statusCode: {
+                        403: function(res) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: "Access decline",
+                                showConfirmButton: false,
+                                timer: 1500,
+                                toast:true
+                            });
+                        }
                     }
                 })
             });
@@ -124,21 +136,29 @@
                             });
                         }
                         else if(res.status === 200){
-
                             location.reload();
-
                             Swal.fire({
                                 position: 'top-end',
                                 icon: 'success',
-                                title: res  .message,
+                                title: res.message,
                                 showConfirmButton: false,
                                 timer: 1500,
                                 toast:true
                             });
-
+                        }
+                    },
+                    statusCode: {
+                        403: function(res) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: "Access decline",
+                                showConfirmButton: false,
+                                timer: 1500,
+                                toast:true
+                            });
                         }
                     }
-
                 })
             });
 

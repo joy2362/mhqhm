@@ -11,17 +11,11 @@ use Illuminate\Support\Facades\Validator;
 class MenuController extends BaseController
 {
     public function index(){
-        if(!Auth::guard('admin')->user()->can('View All Menu')) {
-            return abort(403, "You Dont have Permission");
-        }
         $menus = DB::table('menus')->get();
         return view('admin.pages.menu.index',['menus'=> $menus]);
     }
 
     public function edit($id){
-        if(!Auth::guard('admin')->user()->can('Edit Menu')) {
-            return abort(403, "You Dont have Permission");
-        }
         $menu = DB::table('menus')->where('id',$id)->first();
         return response()->json([
             'status' => 200,
