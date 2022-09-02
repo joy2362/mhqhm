@@ -19,6 +19,7 @@ class AdminAccess
     public function handle(Request $request, Closure $next,$guard)
     {
         $route = Route::current();
+        
         $name_route = $route->action["as"];
         $permission = $this->prepare_permissionName($name_route);
 

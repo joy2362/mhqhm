@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Helpers\Trait\CreateFrontEnd;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
@@ -184,6 +185,39 @@ class Module
     public static function add_content($search,$replace,$path): bool|int
     {
        return file_put_contents( $path , str_replace($search, $replace, file_get_contents( $path)));
+    }
+
+    public static function  getAllDatatype(){
+        return collect([
+            'bigInteger' ,
+            'boolean' ,
+            'char' ,
+            'dateTime' ,
+            'date' ,
+            'decimal' ,
+            'double' ,
+            'enum' ,
+            'float' ,
+            'integer' ,
+            'longText',
+            'mediumInteger',
+            'mediumText',
+            'smallInteger',
+            'string',
+            'text',
+            'time',
+            'timestamp',
+            'timestamps',
+            'tinyInteger',
+            'tinyText',
+            'unsignedBigInteger',
+            'unsignedDecimal',
+            'unsignedInteger',
+            'unsignedMediumInteger',
+            'unsignedSmallInteger',
+            'unsignedTinyInteger',
+          
+        ])->toArray();
     }
 
 }

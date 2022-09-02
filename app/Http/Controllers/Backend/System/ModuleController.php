@@ -2,6 +2,7 @@
 //@abdullah zahid joy
 namespace App\Http\Controllers\Backend\System;
 
+use App\Helpers\Module;
 use App\Http\Controllers\Base\BaseController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class ModuleController extends BaseController
      */
     public function __invoke(Request $request)
     {
-        return view('admin.pages.module.index');
+        $dataType = Module::getAllDatatype();
+        return view('admin.pages.module.index',['dataType'=> $dataType ]);
     }
 }

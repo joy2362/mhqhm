@@ -23,6 +23,7 @@ class PermissionSeeder extends Seeder
         $permissions = [
             ['name'=>'index dashboard','guard_name'=>'admin','group_name' => 'dashboard'],
             ['name'=>'index module','guard_name'=>'admin','group_name' => 'module'],
+            ['name'=>'store module','guard_name'=>'admin','group_name' => 'module'],
 
             ['name'=>'index menu','guard_name'=>'admin','group_name' => 'menu'],
             ['name'=>'edit menu','guard_name'=>'admin','group_name' => 'menu'],
