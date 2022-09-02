@@ -175,16 +175,3 @@ $(document).on("click", "#delete", function (e) {
         }
     })
 });
-
-function showDefaultBox(id) {
-    const val = $(`#default_${id}:checked`).val();
-    if (val === "default") {
-        if ($(`#default_value_${id}`).hasClass('d-none')) {
-            $(`#default_value_${id}`).removeClass('d-none');
-        }
-    } else {
-        if (!$(`#default_value_${id}`).hasClass('d-none')) {
-            $(`#default_value_${id}`).addClass('d-none');
-        }
-    }
-}

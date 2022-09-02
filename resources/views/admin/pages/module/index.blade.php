@@ -41,16 +41,17 @@
                                                     <div class="form-inline">
                                                         <div class="form-group ">
                                                             <label for="field_name_1">Name</label>
-                                                            <input type="text" class="form-control mx-sm-3"
-                                                                id="field_name_1" name="field['name'][]" required>
+                                                            <input type="text" class="form-control " id="field_name_1"
+                                                                name="field['name'][]" required>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="datatype">Data Type</label>
-                                                        <select class="form-control" name="field['type'][]" required>
-                                                            <option selected>Data Type</option>
+                                                        <label for="datatype_1">Data Type</label>
+                                                        <select class="form-control" id="datatype_1" name="field['type'][]"
+                                                            required onchange="dataTypeSelect('1')">
+                                                            <option>...select type...</option>
                                                             @foreach ($dataType as $type)
                                                                 <option value="{{ $type }}">{{ ucFirst($type) }}
                                                                 </option>
@@ -62,8 +63,27 @@
                                                     <div class="form-inline">
                                                         <div class="form-group ">
                                                             <label for="field_name_1">Default Value</label>
-                                                            <input type="text" class="form-control mx-sm-3"
-                                                                id="field_name_1" name="field['default'][]" required>
+                                                            <input type="text" class="form-control " id="default_value_1"
+                                                                name="field['default'][]" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6" id="enum_value_1">
+                                                    <div class="form-inline">
+                                                        <div class="form-group ">
+                                                            <label for="field_name_1">Enum Value 1</label>
+                                                            <input type="text" class="form-control " id="enum1_value_1"
+                                                                name="field['enum1'][]" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6" id="enum_value_1">
+                                                    <div class="form-inline">
+                                                        <div class="form-group ">
+                                                            <label for="field_name_1">Enum Value 2</label>
+                                                            <input type="text" class="form-control " id="enum2_value_1"
+                                                                name="field['enum2'][]" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -92,8 +112,8 @@
 
 
                                             <div class="form-group">
-                                                <button type="button" class="btn btn-primary g-2 mt-3 " id="add_sub"> <i
-                                                        class="align-middle" data-feather="plus"></i> </button>
+                                                <button type="button" class="btn btn-primary g-2 mt-3 " id="add_sub">
+                                                    <i class="align-middle" data-feather="plus"></i> </button>
                                             </div>
 
                                         </fieldset>
@@ -115,6 +135,23 @@
 @endsection
 @section('script')
     <script>
+        function showDefaultBox(id) {
+            const val = $(`#default_${id}:checked`).val();
+            if (val === "default") {
+                if ($(`#default_value_${id}`).hasClass('d-none')) {
+                    $(`#default_value_${id}`).removeClass('d-none');
+                }
+            } else {
+                if (!$(`#default_value_${id}`).hasClass('d-none')) {
+                    $(`#default_value_${id}`).addClass('d-none');
+                }
+            }
+        }
+
+        function dataTypeSelect(id) {
+            const val = $(`#datatype_${id}`).val();
+            console.log(val);
+        }
         //custom validation that check is name start with capital letter or not
         $.validator.addMethod("ucFirst", function(value, element) {
             return this.optional(element) || /^[A-Z][a-zA-Z0-9_-]{1,198}$/.test(value);
