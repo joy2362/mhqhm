@@ -20,6 +20,6 @@ class ModuleController extends BaseController
     {
         $models = Module::getAllModel();
         $dataType = Module::getAllDatatype();
-        return view('admin.pages.module.index',['dataType'=> $dataType ,'models' => $models ]);
+        return view('admin.pages.module.index',['dataType'=> $dataType ,'availableModels' => $models ]);
     }
 }

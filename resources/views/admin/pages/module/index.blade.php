@@ -59,6 +59,20 @@
                                                         </select>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="foreign_1">Model</label>
+                                                        <select class="form-control" id="model_1" name="field['model'][]"
+                                                            required>
+                                                            <option>...select model...</option>
+                                                            @foreach ($availableModels as $row)
+                                                                <option value="{{ $row->name }}">
+                                                                    {{ ucFirst($row->name) }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-6 d-none" id="default_value_1">
                                                     <div class="form-inline">
                                                         <div class="form-group ">
@@ -168,6 +182,12 @@
                     $(`#enum2_${id}`).addClass('d-none');
                 }
             }
+            if (val === "bigInteger") {
+
+            } else if (val != "bigInteger") {
+
+            }
+            console.log(val);
         }
         //custom validation that check is name start with capital letter or not
         $.validator.addMethod("ucFirst", function(value, element) {
