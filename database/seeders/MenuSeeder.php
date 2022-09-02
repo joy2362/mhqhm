@@ -44,18 +44,22 @@ class MenuSeeder extends Seeder
         DB::table('menus')->updateOrInsert(
             ['title' => 'User', 'icon' => "fa-solid fa-user-group",'sorting' => 5],
             ['route' => 'admin.user.index']
-
         );
 
         DB::table('menus')->updateOrInsert(
-            ['title' => 'Setting', 'icon' => "fa-solid fa-gears",'sorting' => 6],
+            ['title' => 'Setting', 'icon' => "fa-solid fa-gears",'sorting' => 7],
             ['route' => 'admin.setting.index']
 
         );
 
         DB::table('menus')->updateOrInsert(
-            ['title' => 'Admin-role', 'icon' => "fa-solid fa-user-gear",'sorting' => 7],
+            ['title' => 'Admin-role', 'icon' => "fa-solid fa-user-gear",'sorting' => 8],
             ['route' => 'admin.admin-role.index']
+        );
+
+        DB::table('menus')->updateOrInsert(
+            ['title' => 'User-role', 'icon' => "fa-solid fa-user-shield",'sorting' => 6],
+            ['route' => 'admin.user-role.index']
         );
 
     }

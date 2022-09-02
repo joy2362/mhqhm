@@ -5,7 +5,11 @@
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
-            <h1 class="h3 fw-bold">User</h1>
+            <h1 class="h3 fw-bold">User
+                @if(Auth::guard('admin')->user()->can('create user'))
+                    <a href="{{route('admin.user.create')}}" class="float-end rounded btn btn-sm btn-success" >Add User</a>
+                @endif
+            </h1>
             <div class="row">
                 <div class="col-12">
                     <div class="card">

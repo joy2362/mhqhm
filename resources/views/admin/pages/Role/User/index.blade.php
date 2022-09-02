@@ -1,13 +1,13 @@
 @extends('admin.layout.master')
 @section('title')
-    <title>Admin Role</title>
+    <title>User Role</title>
 @endsection
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
-            <h1 class="h3 mb-3">Admin Role
-                @if(Auth::guard('admin')->user()->can('create admin-role'))
-                    <a href="{{route('admin.admin-role.create')}}" class="float-end rounded btn btn-sm btn-success" >Add Role</a>
+            <h1 class="h3 mb-3">User Role
+                @if(Auth::guard('admin')->user()->can('create user-role'))
+                    <a href="{{route('admin.user-role.create')}}" class="float-end rounded btn btn-sm btn-success" >Add Role</a>
                 @endif
             </h1>
             <div class="row">
@@ -30,27 +30,24 @@
                                         <td>{{$row->name}}</td>
                                         <td>{{ucfirst($row->guard_name)}}</td>
                                         <td>
-                                           <div class="dropdown">
+                                            <div class="dropdown">
 
                                                 <span class="btn btn-success rounded btn-sm px-3 " type="button" id="action" data-bs-toggle="dropdown" aria-expanded="false" >
                                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                                 </span>
                                                 <ul class="dropdown-menu text-center" aria-labelledby="action">
                                                     <li>
-                                                        <a class="dropdown-item" href="{{route('admin.admin-role.edit',$row->id)}}" aria-disabled="true">Edit</a>
+                                                        <a class="dropdown-item" href="{{route('admin.user-role.edit',$row->id)}}">Edit</a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" role="link" href="{{route('admin.admin-role.show',$row->id)}}">View</a>
+                                                        <a class="dropdown-item" href="{{route('admin.user-role.show',$row->id)}}">Show</a>
                                                     </li>
                                                     <li>
-                                                        @if($row->name != "Super Admin")
-                                                        <form method="post" action="{{ route('admin.admin-role.destroy', $row->id) }}" >
+                                                        <form method="post" action="{{ route('admin.user-role.destroy', $row->id) }}">
                                                             @csrf
                                                             @method('DELETE')
                                                             <span type="submit" id="destroy" class="dropdown-item">Delete</span>
                                                         </form>
-
-                                                        @endif
                                                     </li>
                                                 </ul>
                                             </div>

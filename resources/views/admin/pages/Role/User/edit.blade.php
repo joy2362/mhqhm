@@ -1,13 +1,13 @@
 @extends('admin.layout.master')
 @section('title')
-    <title>Add Admin Role</title>
+    <title>Edit User Role</title>
 @endsection
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
-            <h1 class="h3 mb-3">Add Admin Role
-                @if(auth()->user()->can('index admin-role'))
-                    <a href="{{route('admin.admin-role.index')}}" class="float-end rounded btn btn-sm btn-success">View Admin Role</a>
+            <h1 class="h3 mb-3">Edit User Role
+                @if(auth()->user()->can('index user-role'))
+                    <a href="{{route('admin.user-role.index')}}" class="float-end rounded btn btn-sm btn-success">View User Role</a>
                 @endif
             </h1>
 
@@ -15,11 +15,12 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" action="{{route('admin.admin-role.store')}}">
+                            <form method="post" action="{{route('admin.user-role.update',$role->id)}}">
                                 @csrf
+                                @method('put')
                                 <div class="form-group mb-3">
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required value="{{$role->name}}">
 
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -29,13 +30,13 @@
                                 </div>
                                 <div class="row mb-3">
                                     @foreach($permissions as $group => $values)
-                                       <div class="mb-3 fw-bold ">
+                                        <div class="mb-3 fw-bold ">
                                             <span>{{ucfirst($group)}}</span>
-                                       </div>
+                                        </div>
                                         @foreach( $values as $row)
                                             <div class="col-md-6 col-lg-4 g-2 mb-3 ">
                                                 <div class="form-check ">
-                                                    <input class="form-check-input " type="checkbox" id="permissions_{{$row->id}}" name="permissions[]" value="{{$row->id}}" >
+                                                    <input class="form-check-input " type="checkbox" id="permissions_{{$row->id}}" @if( $role->permissions->contains($row->id) ) {{'checked'}}  @endif name="permissions[]" value="{{$row->id}}" >
                                                     <label class="form-check-label" for="permissions_{{$row->id}}">
                                                         {{ucfirst($row->name)}}
                                                     </label>
@@ -45,7 +46,7 @@
                                     @endforeach
                                 </div>
 
-                                <button type="submit" class="btn btn-primary float-end">Save</button>
+                                <button type="submit" class="btn btn-primary float-end">Update</button>
                             </form>
                         </div>
                     </div>
@@ -53,6 +54,7 @@
             </div>
         </div>
     </main>
+
 @endsection
 @section('script')
     <script>

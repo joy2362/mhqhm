@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Backend\Core;
 
 use App\Http\Controllers\Base\BaseController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class AdminRoleController extends BaseController
+class UserRoleController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,8 @@ class AdminRoleController extends BaseController
      */
     public function index()
     {
-        $roles = Role::where('guard_name','admin')->get();
-        return view('admin.pages.Role.Admin.index',['roles'=>$roles]);
+        $roles = Role::where('guard_name','web')->get();
+        return view('admin.pages.Role.User.index',['roles'=>$roles]);
     }
 
     /**
@@ -28,11 +27,10 @@ class AdminRoleController extends BaseController
      */
     public function create()
     {
-        $permissions = Permission::where('guard_name','admin')->get()->groupBy('group_name');
+        $permissions = Permission::where('guard_name','web')->get()->groupBy('group_name');
 
-        return view('admin.pages.Role.Admin.create',[ 'permissions' => $permissions ]);
+        return view('admin.pages.Role.User.create',[ 'permissions' => $permissions ]);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -46,7 +44,7 @@ class AdminRoleController extends BaseController
         ]);
 
         $data = $request->only('name');
-        $data['guard_name']= "admin";
+        $data['guard_name']= "web";
         $role = Role::create($data);
 
         $role->syncPermissions($request->permissions);
@@ -55,7 +53,7 @@ class AdminRoleController extends BaseController
             'messege' => 'Role added Successfully!',
             'alert-type' => 'success'
         );
-        return Redirect()->route('admin.admin-role.index')->with($notification);
+        return Redirect()->route('admin.user-role.index')->with($notification);
     }
 
     /**
@@ -67,7 +65,7 @@ class AdminRoleController extends BaseController
     public function show($id)
     {
         $role = Role::with('permissions')->find($id);
-        return view('admin.pages.Role.Admin.view',['role'=> $role]);
+        return view('admin.pages.Role.User.view',['role'=> $role]);
     }
 
     /**
@@ -79,8 +77,8 @@ class AdminRoleController extends BaseController
     public function edit($id)
     {
         $role = Role::find($id);
-        $permissions = Permission::where('guard_name','admin')->get()->groupBy('group_name');
-        return view('admin.pages.Role.Admin.edit',['permissions' => $permissions,'role'=> $role]);
+        $permissions = Permission::where('guard_name','web')->get()->groupBy('group_name');
+        return view('admin.pages.Role.User.edit',['permissions' => $permissions,'role'=> $role]);
     }
 
     /**
@@ -103,7 +101,7 @@ class AdminRoleController extends BaseController
             'messege' => 'Role updated Successfully!',
             'alert-type' => 'success'
         );
-        return Redirect()->route('admin.admin-role.index')->with($notification);
+        return Redirect()->route('admin.user-role.index')->with($notification);
     }
 
     /**
@@ -119,6 +117,6 @@ class AdminRoleController extends BaseController
             'messege' => 'Role removed Successfully!',
             'alert-type' => 'success'
         );
-        return Redirect()->route('admin.admin-role.index')->with($notification);
+        return Redirect()->route('admin.user-role.index')->with($notification);
     }
 }
