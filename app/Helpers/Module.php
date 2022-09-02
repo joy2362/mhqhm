@@ -220,4 +220,8 @@ class Module
         ])->toArray();
     }
 
+    public static function getAllModel(){
+        return DB::table('modules')->select('name')->get()->toArray();
+    }
+
 }

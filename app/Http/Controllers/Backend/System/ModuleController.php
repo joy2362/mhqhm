@@ -18,7 +18,8 @@ class ModuleController extends BaseController
      */
     public function __invoke(Request $request)
     {
+        $models = Module::getAllModel();
         $dataType = Module::getAllDatatype();
-        return view('admin.pages.module.index',['dataType'=> $dataType ]);
+        return view('admin.pages.module.index',['dataType'=> $dataType ,'models' => $models ]);
     }
 }

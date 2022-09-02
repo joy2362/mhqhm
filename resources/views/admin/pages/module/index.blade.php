@@ -32,7 +32,7 @@
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="type" id="normal"
                                                 value="normal">
-                                            <label class="form-check-label" for="normal">Normal</label>
+                                            <label class="form-check-label" for="regular">Regular</label>
                                         </div>
                                         <fieldset class="border border-secondary p-2 mt-2">
                                             <legend class="float-none w-auto p-2">Field</legend>
