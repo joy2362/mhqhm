@@ -69,25 +69,28 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-6" id="enum_value_1">
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 d-none" id="enum1_1">
                                                     <div class="form-inline">
                                                         <div class="form-group ">
-                                                            <label for="field_name_1">Enum Value 1</label>
+                                                            <label for="enum1_value_1">Enum Value 1</label>
                                                             <input type="text" class="form-control " id="enum1_value_1"
                                                                 name="field['enum1'][]" required>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6" id="enum_value_1">
+                                                <div class="col-md-6 d-none" id="enum2_1">
                                                     <div class="form-inline">
                                                         <div class="form-group ">
-                                                            <label for="field_name_1">Enum Value 2</label>
+                                                            <label for="enum2_value_1">Enum Value 2</label>
                                                             <input type="text" class="form-control " id="enum2_value_1"
                                                                 name="field['enum2'][]" required>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                             <div class="row mt-2">
                                                 <div class="col-md-12">
@@ -150,7 +153,21 @@
 
         function dataTypeSelect(id) {
             const val = $(`#datatype_${id}`).val();
-            console.log(val);
+            if (val === 'enum') {
+                if ($(`#enum1_${id}`).hasClass('d-none')) {
+                    $(`#enum1_${id}`).removeClass('d-none');
+                }
+                if ($(`#enum2_${id}`).hasClass('d-none')) {
+                    $(`#enum2_${id}`).removeClass('d-none');
+                }
+            } else if (val != 'enum') {
+                if (!$(`#enum1_${id}`).hasClass('d-none')) {
+                    $(`#enum1_${id}`).addClass('d-none');
+                }
+                if (!$(`#enum2_${id}`).hasClass('d-none')) {
+                    $(`#enum2_${id}`).addClass('d-none');
+                }
+            }
         }
         //custom validation that check is name start with capital letter or not
         $.validator.addMethod("ucFirst", function(value, element) {
