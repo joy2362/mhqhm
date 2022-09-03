@@ -59,11 +59,11 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 d-none" id="foreign_model_1">
                                                     <div class="form-group">
                                                         <label for="foreign_1">Model</label>
-                                                        <select class="form-control" id="model_1" name="field['model'][]"
-                                                            required>
+                                                        <select class="form-control" id="foreign_1"
+                                                            name="field['foreign'][]" required>
                                                             <option>...select model...</option>
                                                             @foreach ($availableModels as $row)
                                                                 <option value="{{ $row->name }}">
@@ -83,16 +83,41 @@
                                                     </div>
                                                 </div>
 
-
-
+                                                <div class="col-md-6 d-none" id="precision_1">
+                                                    <div class="form-inline">
+                                                        <div class="form-group ">
+                                                            <label for="field_precision_1">Precision</label>
+                                                            <input type="text" class="form-control "
+                                                                id="field_precision_1" name="field['precision'][]" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 d-none" id="char_1">
+                                                    <div class="form-inline">
+                                                        <div class="form-group ">
+                                                            <label for="field_char_1">Char length</label>
+                                                            <input type="text" class="form-control " id="field_char_1"
+                                                                name="field['char'][]" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 d-none" id="scale_1">
+                                                    <div class="form-inline">
+                                                        <div class="form-group ">
+                                                            <label for="field_scale_1">Scale</label>
+                                                            <input type="text" class="form-control "
+                                                                id="field_scale_1" name="field['scale'][]" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6 d-none" id="enum1_1">
                                                     <div class="form-inline">
                                                         <div class="form-group ">
                                                             <label for="enum1_value_1">Enum Value 1</label>
-                                                            <input type="text" class="form-control " id="enum1_value_1"
-                                                                name="field['enum1'][]" required>
+                                                            <input type="text" class="form-control "
+                                                                id="enum1_value_1" name="field['enum1'][]" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -100,8 +125,8 @@
                                                     <div class="form-inline">
                                                         <div class="form-group ">
                                                             <label for="enum2_value_1">Enum Value 2</label>
-                                                            <input type="text" class="form-control " id="enum2_value_1"
-                                                                name="field['enum2'][]" required>
+                                                            <input type="text" class="form-control "
+                                                                id="enum2_value_1" name="field['enum2'][]" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -128,12 +153,11 @@
                                             </div>
 
 
-                                            <div class="form-group">
-                                                <button type="button" class="btn btn-primary g-2 mt-3 " id="add_sub">
-                                                    <i class="align-middle" data-feather="plus"></i> </button>
-                                            </div>
-
                                         </fieldset>
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary g-2 mt-3 " id="add_sub">
+                                                <i class="align-middle" data-feather="plus"></i> </button>
+                                        </div>
                                     </div>
 
                                     <div class="card-footer ">
@@ -182,12 +206,46 @@
                     $(`#enum2_${id}`).addClass('d-none');
                 }
             }
-            if (val === "bigInteger") {
+            if (val === 'bigInteger' || val === 'unsignedBigInteger' || val === 'unsignedInteger' || val ===
+                'unsignedMediumInteger' || val ===
+                'unsignedSmallInteger' || val === 'unsignedSmallInteger') {
+                if ($(`#foreign_model_${id}`).hasClass('d-none')) {
+                    $(`#foreign_model_${id}`).removeClass('d-none');
+                }
+            } else if (val != "bigInteger" || val != "unsignedBigInteger" || val != "unsignedInteger" || val !=
+                "unsignedMediumInteger" || val !=
+                "unsignedSmallInteger" || val != "unsignedSmallInteger") {
+                if (!$(`#foreign_model_${id}`).hasClass('d-none')) {
+                    $(`#foreign_model_${id}`).addClass('d-none');
+                }
+            }
 
-            } else if (val != "bigInteger") {
+            if (val === 'decimal' || val === 'double' || val === 'float') {
+                if ($(`#scale_${id}`).hasClass('d-none')) {
+                    $(`#scale_${id}`).removeClass('d-none');
+                }
+                if ($(`#precision_${id}`).hasClass('d-none')) {
+                    $(`#precision_${id}`).removeClass('d-none');
+                }
+            } else if (val != 'decimal' || val != 'double' || val != 'float') {
+                if (!$(`#scale_${id}`).hasClass('d-none')) {
+                    $(`#scale_${id}`).addClass('d-none');
+                }
+                if (!$(`#precision_${id}`).hasClass('d-none')) {
+                    $(`#precision_${id}`).addClass('d-none');
+                }
+            }
+            if (val === 'char') {
+                if ($(`#char_${id}`).hasClass('d-none')) {
+                    $(`#char_${id}`).removeClass('d-none');
+                }
+
+            } else if (val != 'char') {
+                if (!$(`#char_${id}`).hasClass('d-none')) {
+                    $(`#char_${id}`).addClass('d-none');
+                }
 
             }
-            console.log(val);
         }
         //custom validation that check is name start with capital letter or not
         $.validator.addMethod("ucFirst", function(value, element) {
