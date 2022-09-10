@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 
 class ModuleHandlerController extends BaseController
@@ -16,11 +17,48 @@ class ModuleHandlerController extends BaseController
 
     public function store(Request $request): RedirectResponse
     {
-        dd($request->all());
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             "name" => 'required|max:191|regex:/^\S*$/u|unique:modules',
         ]);
+        if( !empty($request->field) ){
+            foreach ($request->field["name"] as $name){
+                if(is_null($name)){
+                    $validator->errors()->add('field_name','Please fill all field name');
+                    return redirect()
+                        ->back()
+                        ->withErrors($validator)
+                        ->withInput();
+                }
+            }
+            foreach ($request->field["type"] as $type){
+                if(is_null($type)){
+                    $validator->errors()->add('field_type','Please select all field type');
+                    return redirect()
+                        ->back()
+                        ->withErrors($validator)
+                        ->withInput();
+                }
+            }
+        }else{
+            $validator->errors()->add('field','Please fill at least one field');
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
 
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
+        //make table field
+
+        Module::makeTableField($request->field);
+        dd($request->all());
        $module = Module::create(trim($request->name));
        if(!$module){
            $notification = array(

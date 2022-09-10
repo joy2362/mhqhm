@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Helpers\Trait\CreateFrontEnd;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
@@ -220,8 +221,70 @@ class Module
         ])->toArray();
     }
 
+    public static function  getAllInputType(){
+        return collect([
+            'text' ,
+            'password' ,
+            'file' ,
+            'date' ,
+            'textarea' ,
+            'number' ,
+            'checkbox' ,
+            'radio' ,
+            'select' ,
+        ])->toArray();
+    }
+
+
     public static function getAllModel(){
         return DB::table('modules')->select('name')->get()->toArray();
+    }
+
+    public static function makeTableField($field){
+       // dd($field);
+        $tableField = [];
+        for ($key = 0 ; $key < count($field["type"]); $key++){
+            $type = $field['type'][$key];
+            $condition = "";
+            if(!empty($field['is_nullable'])){
+                if($field['is_nullable'][$key] == "yes" ){
+                    $condition .= "->nullable()";
+                }
+            }
+            if(!empty($field['is_unique'])){
+                if($field['is_unique'][$key] == "yes"){
+                    $condition .= "->unique()";
+                }
+            }
+            if(!empty($field['default'])){
+                if(!empty($field['default'][$key])){
+                    $condition .= "->default('{$field['default'][$key]}')";
+                }
+            }
+
+            $addition = '';
+            if(!empty($field['char'][$key]) && $type == "char"){
+                $addition .= ",{$field['char'][$key]}";
+            }
+            if(!empty($field['enum1'][$key]) && !empty($field['enum2'][$key]) && $type == "enum"){
+                $addition .= ", ['{$field['enum1'][$key]}','{$field['enum2'][$key]}']";
+            }
+            if(!empty($field['precision'][$key]) && !empty($field['scale'][$key]) && ($type == "float" || $type == "double" || $type == "decimal" || $type == "unsignedDecimal")){
+                $addition .= ", {$field['precision'][$key]},{$field['scale'][$key]}";
+            }
+            if(!empty($field['foreign'][$key]) && ($type == "bigInteger" || $type == "unsignedBigInteger" || $type == "unsignedInteger" || $type == "unsignedMediumInteger" || $type == "unsignedSmallInteger" || $type == "unsignedTinyInteger")){
+                $table =  App::make( 'App\\Models\\'. $field['foreign'][$key] )->getTable();
+                $foreign = "\$table->foreign('{$field['name'][$key]}')->references('id')->on('{$table}');";
+            }
+            $f = "\$table->";
+            $f .= "{$type}('{$field['name'][$key]}'{$addition}){$condition};";
+            $tableField[] = $f;
+            if(!empty($foreign)){
+                $tableField[] = $foreign;
+            }
+
+        }
+        dd($tableField);
     }
 
 }

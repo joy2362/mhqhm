@@ -61,7 +61,6 @@ Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],funct
     });
 
     Route::group(['middleware'=>'permission:admin'],function(){
-
         Route::resource('admin-role', AdminRoleController::Class);
 
         Route::resource('user-role', UserRoleController::Class);
@@ -88,7 +87,7 @@ Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],funct
 
         Route::group(['as'=>'module','prefix'=>'module'],function (){
             Route::get('/', ModuleController::class)->name('.index');
-            Route::post('create', [ModuleHandlerController::class,'store'])->name('.store');
+            Route::post('store', [ModuleHandlerController::class,'store'])->name('.store');
         });
         Route::get('dashboard', DashboardController::class)->name('dashboard.index');
 
