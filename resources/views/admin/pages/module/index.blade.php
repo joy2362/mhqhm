@@ -19,7 +19,7 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="name">Name</label>
+                                                    <label for="name">Module Name</label>
                                                     <input type="text" class="form-control" id="name" name="name"
                                                            placeholder="Enter module name" value="{{ old('name') }}">
                                                     <ul class="text-danger d-none" id="errorList"></ul>
@@ -41,6 +41,7 @@
                                             </div>
                                         </div>
 
+                                        <h4 class="mt-4">DB Design</h4>
                                         <div id="field" class="mt-3">
                                             <div id="field_1">
                                                 <div class="row">
@@ -64,8 +65,21 @@
                                                                     <select class="form-control" id="datatype_1"
                                                                             name="field[type][]" required
                                                                             onchange="dataTypeSelect('1')">
-                                                                        <option value="">... select type ...</option>
+                                                                        <option value="">.....</option>
                                                                         @foreach ($dataType as $type)
+                                                                            <option value="{{ $type }}">{{ ucFirst($type) }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <div class="form-group">
+                                                                    <label for="inputType_1">Input Type</label>
+                                                                    <select class="form-control" id="inputType_1"
+                                                                            name="field[inputType][]" required>
+                                                                        <option value="">.....</option>
+                                                                        @foreach ($inputType as $type)
                                                                             <option value="{{ $type }}">{{ ucFirst($type) }}
                                                                             </option>
                                                                         @endforeach
@@ -166,15 +180,14 @@
                                                     </div>
                                                     <div class="col-md-2">
                                                         <div class="form-group my-auto">
-                                                            <button type="button" class="btn btn-primary g-2 mt-3 " id="add_field">
-                                                                <i class="align-middle" data-feather="plus"></i> </button>
+                                                            <button type="button" class="btn btn-primary g-2 mt-3 " id="add_1" onclick="handle_add('1')">
+                                                                <span >+</span>
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
 
                                     <div class="card-footer ">
@@ -194,7 +207,7 @@
 @section('script')
     <script>
         let field_count = 2;
-        const add_field = $("#add_field");
+        let lastRemovedId = [];
         const field = $("#field");
 
         function dataTypeSelect(id) {
@@ -272,134 +285,208 @@
             },
         });
 
-        function handle_remove(id){
-            console.log(id);
-            document.getElementById(`field_${id}`).remove()
+        function findPreviousId(id){
+            for(var i = id-1 ; i => 1 ;i--){
+                var prevField = document.getElementById(`field_${ i }`);
+                    if(  prevField ) {
+                        return i;
+                    }
+            }
         }
 
+        function findNextId(id){
+            for(var i = id+1 ; i <= field_count ;i++){
+                var nextField = document.getElementById(`field_${ i }`);
+                if(  nextField ) {
+                    console.log(i)
+                    return i;
+                }
+            }
+            return 0;
+        }
 
-        add_field.on('click', function() {
- let formField = `<div id="field_${field_count}">
- <div class="row mt-3" >
-            <div class="col-md-6 ">
-                <div class="form-inline">
-                     <div class="form-group ">
-                        <label for="field_name_${field_count}">Name</label>
-                        <input type="text" class="form-control "id="field_name_${field_count}" name="field[name][]" required>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="datatype_${field_count}">Data Type</label>
-                    <select class="form-control" id="datatype_${field_count}" name="field[type][]" required onchange="dataTypeSelect('${field_count}')">
-                         <option value="">...select type...</option>
-                          @foreach ($dataType as $type)
-                           <option value="{{ $type }}">{{ ucFirst($type) }} </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-        <div class="col-md-6 d-none" id="foreign_model_${field_count}">
-            <div class="form-group">
-                <label for="foreign_${field_count}">Model</label>
-                <select class="form-control" id="foreign_${field_count}" name="field[foreign][]" >
-                    <option value="">...select model...</option>
-                     @foreach ($availableModels as $row)
-                        <option value="{{ $row->name }}">{{ ucFirst($row->name) }}</option>
-                        @endforeach
-                </select>
-            </div>
-        </div>
+        function handle_remove(id){
+            if( !lastRemovedId.includes(id-1) ){
+                var next =  findNextId(id);
+                if(next === 0){
+                    if ($(`#add_${id-1}`).hasClass('d-none')) {
+                        $(`#add_${id-1}`).removeClass('d-none');
+                    }
+                }
 
-        <div class="col-md-6 d-none" id="precision_${field_count}">
-            <div class="form-inline">
-                <div class="form-group ">
-                    <label for="field_precision_${field_count}">Precision</label>
-                    <input type="text" class="form-control "
-                        id="field_precision_${field_count}" name="field[precision][]"
-                        >
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 d-none" id="char_${field_count}">
-            <div class="form-inline">
-                <div class="form-group ">
-                    <label for="field_char_${field_count}">Char length</label>
-                    <input type="text" class="form-control "
-                        id="field_char_${field_count}" name="field[char][]" max="255">
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 d-none" id="scale_${field_count}">
-            <div class="form-inline">
-                <div class="form-group ">
-                    <label for="field_scale_${field_count}">Scale</label>
-                    <input type="text" class="form-control "
-                        id="field_scale_${field_count}" name="field[scale][]" >
-                </div>
-            </div>
+            }else if( lastRemovedId.includes(id-1) ){
+              var prevId =  findPreviousId(id);
+                var next =  findNextId(id);
+                if(next === 0){
+                    if ($(`#add_${ prevId }`).hasClass('d-none')) {
+                        $(`#add_${ prevId }`).removeClass('d-none');
+                    }
+                }
+            }else{
+                if ($(`#add_${id-1}`).hasClass('d-none')) {
+                    $(`#add_${id-1}`).removeClass('d-none');
+                }
+
+            }
+            document.getElementById(`field_${id}`).remove();
+            lastRemovedId[lastRemovedId.length] = id;
+        }
+
+        function handle_add(id){
+            if (!$(`#add_${id}`).hasClass('d-none')) {
+                $(`#add_${id}`).addClass('d-none');
+            }
+            let formField = `<div id="field_${field_count}">
+                  <div class="row">
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-inline">
+                                    <div class="form-group ">
+                                        <label for="field_name_${field_count}">Name</label>
+                                        <input type="text" class="form-control"
+                                               id="field_name_${field_count}" name="field[name][]" required>
+                                        <ul class="text-danger d-none" id="errorList"></ul>
+                                        <p class="text-danger d-none" id="errors"></p>
+                                        <p class="text-success d-none" id="message"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="datatype_${field_count}">Data Type</label>
+                                    <select class="form-control" id="datatype_${field_count}"
+                                            name="field[type][]" required
+                                            onchange="dataTypeSelect('${field_count}')">
+                                        <option value="">.....</option>
+                                        @foreach ($dataType as $type)
+            <option value="{{ $type }}">{{ ucFirst($type) }}
+            </option>
+@endforeach
+            </select>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6 d-none" id="enum1_${field_count}">
-            <div class="form-inline">
-                <div class="form-group ">
-                    <label for="enum1_value_1">Enum Value 1</label>
-                    <input type="text" class="form-control "
-                        id="enum1_value_${field_count}" name="field[enum1][]" >
-                </div>
-            </div>
+    <div class="col-md-2">
+        <div class="form-group">
+             <label for="inputType_${field_count}">Input Type</label>
+                                     <select class="form-control" id="inputType_${field_count}"
+                                             name="field[inputType][]" required>
+                                         <option value="">.....</option>
+                                        @foreach ($inputType as $type)
+            <option value="{{ $type }}">{{ ucFirst($type) }}
+            </option>
+@endforeach
+            </select>
+       </div>
+   </div>
+   <div class="col-md-2">
+       <div class="form-group">
+            <label for="nullable_${field_count}">Nullable</label>
+                                     <select class="form-control" id="nullable_${field_count}" name="field[is_nullable][]">
+                                         <option value="yes">Yes</option>
+                                         <option value="no" selected>No</option>
+                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                     <label for="unique_${field_count}">Unique</label>
+                                     <select class="form-control" id="unique_${field_count}" name="field[is_unique][]">
+                                         <option value="yes">Yes</option>
+                                         <option value="no" selected>No</option>
+                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2" >
+                                <div class="form-inline">
+                                     <div class="form-group ">
+                                         <label for="default_${field_count}">Default Value</label>
+                                         <input type="text" class="form-control "
+                                                id="default_${field_count}" name="field[default][]" >
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-2 d-none" id="foreign_model_${field_count}">
+                                <div class="form-group">
+                                     <label for="foreign_${field_count}">Model</label>
+                                     <select class="form-control" id="foreign_${field_count}"
+                                             name="field[foreign][]" >
+                                         <option value="">...select model...</option>
+                                    @foreach ($availableModels as $row)
+            <option value="{{ $row->name }}">
+                                          {{ ucFirst($row->name) }}
+            </option>
+@endforeach
+            </select>
         </div>
-        <div class="col-md-6 d-none" id="enum2_${field_count}">
-            <div class="form-inline">
-                <div class="form-group ">
-                    <label for="enum2_value_${field_count}">Enum Value 2</label>
-                    <input type="text" class="form-control "
-                        id="enum2_value_${field_count}" name="field[enum2][]" >
-                </div>
-            </div>
-        </div>
-        </div>
-          <div class="row mt-2">
-               <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="nullable_${field_count}">Nullable</label>
-                        <select class="form-control" id="nullable_${field_count}" name="field[is_nullable][]">
-                            <option value="yes">Yes</option>
-                            <option value="no" selected>No</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="unique_${field_count}">Unique</label>
-                        <select class="form-control" id="unique_${field_count}" name="field[is_unique][]">
-                            <option value="yes">Yes</option>
-                            <option value="no" selected>No</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-4" id="default_value_${field_count}">
-                    <div class="form-inline">
-                        <div class="form-group ">
-                            <label for="default_${field_count}">Default Value</label>
-                            <input type="text" class="form-control "
-                                   id="default_${field_count}" name="field[default][]" >
+    </div>
+    <div class="col-md-2 d-none" id="precision_${field_count}">
+                                <div class="form-inline">
+                                     <div class="form-group ">
+                                         <label for="field_precision_${field_count}">Precision</label>
+                                         <input type="text" class="form-control "
+                                                id="field_precision_${field_count}" name="field[precision][]"
+                                         >
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 d-none" id="char_${field_count}">
+                                <div class="form-inline">
+                                     <div class="form-group ">
+                                         <label for="field_char_${field_count}">Char length</label>
+                                         <input type="text" class="form-control "
+                                                id="field_char_${field_count}" name="field[char][]" max="255">
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 d-none" id="scale_${field_count}">
+                                <div class="form-inline">
+                                     <div class="form-group ">
+                                         <label for="field_scale_${field_count}">Scale</label>
+                                         <input type="text" class="form-control "
+                                                id="field_scale_${field_count}" name="field[scale][]" >
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 d-none" id="enum1_${field_count}">
+                                <div class="form-inline">
+                                     <div class="form-group ">
+                                         <label for="enum1_value_${field_count}">Enum Value 1</label>
+                                         <input type="text" class="form-control "
+                                                id="enum1_value_${field_count}" name="field[enum1][]" >
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 d-none" id="enum2_${field_count}">
+                                <div class="form-inline">
+                                     <div class="form-group ">
+                                         <label for="enum2_value_${field_count}">Enum Value 2</label>
+                                         <input type="text" class="form-control "
+                                                id="enum2_value_${field_count}" name="field[enum2][]" >
+                                     </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row mt-3">
-                    <div class=col-md-3>
-                        <button type="button" class="btn text-danger remove fw-bold" id="remove_${field_count}" onclick="handle_remove(${field_count})"> x </button>
-                    </div>
-                </div>
+                    <div class="col-md-2">
+                        <div class="form-group my-auto">
+                            <button type="button" class="btn btn-primary g-2 mt-3 " id="add_${field_count}" onclick="handle_add(${field_count})">
+                                +
+                            </button>
 
-            </div>
-            <hr>
+                            <button type="button" class="btn btn-danger g-2 mt-3 " id="id="remove_${field_count}" onclick="handle_remove(${field_count})">
+                                -
+                            </button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>`;
             field.append(formField);
             field_count++;
-        });
+        }
     </script>
 @endsection

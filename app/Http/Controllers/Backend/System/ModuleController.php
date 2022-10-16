@@ -20,6 +20,7 @@ class ModuleController extends BaseController
     {
         $models = Module::getAllModel();
         $dataType = Module::getAllDatatype();
-        return view('admin.pages.module.index',['dataType'=> $dataType ,'availableModels' => $models ]);
+        $inputType = Module::getAllInputType();
+        return view('admin.pages.module.index',['dataType'=> $dataType ,'availableModels' => $models ,'inputType'=> $inputType ]);
     }
 }
