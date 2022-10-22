@@ -13,12 +13,13 @@
     @yield('title')
 
     <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
+
     <link href="{{ asset('admin/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/datatables.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/toastr.min.css') }}" rel="stylesheet">
     <script src="{{asset('admin/js/fontawesome.min.js')}}"></script>
-    @vite('resources/css/app.css')
+    @vite('resources/asset/app.scss')
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     @yield('style')
@@ -33,7 +34,7 @@
             <!-- top navbar start -->
             @include('admin.layout.partials.navbar')
             <!-- top navbar end -->
-            <!-- main conten start-0 -->
+            <!-- main content start-0 -->
             @yield('content')
             <!-- main content end -->
             <!-- footer start -->

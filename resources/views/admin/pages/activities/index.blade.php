@@ -10,24 +10,18 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <table class="table table-border text-center" id="data">
+                            <table class="table table-border " id="data">
                                 <thead>
                                 <tr>
-                                    <th>Subject type</th>
-                                    <th>Subject id</th>
                                     <th>Description</th>
-                                    <th>causer Type</th>
-                                    <th>causer id</th>
+                                    <th>Subject Id</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($logs as $row)
                                     <tr>
-                                        <td> {{$row->subject_type}}</td>
-                                        <td> {{$row->subject_id}}</td>
-                                        <td> {{$row->description}}</td>
-                                        <td> {{$row->causer_type}}</td>
-                                        <td> {{$row->causer_id}}</td>
+                                        <td> {{$row['subject']}}</td>
+                                        <td> {{$row['subject_id']}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

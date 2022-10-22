@@ -1,16 +1,17 @@
 <?php
-//@abdullah zahid joy
-namespace App\Models;
 
+namespace App\Models\Base;
+
+use App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Category extends Model
+class BaseModel extends Model
 {
     use HasFactory, LogsActivity;
-
     /**
      * @var string[]
      */
@@ -42,8 +43,12 @@ class Category extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
+        $name = Auth::user()->name ?? "";
         return LogOptions::defaults()
-        ->logOnly(['*']);
+            ->logOnly(['*'])
+            ->setDescriptionForEvent(fn(string $eventName) => "{$eventName} by {$name}") ;
 
     }
+
+
 }

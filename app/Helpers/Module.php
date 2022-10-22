@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use App\Helpers\Trait\CreateFrontEnd;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -17,11 +17,17 @@ class Module
      * @param string $name
      * @return bool|false
      */
-    public static function create(string $name): bool
+    public static function create(string $name , string $dbField): bool
     {
         //create model and migration and model
        $migration = self::create_module_model($name);
        if(!$migration){
+           return false;
+       }
+
+       //add database field
+        $addField = self::add_db_field($migration, $dbField);
+       if(!$addField){
            return false;
        }
 
@@ -55,6 +61,18 @@ class Module
     public static function check_model($name): bool
     {
        return file_exists($name);
+    }
+
+
+    public static function add_db_field($db , $field){
+        if(!self::check_model(base_path().'\database\migrations\\' . $db.".php")){
+            return false;
+        }else{
+            $search = "//add your columns name from here";
+            $replace = $search. "\n \t \t \t".  $field;
+
+            return self::add_content($search,$replace,base_path().'\database\migrations\\' . $db.".php");
+        }
     }
 
     //create model if not exits
@@ -101,7 +119,6 @@ class Module
     //create view file
     public static function create_crud_front_end($name): bool
     {
-
         $module = new Module();
         $file = new Filesystem();
 
@@ -165,7 +182,7 @@ class Module
 
         $route = "Route::resource('". $url ."', ".$controller."::Class);";
 
-        $replace = $search. "\n \t".  $route;
+        $replace = $search. "\n \t \t \t".  $route;
 
         return self::add_content($search,$replace,base_path('routes/Backend.php'));
 
@@ -235,14 +252,12 @@ class Module
         ])->toArray();
     }
 
-
     public static function getAllModel(){
         return DB::table('modules')->select('name')->get()->toArray();
     }
 
     public static function makeTableField($field){
-       // dd($field);
-        $tableField = [];
+        $tableField = "";
         for ($key = 0 ; $key < count($field["type"]); $key++){
             $type = $field['type'][$key];
             $condition = "";
@@ -274,17 +289,19 @@ class Module
             }
             if(!empty($field['foreign'][$key]) && ($type == "bigInteger" || $type == "unsignedBigInteger" || $type == "unsignedInteger" || $type == "unsignedMediumInteger" || $type == "unsignedSmallInteger" || $type == "unsignedTinyInteger")){
                 $table =  App::make( 'App\\Models\\'. $field['foreign'][$key] )->getTable();
-                $foreign = "\$table->foreign('{$field['name'][$key]}')->references('id')->on('{$table}');";
+                $foreign = "\$table->foreign('{$field['name'][$key]}')->references('id')->on('{$table}');\n \t \t \t";
             }
-            $f = "\$table->";
-            $f .= "{$type}('{$field['name'][$key]}'{$addition}){$condition};";
-            $tableField[] = $f;
+            $tableField .= "\$table->{$type}('{$field['name'][$key]}'{$addition}){$condition};\n \t \t \t";
             if(!empty($foreign)){
-                $tableField[] = $foreign;
+                $tableField .= $foreign;
             }
 
         }
-        dd($tableField);
+        return $tableField;
+    }
+
+    public static function makeInputField(Request $request){
+
     }
 
 }

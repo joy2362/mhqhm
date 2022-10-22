@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend\System;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +18,7 @@ class SystemController extends Controller
     public function update(): string
     {
         $modules = DB::table('modules')->get();
-        $sorting = DB::table('menus')->max('sorting') +1;
+        $sorting = DB::table('menus')->max('sorting') + 1;
 
         foreach ($modules as $module){
             if (class_exists("App\\Models\\" . ucfirst($module->name)) && Route::has("admin.".lcfirst($module->name) .".index") ) {

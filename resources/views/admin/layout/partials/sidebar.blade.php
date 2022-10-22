@@ -1,3 +1,4 @@
+
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <p class="sidebar-brand" >
@@ -13,6 +14,17 @@
                     </li>
                 @endif
             @endforeach
+
+            <li class="sidebar-item ">
+                <a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link">
+                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Master Setup</span>
+                </a>
+                <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item active"><a class="sidebar-link" href="#">Analytics</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="#">E-Commerce </a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="#">Crypto </a></li>
+                </ul>
+            </li>
         </ul>
     </div>
 </nav>

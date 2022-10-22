@@ -95,6 +95,11 @@ class PermissionSeeder extends Seeder
                 ['name' => 'destroy ' .lcfirst($module->name)] ,
                 ['guard_name'=>'admin','group_name'=>lcfirst($module->name)]
             );
+
+            Permission::updateOrCreate(
+                ['name' => 'store ' .lcfirst($module->name)] ,
+                ['guard_name'=>'admin','group_name'=>lcfirst($module->name)]
+            );
         }
 
         $role = Role::where('name','Super Admin')->first();
