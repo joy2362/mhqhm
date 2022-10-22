@@ -1,5 +1,5 @@
 <?php
-//@ abdullah zahid joy
+//@abdullah zahid joy
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create('backend_menus', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('title');
-            $table->string('route');
+            $table->string('route')->nullable();
             $table->string('icon')->default('fa-solid fa-grip');
             $table->integer('sorting');
             $table->timestamps();
-
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('backend_menus');
     }
 };

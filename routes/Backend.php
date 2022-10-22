@@ -6,7 +6,6 @@ use App\Http\Controllers\Backend\Core\DashboardController;
 use App\Http\Controllers\Backend\Core\AdminRoleController;
 use App\Http\Controllers\Backend\Core\UserController;
 use App\Http\Controllers\Backend\Core\UserRoleController;
-use App\Http\Controllers\Backend\System\MenuController;
 use App\Http\Controllers\Backend\System\ModuleController;
 use App\Http\Controllers\Backend\Core\ProfileController;
 use App\Http\Controllers\Backend\Core\ActivityController;
@@ -70,12 +69,6 @@ Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],funct
             Route::get('/', [RecycleBinController::class,'index'])->name('.index');
             Route::get('/delete/{model}/{id}', [RecycleBinController::class,'delete'])->name('.delete');
             Route::get('/recover/{model}/{id}', [RecycleBinController::class,'recover'])->name('.recover');
-        });
-
-        Route::group(['as'=>'menu','prefix'=>'menu'],function (){
-            Route::get('/', [MenuController::class,'index'])->name('.index');
-            Route::get('/{id}/edit', [MenuController::class,'edit'])->name('.edit');
-            Route::post('/{id}/update', [MenuController::class,'update'])->name('.update');
         });
 
         Route::group(['as'=>'module','prefix'=>'module'],function (){

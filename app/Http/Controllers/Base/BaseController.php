@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Base;
 
 use App\Http\Controllers\Controller;
+use App\Models\System\BackendMenu;
 use App\Models\System\Setting;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 
@@ -13,7 +13,7 @@ class BaseController extends Controller
     public function __construct()
     {
         $setting = Setting::first();
-        $menus = DB::table('menus')->orderBy('sorting','asc')->get();
+        $menus = BackendMenu::with('subMenu')->orderBy('sorting','asc')->whereNull('parent_id')->get();
         // Sharing is caring
         View::share(['menus' => $menus, 'setting'=> $setting ]);
     }

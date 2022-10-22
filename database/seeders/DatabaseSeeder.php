@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\BackendMenu;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -22,7 +23,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            MenuSeeder::class,
+            BackendMenuSeeder::class,
             AdminSeeder::class,
             UserSeeder::class,
             SettingSeeder::class,
