@@ -89,7 +89,12 @@
 	<script>
 	    //url for edit ,fetch ,delete
 		const model = "/admin/$NAME$";
+		const textAreas = $TEXTAREA$;
 		$(document).ready(function(){
+
+		    for (let textArea of textAreas){
+                $(`#${textArea}`).ckeditor();
+            }
 			fetch();
 
 			//fetch data

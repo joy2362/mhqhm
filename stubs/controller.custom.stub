@@ -29,7 +29,7 @@ class {{ class }} extends BaseController
       private array $files = [];
 
     /**
-     * @param CrudOperation $crud
+     * @param Crud $crud
      */
      public function __construct(Crud $crud){
         parent::__construct();

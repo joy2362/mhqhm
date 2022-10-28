@@ -32,7 +32,7 @@ use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
 |
 */
 Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],function() {
- 	 	 	Route::resource('category', CategoryController::Class);
+ 	Route::resource('category', CategoryController::Class);
 
     //mandatory route
     Route::get('module/instruction/{name}', [ModuleHandlerController::class,'instruction'])->name('module.instruction');

@@ -149,11 +149,11 @@ class Module
         if (!empty($files)){
             foreach ($files as $file){
                 $attribute .= "public function get".$file."Attribute(\$value)\n";
-                $attribute .= "{\n";
-                $attribute .= "if (!empty(\$value)) {\n";
-                $attribute .= "return Storage::url(\$value) ;\n";
-                $attribute .= " }\n";
-                $attribute .= " return null;\n";
+                $attribute .= "\t{\n";
+                $attribute .= "\t \t if (!empty(\$value)) {\n";
+                $attribute .= "\t \t \t return Storage::url(\$value) ;\n";
+                $attribute .= "\t \t }\n";
+                $attribute .= " \t return null;\n";
                 $attribute .= " }\n";
 
             }
@@ -262,7 +262,7 @@ class Module
 
         $route = "Route::resource('". $url ."', ".$controller."::Class);";
 
-        $replace = $search. "\n \t \t \t".  $route;
+        $replace = $search. "\n \t".  $route;
 
         return self::addFileContent($search,$replace,base_path('routes/Backend.php'));
 
@@ -468,6 +468,10 @@ class Module
             }
             $field .="\t</select>\n";
         }
+        if($type == 'textarea'){
+            $field .="\t<label for=\"{$name}\" class=\"form-label \">{$title}</label>\n";
+            $field .="\t<textarea class=\"form-control\" id=\"{$name}\" name=\"{$name}\" $condition></textarea>\n";
+        }
 
         if($type == 'radio' || $type == 'checkbox'){
             $field .="\t<label for=\"{$name}\">{$title}</label>\n";
@@ -503,16 +507,24 @@ class Module
         $indexField = "";
         $indexTable = "";
         $files = [];
+        $textArea = [];
         for ($key = 0 ; $key < count($field["type"]); $key++){
             if($field['inputType'][$key] == 'file'){
                 $files[] = $field['name'][$key];
             }
-            $name = $field['name'][$key];
-            $title = self::ucFirst($field['name'][$key]);
-            $indexField .= "{data:'{$name}',name:'{$title}'}, \n";
-            $indexTable .= "<th>{$title}</th> \n";
+            if($field['inputType'][$key] == 'textarea'){
+                $textArea[] = $field['name'][$key];
+            }
+            if($field['inputType'][$key] != 'textarea'){
+                $name = $field['name'][$key];
+                $title = self::ucFirst($field['name'][$key]);
+                $indexField .= "{data:'{$name}',name:'{$title}'}, \n";
+                $indexTable .= "<th>{$title}</th> \n";
+            }
+
+
         }
-        return ['indexField' => $indexField ,'indexTable' => $indexTable , 'files' => $files];
+        return ['indexField' => $indexField ,'indexTable' => $indexTable , 'files' => $files,'textArea'=> $textArea];
     }
 
 }

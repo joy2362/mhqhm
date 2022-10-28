@@ -6,8 +6,9 @@
     <script src="{{asset('admin/js/toastr.min.js')}}"></script>
     <script src="{{asset('admin/js/jquery.validate.min.js')}}"></script>
     <script src="{{asset('admin/js/additional-methods.min.js')}}"></script>
-
-<script>
+    <script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.9/adapters/jquery.js"></script>
+    <script>
     document.addEventListener('DOMContentLoaded', function () {
         @if ($errors->any())
             @foreach ($errors->all() as $error)

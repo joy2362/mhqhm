@@ -79,6 +79,7 @@ trait CreateFrontEnd
             'CREATE' => $createForm,
             'indexField' => $indexData['indexField'],
             'indexTable' => $indexData['indexTable'],
+            'TEXTAREA' => json_encode($indexData['textArea']),
         ];
     }
 
