@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend\System;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use Database\Seeders\PermissionSeeder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -17,14 +19,16 @@ class SystemController extends Controller
      */
     public function update(): string
     {
+        //get all available module
         $modules = DB::table('modules')->get();
-        $sorting = DB::table('menus')->max('sorting') + 1;
+        $sorting = DB::table('backend_menus')->max('sorting') + 1;
 
+        //create menu for all module if not available yet
         foreach ($modules as $module){
             if (class_exists("App\\Models\\" . ucfirst($module->name)) && Route::has("admin.".lcfirst($module->name) .".index") ) {
-               $menu = DB::table('menus')->where('route',"admin.".lcfirst($module->name) .".index")->first();
+               $menu = DB::table('backend_menus')->where('route',"admin.".lcfirst($module->name) .".index")->first();
                 if(empty($menu)){
-                    DB::table('menus')->insert([
+                    DB::table('backend_menus')->insert([
                         'route' => "admin.".lcfirst($module->name) .".index",
                         'title' => ucfirst($module->name),
                         'sorting'=>$sorting,
@@ -34,6 +38,12 @@ class SystemController extends Controller
                 $sorting++;
             }
         }
+
+        //regenerate permission
+        $permissions  = new PermissionSeeder();
+        $permissions->run();
+        //migrate database
+        Artisan::call('migrate');
         return "System update successfully";
     }
 

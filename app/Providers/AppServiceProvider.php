@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Crud\Crud;
-use App\Interface\CrudOperation;
+use App\Crud\CrudOperation;
+use App\Interface\Crud;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(CrudOperation::class,Crud::class);
+        $this->app->bind(Crud::class,CrudOperation::class);
 
         Blueprint::macro('userLog',function(){
             $this->unsignedBigInteger('created_by')->nullable();

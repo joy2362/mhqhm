@@ -39,6 +39,15 @@ class ModuleHandlerController extends BaseController
                         ->withInput();
                 }
             }
+            foreach ($request->field["inputType"] as $type){
+                if(is_null($type)){
+                    $validator->errors()->add('field_type','Please select all field type');
+                    return redirect()
+                        ->back()
+                        ->withErrors($validator)
+                        ->withInput();
+                }
+            }
         }else{
             $validator->errors()->add('field','Please fill at least one field');
             return redirect()
@@ -54,12 +63,7 @@ class ModuleHandlerController extends BaseController
                 ->withInput();
         }
 
-
-        //make table field
-
-        Module::makeTableField($request->field);
-        dd($request->all());
-       $module = Module::create(trim($request->name));
+       $module = Module::create(trim($request->name) , $request->field );
        if(!$module){
            $notification = array(
                'messege' => 'Something went wrong.check manually!',

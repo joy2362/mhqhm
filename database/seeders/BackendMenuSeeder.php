@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\BackendMenu;
+use App\Models\System\BackendMenu;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -30,7 +30,7 @@ class BackendMenuSeeder extends Seeder
             [
                 'parent_id' => null,
                 'title' => 'Master Setup',
-                'icon' => "fa-solid fa-house" ,
+                'icon' => "fa-solid fa-globe" ,
                 'sorting' => 2,
                 'route' => null,
             ],
@@ -39,7 +39,7 @@ class BackendMenuSeeder extends Seeder
             [
                 'parent_id' => null,
                 'title' => 'User',
-                'icon' => "fa-solid fa-house" ,
+                'icon' => "fa-solid fa-user" ,
                 'sorting' => 3,
                 'route' => null,
             ],
@@ -66,7 +66,7 @@ class BackendMenuSeeder extends Seeder
             [
                 'parent_id' => null,
                 'title' => 'Admin',
-                'icon' => "fa-solid fa-gears",
+                'icon' => "fa-solid fa-user-secret",
                 'sorting' => 4,
                 'route' => null,
             ],
@@ -78,7 +78,6 @@ class BackendMenuSeeder extends Seeder
                 'sorting' => 8,
                 'route' => 'admin.admin-role.index'
             ],
-
 
             // id 8
             [
@@ -120,6 +119,16 @@ class BackendMenuSeeder extends Seeder
                 'sorting' => 4,
                 'route' => 'admin.activity-log.index'
             ],
+
+            //id 13
+//            [
+//                'parent_id' => 2,
+//                'title' => 'Category',
+//                'icon' => "fa-solid fa-clock-rotate-left",
+//                'sorting' => 1,
+//                'route' => 'admin.category.index'
+//            ],
+
 
         ]);
     }

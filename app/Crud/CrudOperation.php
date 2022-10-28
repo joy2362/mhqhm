@@ -2,7 +2,7 @@
 //@abdullah zahid joy
 namespace App\Crud;
 
-use App\Interface\CrudOperation;
+use App\Interface\Crud;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\App;
@@ -12,18 +12,22 @@ use Yajra\DataTables\DataTables;
 /**
  *
  */
-class Crud implements CrudOperation
+class CrudOperation implements Crud
 {
     /**
      * @param $model
+     * @param string $type
+     * @param array $files
      * @return JsonResponse
      * @throws Exception
      */
-    public function getAll($model): JsonResponse
+    public function getAll($model,$type = 'datatable' ,$files = []): JsonResponse
     {
         $data = App::make( 'App\\Models\\'.$model )->where('is_deleted','no')->get();
-
-        return Datatables::of($data)
+        if($type  == "api"){
+            return response()->json(['data'=>$data]);
+        }
+        $dates =  Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('actions', function($row){
                 return '<div class="dropdown">
@@ -37,10 +41,19 @@ class Crud implements CrudOperation
                         </div>';
 
 
-            })
-            ->rawColumns(['actions'])
-            ->make(true);
+            });
 
+        $columns = ['actions'];
+        if(!empty($files)){
+            foreach ($files as $file){
+                $dates->addColumn($file,function($row) use ($file) {
+                    return  '<a href="'.$row->$file.'"><img src="'.$row->$file.'" width="60px" height="60px" alt="image"></a>';
+                });
+                $columns[] = $file;
+            }
+        }
+
+        return $dates->rawColumns($columns)->make(true);
     }
 
     /**

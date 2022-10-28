@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\System\SystemController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;

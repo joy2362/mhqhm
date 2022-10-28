@@ -15,6 +15,7 @@
                                     <div class="card-header ">
                                         <h3>Add New Module</h3>
                                     </div>
+
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-4">
@@ -28,7 +29,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-4">
-                                                <div class="form-check form-check-inline mt-3">
+                                                <div class="form-group">
+                                                    <label for="name">Module Type</label>
+                                                    <br>
+                                                <div class="form-check form-check-inline ">
                                                     <input class="form-check-input" type="radio" name="type" id="spa"
                                                            checked value="spa">
                                                     <label class="form-check-label" for="spa">SPA</label>
@@ -39,9 +43,10 @@
                                                     <label class="form-check-label" for="regular">Regular</label>
                                                 </div>
                                             </div>
+                                            </div>
                                         </div>
 
-                                        <h4 class="mt-4">DB Design</h4>
+                                        <h4 class="mt-4">Schema Builder</h4>
                                         <div id="field" class="mt-3">
                                             <div id="field_1">
                                                 <div class="row">

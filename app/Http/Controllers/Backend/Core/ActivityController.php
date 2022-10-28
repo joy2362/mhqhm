@@ -21,7 +21,16 @@ class ActivityController extends BaseController
      */
     public function __invoke(Request $request)
     {
-        $logs = Activity::all();
-        return view('admin.pages.activities.index' , [ 'logs' => $logs ]);
+        $logs = Activity::orderByDesc('id')->get();
+        $logCollection = collect($logs)->map(function($item){
+            $subjects =  explode("\\",$item->subject_type);
+            $subject =  $subjects[ count($subjects)-1];
+            $subject .=  " ".$item->description;
+            return [
+              'subject' => $subject,
+              'subject_id' => $item->subject_id,
+            ];
+        })->toArray();
+        return view('admin.pages.activities.index' , [ 'logs' => $logCollection ]);
     }
 }

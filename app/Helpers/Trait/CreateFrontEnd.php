@@ -2,6 +2,9 @@
 //@abdullah zahid joy
 namespace App\Helpers\Trait;
 
+/**
+ *
+ */
 trait CreateFrontEnd
 {
     /**
@@ -17,6 +20,7 @@ trait CreateFrontEnd
     /**
      * Get the full path of generate front end
      *
+     * @param $name
      * @return string
      */
     public function getSourceFrontEndPath($name): string
@@ -28,10 +32,10 @@ trait CreateFrontEnd
      * Replace the stub variables(key) with the desire value
      *
      * @param $stub
-     * @param  $stubVariables
+     * @param array $stubVariables
      * @return string|array|bool
      */
-    public function getContents($stub , $stubVariables = []): string|array|bool
+    public function getContents($stub , array $stubVariables = []): string|array|bool
     {
         $contents = file_get_contents($stub);
 
@@ -48,25 +52,33 @@ trait CreateFrontEnd
      *
      * @param $name
      * @param $model
+     * @param $createForm
+     * @param $indexData
      * @return string|array|bool
      */
-    public function getSourceFrontEnd($name,$model): string|array|bool
+    public function getSourceFrontEnd($name,$model,$createForm,$indexData): string|array|bool
     {
-        return $this->getContents($this->getPath(), $this->getVariables($name,$model));
+        return $this->getContents($this->getPath(), $this->getVariables($name,$model,$createForm,$indexData));
     }
 
     /**
      **
      * Map the stub variables present in stub to its value
      *
+     * @param $name
+     * @param $model
+     * @param $createForm
+     * @param $indexData
      * @return array
-     *
      */
-    public function getVariables($name,$model)
+    public function getVariables($name,$model,$createForm,$indexData): array
     {
         return [
             'NAME' => $name,
             'MODEL' => $model,
+            'CREATE' => $createForm,
+            'indexField' => $indexData['indexField'],
+            'indexTable' => $indexData['indexTable'],
         ];
     }
 

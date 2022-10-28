@@ -3,8 +3,9 @@
 namespace {{ namespace }};
 
 use App\Models\Base\BaseModel;
+use Illuminate\Support\Facades\Storage;
 
 class {{ class }} extends BaseModel
 {
-
+    //add your model content here
 }

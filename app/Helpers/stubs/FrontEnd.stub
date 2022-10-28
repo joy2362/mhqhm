@@ -22,10 +22,7 @@
 					<form method="post" enctype="multipart/form-data" id="addForm">
 						<div class="modal-body">
 							<ul class="alert alert-danger d-none" id="save_errorList"></ul>
-							<div class="form-group mb-3">
-								<label for="title" class="form-label">Title</label>
-								<input type="text" class="form-control" id="title" name="title" required>
-							</div>
+							$CREATE$
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -73,8 +70,7 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
-
+                                $indexTable$
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -112,7 +108,7 @@
 					ajax:"{{route('admin.$NAME$.index')}}",
 					columns:[
 						{data:"id",name:'#'},
-						{data:"title",name:'Name'},
+						$indexField$
 						{data:"actions",name:'Actions'},
 					]
 				});

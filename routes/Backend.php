@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\System\ModuleHandlerController;
 use App\Http\Controllers\Backend\System\SettingController;
 use App\Http\Controllers\Backend\System\SystemController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\CategoryController;
 
 use Laravel\Fortify\Http\Controllers\PasswordController;
 use Laravel\Fortify\Http\Controllers\ProfileInformationController;
@@ -31,6 +32,7 @@ use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
 |
 */
 Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],function() {
+ 	 	 	Route::resource('category', CategoryController::Class);
 
     //mandatory route
     Route::get('module/instruction/{name}', [ModuleHandlerController::class,'instruction'])->name('module.instruction');
