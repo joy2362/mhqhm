@@ -1,13 +1,13 @@
 <!-- @abdullah zahid joy-->
 @extends('admin.layout.master')
 @section('title')
-    <title>$MODEL$</title>
+    <title>SubCategory</title>
 @endsection
 @section('content')
 <main class="content">
 	<div class="container-fluid p-0">
 
-		<h1 class="h3 fw-bold">$MODEL$
+		<h1 class="h3 fw-bold">SubCategory
 			<a href="#" class="float-end btn btn-sm btn-success rounded" data-bs-toggle="modal" data-bs-target="#add">Add New</a>
 		</h1>
 
@@ -16,13 +16,29 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="add_Label">Add $MODEL$</h5>
+						<h5 class="modal-title" id="add_Label">Add SubCategory</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<form method="post" enctype="multipart/form-data" id="addForm">
 						<div class="modal-body">
 							<ul class="alert alert-danger d-none" id="save_errorList"></ul>
-							$createForm$
+							<div class="form-group mb-3"> 
+	<label for="name" class="form-label ">Name</label>
+	<input type="text" class="form-control" id="name" name="name"  required>
+</div>
+<div class="form-group mb-3"> 
+	<label for="logo" class="form-label ">Logo</label>
+	<input type="file" class="form-control" id="logo" name="logo"  required accept="image/*">
+</div>
+<div class="form-group mb-3"> 
+	<label for="type" class="form-label ">Type</label>
+	<select class="form-select" id="type" name="type"  required>
+	<option selected>Choose...</option>
+	 <option value="male">Male</option>
+	 <option value="female">Female</option>
+	</select>
+</div>
+
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -39,7 +55,7 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="edit_Label">Edit $MODEL$</h5>
+						<h5 class="modal-title" id="edit_Label">Edit SubCategory</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<form method="post" enctype="multipart/form-data" id="editForm">
@@ -47,20 +63,40 @@
 							<ul class="alert alert-danger d-none" id="edit_errorList"></ul>
 							<input type="hidden" id="edit_id" name="id" >
 
-							$updateForm$
+							<div class="form-group mb-3"> 
+	<label for="edit_name" class="form-label ">Name</label>
+	<input type="text" class="form-control" id="edit_name" name="name"  required>
+</div>
+<div class="form-group mb-3"> 
+	<p  class="form-label">Current logo</p>
+	<a href="#" class="edit_logo_link"><img src="#" width="100px" height="100px" alt="image" class="edit_logo_preview"></a>
+	</div>
+<div class="form-group mb-3">
+	<label for="edit_logo" class="form-label ">Logo</label>
+	<input type="file" class="form-control" id="edit_logo" name="logo"  required accept="image/*">
+</div>
+<div class="form-group mb-3"> 
+	<label for="edit_type" class="form-label ">Type</label>
+	<select class="form-select" id="edit_type" name="type"  required>
+	<option selected>Choose...</option>
+	 <option value="male">Male</option>
+	 <option value="female">Female</option>
+	</select>
+</div>
 
-							<div class="form-group mb-3 edit_status">
-                            								<label  >Status: </label>
-                            								<br>
-                            								<input class="form-check-input" type="radio" name="status" id="edit_status_active" value="active" >
-                            								<label class="form-check-label" for="edit_status_active">
-                            									Active
-                            								</label>
-                            								<input class="form-check-input" type="radio" name="status" id="edit_status_inactive" value="inactive">
-                            								<label class="form-check-label" for="edit_status_inactive">
-                            									Inactive
-                            								</label>
-                            							</div>
+							<div class="form-group mb-3 status">
+								<label  class="form-label mr-2">Status: </label>
+								<input class="form-check-input" type="radio" name="status" id="edit_status_active" value="Active" >
+								<label class="form-check-label" for="edit_status_active">
+									Active
+								</label>
+								<input class="form-check-input" type="radio" name="status" id="edit_status_inactive" value="Inactive">
+								<label class="form-check-label" for="edit_status_inactive">
+									Inactive
+								</label>
+							</div>
+
+
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -81,7 +117,10 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                $indexTable$
+                                <th>Name</th> 
+<th>Logo</th> 
+<th>Type</th> 
+
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -99,8 +138,8 @@
 @section('script')
 	<script>
 	    //url for edit ,fetch ,delete
-		const model = "/admin/$NAME$";
-		const textAreas = $TEXTAREA$;
+		const model = "/admin/subCategory";
+		const textAreas = [];
 		$(document).ready(function(){
 
 		    for (let textArea of textAreas){
@@ -121,10 +160,13 @@
 					},
 					processing: true,
 					serverSide:true,
-					ajax:"{{route('admin.$NAME$.index')}}",
+					ajax:"{{route('admin.subCategory.index')}}",
 					columns:[
 						{data:"id",name:'#'},
-						$indexField$
+						{data:'name',name:'Name'}, 
+						{data:'logo',name:'Logo'},
+						{data:'type',name:'Type'},
+
 						{data:"actions",name:'Actions'},
 					]
 				});
@@ -136,7 +178,7 @@
             e.preventDefault();
             let formData = new FormData($('#addForm')[0]);
 
-            store_handler( "{{route('admin.$NAME$.store')}}" ,formData );
+            store_handler( "{{route('admin.subCategory.store')}}" ,formData );
         });
 
         //edit form handle
@@ -153,12 +195,14 @@
             edit_btn_handler(model,$(this).val()).then(function(res){
                 if(res.status === 200){
                     $('#edit_id').val(res.data.id);
-                    $editField$
-                    $(`.edit_status > input[type="radio"]`).each((index , input) =>{
-                        if(res.data.status === input.value){
-                            input.checked= true;
-                        }
-                    });
+                    $('#edit_title').val(res.data.title);
+					$('#edit_type').val(res.data.type);
+					$(`.status > input[type="radio"]`).each((index , input) =>{
+						if(res.data.status === input.value){
+							input.checked= true;
+						}
+					});
+
                 }
             });
         });

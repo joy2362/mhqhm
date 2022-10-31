@@ -56,9 +56,9 @@ trait CreateFrontEnd
      * @param $indexData
      * @return string|array|bool
      */
-    public function getSourceFrontEnd($name,$model,$createForm,$indexData): string|array|bool
+    public function getSourceFrontEnd($name,$model,$formBuilder,$indexData): string|array|bool
     {
-        return $this->getContents($this->getPath(), $this->getVariables($name,$model,$createForm,$indexData));
+        return $this->getContents($this->getPath(), $this->getVariables($name,$model,$formBuilder,$indexData));
     }
 
     /**
@@ -67,18 +67,20 @@ trait CreateFrontEnd
      *
      * @param $name
      * @param $model
-     * @param $createForm
+     * @param $formBuilder
      * @param $indexData
      * @return array
      */
-    public function getVariables($name,$model,$createForm,$indexData): array
+    public function getVariables($name,$model,$formBuilder,$indexData): array
     {
         return [
             'NAME' => $name,
             'MODEL' => $model,
-            'CREATE' => $createForm,
+            'createForm' => $formBuilder["createInputField"],
+            'updateForm' => $formBuilder["updateInputField"],
             'indexField' => $indexData['indexField'],
             'indexTable' => $indexData['indexTable'],
+            'editField' => $indexData['editField'],
             'TEXTAREA' => json_encode($indexData['textArea']),
         ];
     }

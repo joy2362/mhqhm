@@ -32,8 +32,7 @@
                                             </li>
                                             <li>
                                                 <p class="text-primary fw-bold ">Migration</p>
-                                                <p class="text-warning ">Use php Artisan migrate</p>
-                                                <p>Migration created with  <span class="text-success fw-bold">mandatory </span> field and example title field change title and add necessary field.</p>
+                                                <p>Migration created with  <span class="text-success fw-bold">mandatory </span> and schema builder fields</p>
                                                 <p class="text-danger fw-bold">Don't remove or modify  mandatory field </p>
                                             </li>
                                             <li >

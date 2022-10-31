@@ -13,6 +13,12 @@ use App\Http\Controllers\Backend\System\ModuleHandlerController;
 use App\Http\Controllers\Backend\System\SettingController;
 use App\Http\Controllers\Backend\System\SystemController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\TestController;
+use App\Http\Controllers\Backend\Test1Controller;
+use App\Http\Controllers\Backend\AsdController;
+use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\BatchController;
+use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\CategoryController;
 
 use Laravel\Fortify\Http\Controllers\PasswordController;
@@ -32,6 +38,12 @@ use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
 |
 */
 Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],function() {
+ 	Route::resource('test', TestController::Class);
+ 	Route::resource('test1', Test1Controller::Class);
+ 	Route::resource('asd', AsdController::Class);
+ 	Route::resource('product', ProductController::Class);
+ 	Route::resource('batch', BatchController::Class);
+ 	Route::resource('subCategory', SubCategoryController::Class);
  	Route::resource('category', CategoryController::Class);
 
     //mandatory route

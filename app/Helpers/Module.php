@@ -43,7 +43,7 @@ class Module
     {
         //make table field
         $dbField = self::makeTableField($field );
-        $createForm = self::makeInputField($field);
+        $formBuilder = self::makeInputField($field);
         $indexData = self::makeIndexData($field);
 
         //create model and migration and model
@@ -59,7 +59,7 @@ class Module
        }
 
         //generate view file
-        $generateFrontend = self::generateFrontend($name , $createForm, $indexData);
+        $generateFrontend = self::generateFrontend($name , $formBuilder, $indexData);
         if(!$generateFrontend){
             return false;
         }
@@ -144,6 +144,10 @@ class Module
 
     }
 
+    /**
+     * @param array $files
+     * @return string
+     */
     public static function makeFileAttributeForModel(array $files = []){
         $attribute = "";
         if (!empty($files)){
@@ -209,11 +213,11 @@ class Module
 
     /**
      * @param $name
-     * @param $createForm
+     * @param $formBuilder
      * @param $indexData
      * @return bool
      */
-    public static function generateFrontend($name , $createForm , $indexData): bool
+    public static function generateFrontend($name , $formBuilder , $indexData): bool
     {
         $module = new Module();
         $file = new Filesystem();
@@ -222,7 +226,7 @@ class Module
 
         $module->makeDirectory( dirname( $front_end ) );
 
-        $contents =  $module->getSourceFrontEnd(self::lcFirst($name),self::ucFirst($name),$createForm, $indexData);
+        $contents =  $module->getSourceFrontEnd(self::lcFirst($name),self::ucFirst($name),$formBuilder, $indexData);
 
         if (!$file->exists($contents)) {
             $file->put($front_end, $contents);
@@ -411,9 +415,10 @@ class Module
      * @param $field
      * @return string
      */
-    public static function makeInputField($field ): string
+    public static function makeInputField($field ): array
     {
-        $inputField = "";
+        $createInputField = "";
+        $updateInputField = "";
         for ($key = 0 ; $key < count($field["inputType"]); $key++){
             $type = $field['inputType'][$key];
             $name = $field['name'][$key];
@@ -433,15 +438,20 @@ class Module
                 $enum[] = $field['enum2'][$key];
             }
 
-            $inputField .= self::generateInputField($name,$title,$type,$condition,$enum);
+            $createInputField .= self::generateInputField("create",$name,$title,$type,$condition,$enum);
+            $updateInputField .= self::generateInputField("update",$name,$title,$type,$condition,$enum);
         }
 
-        return $inputField;
+        return [
+            'createInputField'=> $createInputField,
+            'updateInputField'=> $updateInputField,
+        ];
+
     }
 
     /**
      *
-     * #[Pure] =>  Whether the function result may be dependent on anything except passed variables
+     * @param $formType
      * @param $name
      * @param $title
      * @param $type
@@ -449,16 +459,49 @@ class Module
      * @param array $enums
      * @return string
      */
-    public static function generateInputField($name , $title , $type , $condition , array $enums = []): string
+    public static function generateInputField($formType ,$name , $title , $type , $condition , array $enums = []): string
     {
-        $field ="<div class=\"form-group mb-3\"> \n";
-        if($type == 'text' || $type == 'password' || $type == 'number' || $type == 'date' || $type == 'file'){
-            $field .="\t<label for=\"{$name}\" class=\"form-label \">{$title}</label>\n";
-            $field .="\t<input type=\"{$type}\" class=\"form-control\" id=\"{$name}\" name=\"{$name}\" {$condition}>\n";
+        if($formType == "update"){
+            $field ="<div class=\"form-group mb-3 edit_{$name}\"> \n";
+        }else{
+            $field ="<div class=\"form-group mb-3\"> \n";
         }
+
+        if($type == 'text' || $type == 'password' || $type == 'number' || $type == 'date' ){
+            if($formType == 'create'){
+              $field .="\t<label for=\"{$name}\" class=\"form-label \">{$title}</label>\n";
+              $field .="\t<input type=\"{$type}\" class=\"form-control\" id=\"{$name}\" name=\"{$name}\" {$condition}>\n";
+            }else{
+                $field .="\t<label for=\"edit_{$name}\" class=\"form-label \">{$title}</label>\n";
+                $field .="\t<input type=\"{$type}\" class=\"form-control\" id=\"edit_{$name}\" name=\"{$name}\" {$condition}>\n";
+            }
+        }
+
+        if( $type == 'file'){
+            if($formType == 'update'){
+                $field .= "\t<p  class=\"form-label\">Current {$name}</p>\n";
+                $field .= "\t<a href=\"#\" class=\"edit_{$name}_link\"><img src=\"#\" width=\"100px\" height=\"100px\" alt=\"image\" class=\"edit_{$name}_preview\"></a>\n";
+                $field .= "\t</div>\n";
+                $field .= "<div class=\"form-group mb-3\">\n";
+
+                $field .="\t<label for=\"edit_{$name}\" class=\"form-label \">{$title}</label>\n";
+                $field .="\t<input type=\"{$type}\" class=\"form-control\" id=\"edit_{$name}\" name=\"{$name}\" {$condition}>\n";
+
+            }else{
+                $field .="\t<label for=\"{$name}\" class=\"form-label \">{$title}</label>\n";
+                $field .="\t<input type=\"{$type}\" class=\"form-control\" id=\"{$name}\" name=\"{$name}\" {$condition}>\n";
+            }
+        }
+
         if($type == 'select'){
-            $field .="\t<label for=\"{$name}\" class=\"form-label \">{$title}</label>\n";
-            $field .="\t<select class=\"form-select\" id=\"{$name}\" name=\"{$name}\" $condition>\n";
+            if($formType == "create"){
+                $field .="\t<label for=\"{$name}\" class=\"form-label \">{$title}</label>\n";
+                $field .="\t<select class=\"form-select\" id=\"{$name}\" name=\"{$name}\" $condition>\n";
+            }else{
+                $field .="\t<label for=\"edit_{$name}\" class=\"form-label \">{$title}</label>\n";
+                $field .="\t<select class=\"form-select\" id=\"edit_{$name}\" name=\"{$name}\" $condition>\n";
+            }
+
             $field .="\t<option selected>Choose...</option>\n";
             if(count($enums) > 0){
                 foreach ($enums as $enum){
@@ -468,63 +511,97 @@ class Module
             }
             $field .="\t</select>\n";
         }
-        if($type == 'textarea'){
-            $field .="\t<label for=\"{$name}\" class=\"form-label \">{$title}</label>\n";
-            $field .="\t<textarea class=\"form-control\" id=\"{$name}\" name=\"{$name}\" $condition></textarea>\n";
+        if($type == 'textarea') {
+            if ($formType == "create"){
+                $field .= "\t<label for=\"{$name}\" class=\"form-label \">{$title}</label>\n";
+                $field .= "\t<textarea class=\"form-control\" id=\"{$name}\" name=\"{$name}\" $condition></textarea>\n";
+            }else {
+                $field .= "\t<label for=\"edit_{$name}\" class=\"form-label \">{$title}</label>\n";
+                $field .= "\t<textarea class=\"form-control\" id=\"edit_{$name}\" name=\"{$name}\" $condition></textarea>\n";
+            }
         }
 
         if($type == 'radio' || $type == 'checkbox'){
-            $field .="\t<label for=\"{$name}\">{$title}</label>\n";
+            $field .="\t<label>{$title}</label>\n";
             $field .="\t<br>\n";
-            $field .="\t<div class=\"col-md-10\">\n";
             if(count($enums) > 0){
                 foreach ($enums as $enum){
                     $title = self::ucFirst($enum);
-                    $field .="\t <div class=\"form-check form-check-inline\">\n";
-                    $field .="\t <input class=\"form-check-input\" type=\"{$type}\" name=\"{$name}\" id=\"{$enum}\" value=\"{$enum}\">\n";
-                    $field .="\t  <label class=\"form-check-label\" for=\"{$enum}\">{$title}</label>\n";
-                    $field .="\t </div>\n";
+                    if($formType == "create"){
+                        $field .="\t <input class=\"form-check-input\" type=\"{$type}\" name=\"{$name}\" id=\"{$enum}\" value=\"{$enum}\">\n";
+                        $field .="\t  <label class=\"form-check-label\" for=\"{$enum}\">{$title}</label>\n";
+                    }else{
+                        $field .="\t <input class=\"form-check-input\" type=\"{$type}\" name=\"{$name}\" id=\"edit_{$enum}\" value=\"{$enum}\">\n";
+                        $field .="\t  <label class=\"form-check-label\" for=\"edit_{$enum}\">{$title}</label>\n";
+                    }
                 }
             }else{
-                $field .="\t <div class=\"form-check form-check-inline\">\n";
-                $field .="\t <input class=\"form-check-input\" type=\"{$type}\" name=\"{$name}\" id=\"{$name}_1\" value=\"1\">\n";
-                $field .="\t  <label class=\"form-check-label\" for=\"{$name}_1\">1</label>\n";
-                $field .="\t </div>\n";
-                $field .="\t <div class=\"form-check form-check-inline\">\n";
-                $field .="\t <input class=\"form-check-input\" type=\"{$type}\" name=\"{$name}\" id=\"{$name}_2\" value=\"2\">\n";
-                $field .="\t  <label class=\"form-check-label\" for=\"{$name}_2\">2</label>\n";
-                $field .="\t </div>\n";
+
+                if ($formType == "create"){
+                    $field .="\t <input class=\"form-check-input\" type=\"{$type}\" name=\"{$name}\" id=\"{$name}_1\" value=\"1\">\n";
+                    $field .="\t  <label class=\"form-check-label\" for=\"{$name}_1\">1</label>\n";
+                }else{
+                    $field .="\t <input class=\"form-check-input\" type=\"{$type}\" name=\"{$name}\" id=\"edit_{$name}_1\" value=\"1\">\n";
+                    $field .="\t  <label class=\"form-check-label\" for=\"edit_{$name}_1\">1</label>\n";
+                }
+                if($formType == "create"){
+                    $field .="\t <input class=\"form-check-input\" type=\"{$type}\" name=\"{$name}\" id=\"{$name}_2\" value=\"2\">\n";
+                    $field .="\t  <label class=\"form-check-label\" for=\"{$name}_2\">2</label>\n";
+                }else{
+                    $field .="\t <input class=\"form-check-input\" type=\"{$type}\" name=\"{$name}\" id=\"edit_{$name}_2\" value=\"2\">\n";
+                    $field .="\t  <label class=\"form-check-label\" for=\"edit_{$name}_2\">2</label>\n";
+                }
             }
-            $field .="\t</div>\n";
         }
 
         $field .="</div>\n";
         return $field;
     }
 
+    /**
+     * @param $field
+     * @return array
+     */
     public static function makeIndexData($field): array
     {
         $indexField = "";
         $indexTable = "";
+        $editField = "";
         $files = [];
         $textArea = [];
         for ($key = 0 ; $key < count($field["type"]); $key++){
+            $name = $field['name'][$key];
+            $title = self::ucFirst($field['name'][$key]);
             if($field['inputType'][$key] == 'file'){
-                $files[] = $field['name'][$key];
-            }
-            if($field['inputType'][$key] == 'textarea'){
-                $textArea[] = $field['name'][$key];
-            }
-            if($field['inputType'][$key] != 'textarea'){
-                $name = $field['name'][$key];
-                $title = self::ucFirst($field['name'][$key]);
                 $indexField .= "{data:'{$name}',name:'{$title}'}, \n";
                 $indexTable .= "<th>{$title}</th> \n";
+                $files[] = $field['name'][$key];
+                $editField .= "$(\".edit_{$name}_preview\").attr(\"src\",res.data.{$name});\n";
+                $editField .= "$(\".edit_{$name}_link\").attr(\"href\",res.data.{$name});\n";
+            }else if($field['inputType'][$key] == 'textarea'){
+                $textArea[] = $name;
+                $textArea[] = "edit_".$name;
+                $editField .= "$('#edit_{$name}').val(res.data.{$name});\n";
+            }else if($field['inputType'][$key] == 'radio' || $field['inputType'][$key] == 'checkbox'){
+                $type = $field['inputType'][$key];
+                $editField .= "\$(`.edit_{$name} > input[type=\"{$type}\"]`).each((index , input) =>{\n";
+                $editField .= "\t if(res.data.{$name} === input.value){\n";
+                $editField .= "\t input.checked= true;\n";
+                $editField .= "\t}\n";
+                $editField .= "\t });\n";
+
+                $indexField .= "{data:'{$name}',name:'{$title}'}, \n";
+                $indexTable .= "<th>{$title}</th> \n";
+
+            }else{
+                $indexField .= "{data:'{$name}',name:'{$title}'}, \n";
+                $indexTable .= "<th>{$title}</th> \n";
+                $editField .= "$('#edit_{$name}').val(res.data.{$name});\n";
             }
 
 
         }
-        return ['indexField' => $indexField ,'indexTable' => $indexTable , 'files' => $files,'textArea'=> $textArea];
+        return ['indexField' => $indexField ,'indexTable' => $indexTable , 'files' => $files,'textArea'=> $textArea,'editField'=> $editField];
     }
 
 }

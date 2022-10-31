@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Blueprint::macro('status',function(){
-            $this->enum('status', ['Inactive', 'Active'])->default('Active');
+            $this->enum('status', ['inactive', 'active'])->default('active');
             $this->enum('is_deleted', ['yes', 'no'])->default('no');
         });
     }
