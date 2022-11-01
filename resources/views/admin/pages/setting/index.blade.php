@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 @section('title')
-    <title>Application Setting</title>
+   >Application Setting
 @endsection
 @section('content')
     <main class="content">

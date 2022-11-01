@@ -1,13 +1,13 @@
 @extends('admin.layout.master')
 @section('title')
-    User
+    Admin
 @endsection
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
-            <h1 class="h3 mb-3">Add User
-                @if(auth()->user()->can('index user'))
-                    <a href="{{route('admin.user.index')}}" class="float-end rounded btn btn-sm btn-success">All User</a>
+            <h1 class="h3 mb-3">Add Admin
+                @if(auth()->user()->can('index admin'))
+                    <a href="{{route('admin.admin.index')}}" class="float-end rounded btn btn-sm btn-success">All Admin</a>
                 @endif
             </h1>
 
@@ -15,7 +15,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" action="{{route('admin.user.store')}}" enctype="multipart/form-data">
+                            <form method="post" action="{{route('admin.admin.store')}}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label for="name" class="form-label">Name</label>
@@ -51,6 +51,16 @@
                                 <div class="form-group mb-3">
                                     <label for="avatar" class="form-label">Avatar</label>
                                     <input class="form-control" type="file" id="avatar" name="avatar" accept="image/*">
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="role" class="form-label">Admin Role</label>
+                                    <select class="form-select" id="role" name="role">
+                                        <option selected>.........</option>
+                                        @foreach($roles as $role)
+                                        <option value="{{$role->name}}">{{$role->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
 

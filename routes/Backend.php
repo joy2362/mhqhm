@@ -1,6 +1,7 @@
 <?php
 //@abdullah zahid joy
 
+use App\Http\Controllers\Backend\Core\AdminController;
 use App\Http\Controllers\Backend\Core\RecycleBinController;
 use App\Http\Controllers\Backend\Core\DashboardController;
 use App\Http\Controllers\Backend\Core\AdminRoleController;
@@ -13,13 +14,6 @@ use App\Http\Controllers\Backend\System\ModuleHandlerController;
 use App\Http\Controllers\Backend\System\SettingController;
 use App\Http\Controllers\Backend\System\SystemController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\TestController;
-use App\Http\Controllers\Backend\Test1Controller;
-use App\Http\Controllers\Backend\AsdController;
-use App\Http\Controllers\Backend\ProductController;
-use App\Http\Controllers\Backend\BatchController;
-use App\Http\Controllers\Backend\SubCategoryController;
-use App\Http\Controllers\Backend\CategoryController;
 
 use Laravel\Fortify\Http\Controllers\PasswordController;
 use Laravel\Fortify\Http\Controllers\ProfileInformationController;
@@ -38,14 +32,6 @@ use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
 |
 */
 Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],function() {
- 	Route::resource('test', TestController::Class);
- 	Route::resource('test1', Test1Controller::Class);
- 	Route::resource('asd', AsdController::Class);
- 	Route::resource('product', ProductController::Class);
- 	Route::resource('batch', BatchController::Class);
- 	Route::resource('subCategory', SubCategoryController::Class);
- 	Route::resource('category', CategoryController::Class);
-
     //mandatory route
     Route::get('module/instruction/{name}', [ModuleHandlerController::class,'instruction'])->name('module.instruction');
     Route::get('system-update', [SystemController::class,'update'])->name('system.update');
@@ -68,7 +54,7 @@ Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],funct
 
     Route::group(['middleware'=>'permission:admin'],function(){
         Route::resource('admin-role', AdminRoleController::Class);
-
+        Route::resource('admin', AdminController::Class);
         Route::resource('user-role', UserRoleController::Class);
 
         Route::post('setting/icon/change/{type}',[SettingController::class,'iconChange'])->name('logos.update');
@@ -90,6 +76,8 @@ Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],funct
             Route::post('store', [ModuleHandlerController::class,'store'])->name('.store');
         });
         Route::get('dashboard', DashboardController::class)->name('dashboard.index');
+
+        //module routes
 
     });
 });

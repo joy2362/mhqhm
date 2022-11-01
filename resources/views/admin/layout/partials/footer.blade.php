@@ -7,7 +7,7 @@
                 </p>
             </div>
             <div class="col-6 text-end">
-                <p>v0.0.12</p>
+                <p>v1.0.02</p>
             </div>
         </div>
     </div>

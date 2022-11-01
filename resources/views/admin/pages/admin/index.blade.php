@@ -1,13 +1,13 @@
 @extends('admin.layout.master')
 @section('title')
-   User
+    Admin
 @endsection
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
-            <h1 class="h3 fw-bold">User
-                @if(Auth::guard('admin')->user()->can('create user'))
-                    <a href="{{route('admin.user.create')}}" class="float-end rounded btn btn-sm btn-success" >Add User</a>
+            <h1 class="h3 fw-bold">Admin
+                @if(Auth::guard('admin')->user()->can('create admin'))
+                    <a href="{{route('admin.admin.create')}}" class="float-end rounded btn btn-sm btn-success" >Add admin</a>
                 @endif
             </h1>
             <div class="row">
@@ -21,28 +21,24 @@
                                     <th>Avatar</th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($users as $row)
+                                @foreach($admins as $row)
                                     <tr>
                                         <td> {{ $loop->index + 1 }}</td>
                                         <td><a href="{{$row->avatar}}"><img src="{{$row->avatar}}" alt="{{$row->name}}" width="100" height="70"></a> </td>
                                         <td> {{ $row->name }}</td>
                                         <td> {{ $row->email }}</td>
-                                        <td> <span @class(["badge", "bg-success"=>$row->status == "active" , "bg-danger"=>$row->status == "inactive" ]) >{{ ucfirst($row->status) }}</span></td>
                                         <td>
                                             <div class="dropdown">
                                                 <span class="btn btn-success rounded btn-sm px-3 " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                                 </span>
                                                 <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item" href="{{route('admin.user.status.update',['id'=>$row->id,'status'=>"active"])}}">Mark as Active</a></li>
-                                                    <li><a class="dropdown-item" href="{{route('admin.user.status.update',['id'=>$row->id,'status'=>"inactive"])}}">Mark as Inactive</a></li>
                                                     <li>
-                                                        <form method="post" action="{{ route('admin.user.destroy', $row->id) }}">
+                                                        <form method="post" action="{{ route('admin.admin.destroy', $row->id) }}">
                                                             @csrf
                                                             @method('DELETE')
                                                             <span type="submit" id="destroy" class="m-2">Delete</span>

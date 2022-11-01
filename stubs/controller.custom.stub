@@ -151,7 +151,17 @@ class {{ class }} extends BaseController
            ]);
        }
 
-       $data  = $request->all();
+
+        $value = $this->crud->getById($this->modelName ,$id);
+
+        $data = $request->all();
+           if(!empty($this->files)){
+               foreach ($this->files as $file){
+                   if($request->file($file)){
+                       $data[$file] = $this->upload($request->{$file} , $this->modelName,$value->{$file} );
+                   }
+               }
+           }
        $this->crud->createOrUpdate($this->modelName, $data , $id);
 
        return response()->json([

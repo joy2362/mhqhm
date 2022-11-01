@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 @section('title')
-    <title>Recovery Code</title>
+   Recovery Code
 @endsection
 @section('content')
     <main class="content">

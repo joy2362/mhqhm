@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 @section('title')
-    <title>Profile</title>
+    Profile
 @endsection
 @section('content')
     <main class="content">

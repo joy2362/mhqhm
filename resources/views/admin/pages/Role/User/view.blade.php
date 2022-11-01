@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 @section('title')
-    <title>User Role</title>
+   User Role
 @endsection
 @section('content')
     <main class="content">

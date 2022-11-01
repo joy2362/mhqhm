@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 @section('title')
-    <title>Recycle Bin</title>
+    Recycle Bin
 @endsection
 @section('content')
     <main class="content">

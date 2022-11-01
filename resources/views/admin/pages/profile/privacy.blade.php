@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 @section('title')
-    <title>Profile Privacy</title>
+   Profile Privacy
 @endsection
 @section('content')
     <main class="content">

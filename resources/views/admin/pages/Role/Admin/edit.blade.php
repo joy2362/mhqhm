@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 @section('title')
-    <title>Edit Admin Role</title>
+   Admin Role
 @endsection
 @section('content')
     <main class="content">

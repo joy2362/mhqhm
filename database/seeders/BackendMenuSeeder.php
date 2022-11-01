@@ -75,11 +75,19 @@ class BackendMenuSeeder extends Seeder
                 'parent_id' => 6,
                 'title' => 'Admin-role',
                 'icon' => "fa-solid fa-user-gear",
-                'sorting' => 8,
+                'sorting' => 1,
                 'route' => 'admin.admin-role.index'
             ],
+            //id 8
+            [
+                'parent_id' => 6,
+                'title' => 'Admin',
+                'icon' => "fa-solid fa-user-gear",
+                'sorting' => 2,
+                'route' => 'admin.admin.index'
+            ],
 
-            // id 8
+            // id 9
             [
                 'parent_id' => null,
                 'title' => 'System Setting',
@@ -89,21 +97,21 @@ class BackendMenuSeeder extends Seeder
             ],
             //id 9
             [
-                'parent_id' => 8,
+                'parent_id' => 9,
                 'title' => 'Module',
                 'icon' => "fa-solid fa-star",
                 'sorting' => 1,
                 'route' => 'admin.module.index'
             ],
-            //id 10
+            //id 11
             [
-                'parent_id' => 8,
+                'parent_id' => 9,
                 'title' => 'Setting',
                 'icon' => "fa-solid fa-gears",
                 'sorting' => 2,
                 'route' => 'admin.setting.index'
             ],
-            //id 11
+            //id 12
             [
                 'parent_id' => null,
                 'title' => 'Recycle',
@@ -111,7 +119,7 @@ class BackendMenuSeeder extends Seeder
                 'sorting' => 6,
                 'route' => 'admin.recycle.index'
             ],
-            //id 12
+            //id 13
             [
                 'parent_id' => null,
                 'title' => 'Activity-log',
@@ -120,7 +128,7 @@ class BackendMenuSeeder extends Seeder
                 'route' => 'admin.activity-log.index'
             ],
 
-            //id 13
+            //id 14
 //            [
 //                'parent_id' => 2,
 //                'title' => 'Category',

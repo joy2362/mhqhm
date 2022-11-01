@@ -1,11 +1,11 @@
-    <script src="{{asset('admin/js/jquery-3.6.0.min.js')}}"></script>
+    <script src="{{asset('asset/js/jquery-3.6.0.min.js')}}"></script>
     @vite('resources/js/app.js')
-    <script src="{{asset('admin/js/app.js')}}"></script>
-    <script src="{{asset('admin/js/custom.js')}}"></script>
-    <script src="{{asset('admin/js/datatables.min.js')}}"></script>
-    <script src="{{asset('admin/js/toastr.min.js')}}"></script>
-    <script src="{{asset('admin/js/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('admin/js/additional-methods.min.js')}}"></script>
+    <script src="{{asset('asset/js/app.js')}}"></script>
+    <script src="{{asset('asset/js/custom.js')}}"></script>
+    <script src="{{asset('asset/js/datatables.min.js')}}"></script>
+    <script src="{{asset('asset/js/toastr.min.js')}}"></script>
+    <script src="{{asset('asset/js/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('asset/js/additional-methods.min.js')}}"></script>
     <script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.9/adapters/jquery.js"></script>
     <script>

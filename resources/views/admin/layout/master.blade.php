@@ -10,15 +10,14 @@
 
     <link rel="shortcut icon" href="{{$setting->favicon}}" />
 
-    @yield('title')
+    <title>@yield("title") | {{$setting->name ?? config("app.name")}}</title>
+    <link href="{{ asset('asset/css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <link href="{{ asset('admin/css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/css/custom.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/css/datatables.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/css/toastr.min.css') }}" rel="stylesheet">
-    <script src="{{asset('admin/js/fontawesome.min.js')}}"></script>
+    <link href="{{ asset('asset/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('asset/css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('asset/css/datatables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('asset/css/toastr.min.css') }}" rel="stylesheet">
+    <script src="{{asset('asset/js/fontawesome.min.js')}}"></script>
     @vite('resources/css/app.css')
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">

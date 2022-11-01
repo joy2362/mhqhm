@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 @section('title')
-    <title>Menu</title>
+    Activity Log
 @endsection
 @section('content')
     <main class="content">

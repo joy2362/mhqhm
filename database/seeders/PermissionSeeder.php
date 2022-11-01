@@ -36,6 +36,14 @@ class PermissionSeeder extends Seeder
             ['name'=>'destroy user','guard_name'=>'admin','group_name' => 'user'],
             ['name'=>'update status user','guard_name'=>'admin','group_name' => 'user'],
 
+            ['name'=>'index admin','guard_name'=>'admin','group_name' => 'admin'],
+            ['name'=>'create admin','guard_name'=>'admin','group_name' => 'admin'],
+            ['name'=>'store admin','guard_name'=>'admin','group_name' => 'admin'],
+            ['name'=>'show admin','guard_name'=>'admin','group_name' => 'admin'],
+            ['name'=>'edit admin','guard_name'=>'admin','group_name' => 'admin'],
+            ['name'=>'update admin','guard_name'=>'admin','group_name' => 'admin'],
+            ['name'=>'destroy admin','guard_name'=>'admin','group_name' => 'admin'],
+
             ['name'=>'index recycle','guard_name'=>'admin','group_name' => 'recycle'],
             ['name'=>'recover recycle','guard_name'=>'admin','group_name' => 'recycle'],
             ['name'=>"delete recycle",'guard_name'=>'admin','group_name' => 'recycle'],

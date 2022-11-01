@@ -258,8 +258,8 @@ class Module
      */
     public static function addRoute($name): bool|int
     {
-        $search = "Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],function() {";
-
+       // $search = "Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],function() {";
+        $search = "//module routes";
         $url = self::lcFirst($name);
 
         $controller = self::ucFirst($name)."Controller";
