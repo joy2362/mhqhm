@@ -45,22 +45,17 @@ class Setting extends Model
     {
         return LogOptions::defaults()
         ->logOnly(['*']);
-
     }
-
-    public function getLogoAttribute($value)
+    public function getValueAttribute($value)
     {
-        if (!empty($value)) {
-            return Storage::url($value) ;
+        if($this->type == "image"){
+            if (!empty($value)) {
+                return Storage::url($value) ;
+            }
+            return null;
+        }else{
+            return $value;
         }
-        return null;
-    }
 
-    public function getFaviconAttribute($value)
-    {
-        if (!empty($value)) {
-            return Storage::url($value) ;
-        }
-        return null;
     }
 }

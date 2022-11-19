@@ -6,8 +6,8 @@
     <main class="content">
         <div class="container-fluid p-0">
             <h1 class="h3 mb-3">User Role
-                @if(Auth::guard('admin')->user()->can('create user-role'))
-                    <a href="{{route('admin.user-role.create')}}" class="float-end rounded btn btn-sm btn-success" >Add Role</a>
+                @if(Auth::guard('admin')->user()->can('create UserRole'))
+                    <a href="{{route('UserRole.create')}}" class="float-end rounded btn btn-sm btn-primary" ><i class="fa-solid fa-plus"></i></a>
                 @endif
             </h1>
             <div class="row">
@@ -37,13 +37,13 @@
                                                 </span>
                                                 <ul class="dropdown-menu text-center" aria-labelledby="action">
                                                     <li>
-                                                        <a class="dropdown-item" href="{{route('admin.user-role.edit',$row->id)}}">Edit</a>
+                                                        <a class="dropdown-item" href="{{route('UserRole.edit',$row->id)}}">Edit</a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" href="{{route('admin.user-role.show',$row->id)}}">Show</a>
+                                                        <a class="dropdown-item" href="{{route('UserRole.show',$row->id)}}">Show</a>
                                                     </li>
                                                     <li>
-                                                        <form method="post" action="{{ route('admin.user-role.destroy', $row->id) }}">
+                                                        <form method="post" action="{{ route('UserRole.destroy', $row->id) }}">
                                                             @csrf
                                                             @method('DELETE')
                                                             <span type="submit" id="destroy" class="dropdown-item">Delete</span>
@@ -70,24 +70,6 @@
             $('#data').DataTable({
                 "order":false
             });
-            $(document).on("click", "#destroy", function(e){
-                e.preventDefault();
-                var form = $(this).parents('form');
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {form.submit();}
-                });
-
-            });
-
         });
-
     </script>
 @endsection

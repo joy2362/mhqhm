@@ -6,8 +6,8 @@
     <main class="content">
         <div class="container-fluid p-0">
             <h1 class="h3 mb-3">Add User Role
-                @if(auth()->user()->can('index user-role'))
-                    <a href="{{route('admin.user-role.index')}}" class="float-end rounded btn btn-sm btn-success">View User Role</a>
+                @if(auth()->user()->can('index UserRole'))
+                    <a href="{{route('UserRole.index')}}" class="float-end rounded btn btn-sm btn-success">All Role</a>
                 @endif
             </h1>
 
@@ -15,7 +15,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" action="{{route('admin.user-role.store')}}">
+                            <form method="post" action="{{route('UserRole.store')}}">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label for="name" class="form-label">Name</label>
@@ -57,8 +57,6 @@
 @endsection
 @section('script')
     <script>
-        $(document).ready(function(){
-
-        });
+        $(document).ready(function(){});
     </script>
 @endsection

@@ -6,26 +6,28 @@
     <main class="content">
         <div class="container-fluid p-0">
             <h1 class="h3 mb-3">View Role
-                @if(auth()->user()->can('index admin-role'))
-                    <a href="{{route('admin.admin-role.index')}}" class="float-end rounded btn btn-sm btn-success">View Admin Role</a>
+                @if(auth()->user()->can('index AdminRole'))
+                    <a href="{{route('AdminRole.index')}}" class="float-end rounded btn btn-sm btn-success">All Role</a>
                 @endif
             </h1>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="fw-bold ">Role Details</h3>
+                            <h3 >Role Details</h3>
                         </div>
                         <div class="card-body">
-                            <h4 class="m-2 ">{{$role->name}}</h4>
-                            <p class="m-2 ">Permission</p>
-                            <ul>
+                            <h3 class="fw-bold">{{$role->name}}</h3>
+                            <p class="fw-bold">Permissions</p>
+                            <div class="row">
                                 @foreach($role->permissions as $permission)
-                                    <li class="fw-bold">
-                                        {{ucfirst($permission->name)}}
-                                    </li>
+                                    <div class="col-md-6 col-lg-4 g-2 mb-3 ">
+                                        <div class="fw-bold">
+                                            <span style="color: green"><i class="fa-solid fa-check-double"></i> </span>{{ucfirst($permission->name)}}
+                                        </div>
+                                    </div>
                                 @endforeach
-                            </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -36,6 +38,6 @@
 @endsection
 @section('script')
     <script>
-
+        $(document).ready(function(){});
     </script>
 @endsection

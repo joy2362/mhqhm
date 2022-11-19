@@ -1,6 +1,9 @@
 <?php
 
+
+
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +20,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test', function () {
+    $routes = Route::getRoutes();
+    foreach ($routes as $route){
+        if(in_array('permission:admin',$route->action['middleware'])){
+
+            dd(class_basename(explode("@",$route->action['controller'])[0]));
+        }
+        //dd($route->getActionName());
+    }
+});

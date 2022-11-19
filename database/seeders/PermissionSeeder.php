@@ -19,54 +19,54 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         $modules = DB::table('modules')->get();
-
         $permissions = [
-            ['name'=>'index dashboard','guard_name'=>'admin','group_name' => 'dashboard'],
-            ['name'=>'index module','guard_name'=>'admin','group_name' => 'module'],
-            ['name'=>'store module','guard_name'=>'admin','group_name' => 'module'],
+            ['name'=>'index Dashboard','guard_name'=>'admin','group_name' => 'Dashboard'],
+            ['name'=>'index Module','guard_name'=>'admin','group_name' => 'Module'],
+            ['name'=>'store Module','guard_name'=>'admin','group_name' => 'Module'],
             
-            ['name'=>'index activity-log','guard_name'=>'admin','group_name' => 'activity-log'],
+            ['name'=>'index ActivityLog','guard_name'=>'admin','group_name' => 'ActivityLog'],
 
-            ['name'=>'index user','guard_name'=>'admin','group_name' => 'user'],
-            ['name'=>'create user','guard_name'=>'admin','group_name' => 'user'],
-            ['name'=>'store user','guard_name'=>'admin','group_name' => 'user'],
-            ['name'=>'show user','guard_name'=>'admin','group_name' => 'user'],
-            ['name'=>'edit user','guard_name'=>'admin','group_name' => 'user'],
-            ['name'=>'update user','guard_name'=>'admin','group_name' => 'user'],
-            ['name'=>'destroy user','guard_name'=>'admin','group_name' => 'user'],
-            ['name'=>'update status user','guard_name'=>'admin','group_name' => 'user'],
+            ['name'=>'index User','guard_name'=>'admin','group_name' => 'User'],
+            ['name'=>'create User','guard_name'=>'admin','group_name' => 'User'],
+            ['name'=>'store User','guard_name'=>'admin','group_name' => 'User'],
+            ['name'=>'show User','guard_name'=>'admin','group_name' => 'User'],
+            ['name'=>'edit User','guard_name'=>'admin','group_name' => 'User'],
+            ['name'=>'update User','guard_name'=>'admin','group_name' => 'User'],
+            ['name'=>'destroy user','guard_name'=>'admin','group_name' => 'User'],
+            ['name'=>'changeStatus User','guard_name'=>'admin','group_name' => 'User'],
 
-            ['name'=>'index admin','guard_name'=>'admin','group_name' => 'admin'],
-            ['name'=>'create admin','guard_name'=>'admin','group_name' => 'admin'],
-            ['name'=>'store admin','guard_name'=>'admin','group_name' => 'admin'],
-            ['name'=>'show admin','guard_name'=>'admin','group_name' => 'admin'],
-            ['name'=>'edit admin','guard_name'=>'admin','group_name' => 'admin'],
-            ['name'=>'update admin','guard_name'=>'admin','group_name' => 'admin'],
-            ['name'=>'destroy admin','guard_name'=>'admin','group_name' => 'admin'],
+            ['name'=>'index Admin','guard_name'=>'admin','group_name' => 'Admin'],
+            ['name'=>'create Admin','guard_name'=>'admin','group_name' => 'Admin'],
+            ['name'=>'store Admin','guard_name'=>'admin','group_name' => 'Admin'],
+            ['name'=>'show Admin','guard_name'=>'admin','group_name' => 'Admin'],
+            ['name'=>'edit Admin','guard_name'=>'admin','group_name' => 'Admin'],
+            ['name'=>'update Admin','guard_name'=>'admin','group_name' => 'Admin'],
+            ['name'=>'destroy Admin','guard_name'=>'admin','group_name' => 'Admin'],
 
-            ['name'=>'index recycle','guard_name'=>'admin','group_name' => 'recycle'],
-            ['name'=>'recover recycle','guard_name'=>'admin','group_name' => 'recycle'],
-            ['name'=>"delete recycle",'guard_name'=>'admin','group_name' => 'recycle'],
+            ['name'=>'index RecycleBin','guard_name'=>'admin','group_name' => 'RecycleBin'],
+            ['name'=>'recover RecycleBin','guard_name'=>'admin','group_name' => 'RecycleBin'],
+            ['name'=>"delete RecycleBin",'guard_name'=>'admin','group_name' => 'RecycleBin'],
 
-            ['name'=>"index setting",'guard_name'=>'admin','group_name' => 'setting'],
-            ['name'=>"update setting",'guard_name'=>'admin','group_name' => 'setting'],
-            ['name'=>"update logos",'guard_name'=>'admin','group_name' => 'setting'],
+            ['name'=>"index Setting",'guard_name'=>'admin','group_name' => 'Setting'],
+            ['name'=>"store Setting",'guard_name'=>'admin','group_name' => 'Setting'],
+            ['name'=>"destroy Setting",'guard_name'=>'admin','group_name' => 'Setting'],
+            ['name'=>"update Setting",'guard_name'=>'admin','group_name' => 'Setting'],
 
-            ['name'=>"index admin-role",'guard_name'=>'admin','group_name' => 'admin-role'],
-            ['name'=>"create admin-role",'guard_name'=>'admin','group_name' => 'admin-role'],
-            ['name'=>"store admin-role",'guard_name'=>'admin','group_name' => 'admin-role'],
-            ['name'=>"show admin-role",'guard_name'=>'admin','group_name' => 'admin-role'],
-            ['name'=>"edit admin-role",'guard_name'=>'admin','group_name' => 'admin-role'],
-            ['name'=>"update admin-role",'guard_name'=>'admin','group_name' => 'admin-role'],
-            ['name'=>"destroy admin-role",'guard_name'=>'admin','group_name' => 'admin-role'],
+            ['name'=>"index AdminRole",'guard_name'=>'admin','group_name' => 'AdminRole'],
+            ['name'=>"create AdminRole",'guard_name'=>'admin','group_name' => 'AdminRole'],
+            ['name'=>"store AdminRole",'guard_name'=>'admin','group_name' => 'AdminRole'],
+            ['name'=>"show AdminRole",'guard_name'=>'admin','group_name' => 'AdminRole'],
+            ['name'=>"edit AdminRole",'guard_name'=>'admin','group_name' => 'AdminRole'],
+            ['name'=>"update AdminRole",'guard_name'=>'admin','group_name' => 'AdminRole'],
+            ['name'=>"destroy AdminRole",'guard_name'=>'admin','group_name' => 'AdminRole'],
 
-            ['name'=>"index user-role",'guard_name'=>'admin','group_name' => 'user-role'],
-            ['name'=>"create user-role",'guard_name'=>'admin','group_name' => 'user-role'],
-            ['name'=>"store user-role",'guard_name'=>'admin','group_name' => 'user-role'],
-            ['name'=>"show user-role",'guard_name'=>'admin','group_name' => 'user-role'],
-            ['name'=>"edit user-role",'guard_name'=>'admin','group_name' => 'user-role'],
-            ['name'=>"update user-role",'guard_name'=>'admin','group_name' => 'user-role'],
-            ['name'=>"destroy user-role",'guard_name'=>'admin','group_name' => 'user-role'],
+            ['name'=>"index UserRole",'guard_name'=>'admin','group_name' => 'user-role'],
+            ['name'=>"create UserRole",'guard_name'=>'admin','group_name' => 'user-role'],
+            ['name'=>"store UserRole",'guard_name'=>'admin','group_name' => 'user-role'],
+            ['name'=>"show UserRole",'guard_name'=>'admin','group_name' => 'user-role'],
+            ['name'=>"edit UserRole",'guard_name'=>'admin','group_name' => 'user-role'],
+            ['name'=>"update UserRole",'guard_name'=>'admin','group_name' => 'user-role'],
+            ['name'=>"destroy UserRole",'guard_name'=>'admin','group_name' => 'user-role'],
         ];
         foreach($permissions as $permission){
             Permission::updateOrCreate(
@@ -76,33 +76,33 @@ class PermissionSeeder extends Seeder
 
         foreach ($modules as $module){
             Permission::updateOrCreate(
-                ['name' => 'show ' .lcfirst($module->name)] ,
-                ['guard_name'=>'admin','group_name'=>lcfirst($module->name)]
+                ['name' => 'show ' . $module->name] ,
+                ['guard_name'=>'admin','group_name'=> $module->name]
             );
 
             Permission::updateOrCreate(
-                ['name' => 'index ' .lcfirst($module->name)] ,
-                ['guard_name'=>'admin','group_name'=>lcfirst($module->name)]
+                ['name' => 'index ' . $module->name] ,
+                ['guard_name'=>'admin','group_name'=> $module->name]
             );
 
             Permission::updateOrCreate(
-                ['name' => 'create ' .lcfirst($module->name)] ,
-                ['guard_name'=>'admin','group_name'=>lcfirst($module->name)]
+                ['name' => 'create ' . $module->name] ,
+                ['guard_name'=>'admin','group_name'=> $module->name]
             );
 
             Permission::updateOrCreate(
-                ['name' => 'edit ' .lcfirst($module->name)] ,
-                ['guard_name'=>'admin','group_name'=>lcfirst($module->name)]
+                ['name' => 'edit ' . $module->name] ,
+                ['guard_name'=>'admin','group_name'=> $module->name]
             );
 
             Permission::updateOrCreate(
-                ['name' => 'destroy ' .lcfirst($module->name)] ,
-                ['guard_name'=>'admin','group_name'=>lcfirst($module->name)]
+                ['name' => 'destroy ' . $module->name] ,
+                ['guard_name'=>'admin','group_name'=> $module->name]
             );
 
             Permission::updateOrCreate(
-                ['name' => 'store ' .lcfirst($module->name)] ,
-                ['guard_name'=>'admin','group_name'=>lcfirst($module->name)]
+                ['name' => 'store ' . $module->name] ,
+                ['guard_name'=>'admin','group_name'=> $module->name]
             );
         }
 

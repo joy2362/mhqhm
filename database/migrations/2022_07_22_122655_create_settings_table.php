@@ -16,18 +16,9 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('short_name')->nullable();
-            $table->string('logo')->nullable();
-            $table->string('favicon')->nullable();
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('address')->nullable();
-            $table->text('footer_description')->nullable();
-            $table->string('facebook')->nullable();
-            $table->string('instagram')->nullable();
-            $table->string('youtube')->nullable();
-            $table->string('twitter')->nullable();
-            $table->string('linkedin')->nullable();
+            $table->text('value')->nullable();
+            $table->string('type')->nullable();
+            $table->string('deleteAble')->default("yes");
             $table->timestamps();
         });
     }

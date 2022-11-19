@@ -6,8 +6,8 @@
     <main class="content">
         <div class="container-fluid p-0">
             <h1 class="h3 mb-3">Add User
-                @if(auth()->user()->can('index user'))
-                    <a href="{{route('admin.user.index')}}" class="float-end rounded btn btn-sm btn-success">All User</a>
+                @if(auth()->user()->can('index User'))
+                    <a href="{{route('User.index')}}" class="float-end rounded btn btn-sm btn-success">All User</a>
                 @endif
             </h1>
 
@@ -15,7 +15,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" action="{{route('admin.user.store')}}" enctype="multipart/form-data">
+                            <form method="post" action="{{route('User.store')}}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label for="name" class="form-label">Name</label>

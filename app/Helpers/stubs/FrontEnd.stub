@@ -8,7 +8,7 @@
 	<div class="container-fluid p-0">
 
 		<h1 class="h3 fw-bold">$MODEL$
-			<a href="#" class="float-end btn btn-sm btn-success rounded" data-bs-toggle="modal" data-bs-target="#add">Add New</a>
+			<a href="#" class="float-end btn btn-sm btn-primary rounded" data-bs-toggle="modal" data-bs-target="#add"> <i class="fa-solid fa-plus"></i> </a>
 		</h1>
 
 		<!-- Modal for add  -->
@@ -50,17 +50,17 @@
 							$updateForm$
 
 							<div class="form-group mb-3 edit_status">
-                            								<label  >Status: </label>
-                            								<br>
-                            								<input class="form-check-input" type="radio" name="status" id="edit_status_active" value="active" >
-                            								<label class="form-check-label" for="edit_status_active">
-                            									Active
-                            								</label>
-                            								<input class="form-check-input" type="radio" name="status" id="edit_status_inactive" value="inactive">
-                            								<label class="form-check-label" for="edit_status_inactive">
-                            									Inactive
-                            								</label>
-                            							</div>
+                                <label  >Status: </label>
+                                <br>
+                                <input class="form-check-input" type="radio" name="status" id="edit_status_active" value="active" >
+                                <label class="form-check-label" for="edit_status_active">
+                                    Active
+                                </label>
+                                <input class="form-check-input" type="radio" name="status" id="edit_status_inactive" value="inactive">
+                                <label class="form-check-label" for="edit_status_inactive">
+                                    Inactive
+                                </label>
+                            </div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -121,7 +121,7 @@
 					},
 					processing: true,
 					serverSide:true,
-					ajax:"{{route('admin.$NAME$.index')}}",
+					ajax: model,
 					columns:[
 						{data:"id",name:'#'},
 						$indexField$
@@ -136,7 +136,7 @@
             e.preventDefault();
             let formData = new FormData($('#addForm')[0]);
 
-            store_handler( "{{route('admin.$NAME$.store')}}" ,formData );
+            store_handler( "{{route('$NAME$.store')}}" ,formData );
         });
 
         //edit form handle

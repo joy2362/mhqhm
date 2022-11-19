@@ -20,9 +20,7 @@ class AdminAccess
     public function handle(Request $request, Closure $next,$guard)
     {
         $route = Route::current();
-        
-        $name_route = $route->action["as"];
-        $permission = $this->prepare_permissionName($name_route);
+        $permission = $this->getNameRoute($route->action["as"]);
         if(!empty($guard) && !empty($permission)){
             if(!Auth::guard($guard)->user()->can($permission)){
                 if($request->wantsJson()){
@@ -43,12 +41,11 @@ class AdminAccess
         return $next($request);
     }
 
-    private function prepare_permissionName($value): string
+    private function getNameRoute(string $name = ""): string
     {
-        //$value = str_replace_first('admin.','',$value);
-        $arr   =  explode(".",$value);
-        array_shift($arr);
-        $arr = array_reverse($arr);
-        return implode(" ",$arr);
+        $names = explode(".",$name);
+        $action = $names[1] ?? "";
+        $module = $names[0] ?? "";
+        return $action  . " " . $module ;
     }
 }

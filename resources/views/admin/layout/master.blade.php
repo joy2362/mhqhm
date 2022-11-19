@@ -8,9 +8,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('meta')
 
-    <link rel="shortcut icon" href="{{$setting->favicon}}" />
+    <link rel="shortcut icon" href="{{$systemSetting['favicon']}}" />
 
-    <title>@yield("title") | {{$setting->name ?? config("app.name")}}</title>
+    <title>@yield("title") | {{$systemSetting['siteName'] ?? config("app.name")}}</title>
     <link href="{{ asset('asset/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('asset/css/app.css') }}" rel="stylesheet">

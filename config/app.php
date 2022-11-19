@@ -188,6 +188,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
 		Spatie\Permission\PermissionServiceProvider::class,
+        App\Providers\CrudServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -213,7 +214,8 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-        'Module' =>App\Helpers\Module::class,
+        'Module' => App\Helpers\Module::class,
+        'crud' => App\Facades\CrudFacades::class,
     ])->toArray(),
 
 ];

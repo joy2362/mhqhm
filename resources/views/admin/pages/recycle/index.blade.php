@@ -34,9 +34,9 @@
                                                 </span>
                                             <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton1">
                                                 <li>
-                                                    <a class="m-2 edit_button  btn  " href="{{route('admin.recycle.recover',[ 'model' =>$row->name , 'id' => $value->id ])}}" id="delete">Recover</a>
+                                                    <a class="m-2 edit_button  btn  " href="{{route('RecycleBin.recover',[ 'model' =>$row->name , 'id' => $value->id ])}}" id="delete">Recover</a>
                                                 </li>
-                                                <li><a class="m-2  btn " href="{{route('admin.recycle.delete',[ 'model' =>$row->name , 'id' => $value->id ])}}"  id="delete">Permanently Delete</a></li>
+                                                <li><a class="m-2  btn " href="{{route('RecycleBin.delete',[ 'model' =>$row->name , 'id' => $value->id ])}}"  id="delete">Permanently Delete</a></li>
                                             </ul>
                                         </div>
                                     </td>

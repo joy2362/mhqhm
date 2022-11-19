@@ -1,8 +1,7 @@
 <?php
 //@abdullah zahid joy
-namespace App\Crud;
+namespace App\Facades;
 
-use App\Interface\Crud;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\App;
@@ -12,8 +11,11 @@ use Yajra\DataTables\DataTables;
 /**
  *
  */
-class CrudOperation implements Crud
+class Crud
 {
+    public function test(){
+        return $this->input('email');
+    }
     /**
      * @param $model
      * @param string $type
@@ -21,7 +23,7 @@ class CrudOperation implements Crud
      * @return JsonResponse
      * @throws Exception
      */
-    public function getAll($model,$type = 'datatable' ,$files = []): JsonResponse
+    public function getAll($model, string $type = 'datatable' , array $files = []): JsonResponse
     {
         $data = App::make( 'App\\Models\\'.$model )->where('is_deleted','no')->get();
         if($type  == "api"){
@@ -39,8 +41,6 @@ class CrudOperation implements Crud
                                 <li><button class="m-2 btn btn-sm btn-danger delete_button rounded" value="'.$row->id.'">Delete</button></li>
                             </ul>
                         </div>';
-
-
             });
 
         $columns = ['actions'];

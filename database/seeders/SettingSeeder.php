@@ -17,14 +17,64 @@ class SettingSeeder extends Seeder
     {
        $setting =  Setting::all()->count();
        if($setting == 0){
-           Setting::create([
-               'name' => 'CMS',
-               'short_name' => 'CMS',
-               'email' => 'abdullahzahidjoy@gmail.com',
-               'phone' => '01780134797',
-               'address' => '145/3-1 matikhata dhaka cantonment dhaka-1206',
-               'footer_description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
+           Setting::updateOrCreate([
+               'name' => 'siteName',
+           ],[
+               'value' => 'CMS',
+               'type' => 'text',
+               'deleteAble' => 'no',
            ]);
+
+           Setting::updateOrCreate([
+               'name' => 'shortName',
+           ],[
+               'value' => 'CMS',
+               'type' => 'text',
+               'deleteAble' => 'no',
+           ]);
+
+           Setting::updateOrCreate([
+               'name' => 'email',
+           ],[
+               'value' => 'abdullahzahidjoy@gmail.com',
+               'type' => 'email',
+               'deleteAble' => 'no',
+           ]);
+
+           Setting::updateOrCreate([
+               'name' => 'phone',
+           ],[
+               'value' => '01780134797',
+               'type' => 'text',
+               'deleteAble' => 'no',
+           ]);
+
+           Setting::updateOrCreate([
+               'name' => 'address',
+           ],[
+               'value' => '145/3-1 matikhata dhaka cantonment dhaka-1206',
+               'type' => 'textarea',
+               'deleteAble' => 'no',
+           ]);
+
+           Setting::updateOrCreate([
+               'name' => 'logo',
+           ],[
+               'value' => '',
+               'type' => 'image',
+               'deleteAble' => 'no',
+           ]);
+
+           Setting::updateOrCreate([
+               'name' => 'favicon',
+           ],[
+               'value' => '',
+               'type' => 'image',
+               'deleteAble' => 'no',
+           ]);
+
+           //Logo
+
        }
     }
 }

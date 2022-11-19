@@ -23,7 +23,7 @@ class BackendMenuSeeder extends Seeder
                 'title' => 'Dashboard',
                 'icon' => "fa-solid fa-house" ,
                 'sorting' => 1,
-                'route' => 'admin.dashboard.index'
+                'route' => 'Dashboard.index'
 
             ],
             //id 2
@@ -47,10 +47,10 @@ class BackendMenuSeeder extends Seeder
             //id 4
             [
                 'parent_id' => 3,
-                'title' => 'User-role',
+                'title' => 'User Role',
                 'icon' => "fa-solid fa-user-shield",
                 'sorting' => 1,
-                'route' => 'admin.user-role.index'
+                'route' => 'UserRole.index'
             ],
 
             //id 5
@@ -59,7 +59,7 @@ class BackendMenuSeeder extends Seeder
                 'title' => 'User',
                 'icon' => "fa-solid fa-user-group",
                 'sorting' => 2,
-                'route' => 'admin.user.index'
+                'route' => 'User.index'
             ],
 
             // id 6
@@ -73,10 +73,10 @@ class BackendMenuSeeder extends Seeder
             //id 7
             [
                 'parent_id' => 6,
-                'title' => 'Admin-role',
+                'title' => 'Admin Role',
                 'icon' => "fa-solid fa-user-gear",
                 'sorting' => 1,
-                'route' => 'admin.admin-role.index'
+                'route' => 'AdminRole.index'
             ],
             //id 8
             [
@@ -84,7 +84,7 @@ class BackendMenuSeeder extends Seeder
                 'title' => 'Admin',
                 'icon' => "fa-solid fa-user-gear",
                 'sorting' => 2,
-                'route' => 'admin.admin.index'
+                'route' => 'Admin.index'
             ],
 
             // id 9
@@ -101,7 +101,7 @@ class BackendMenuSeeder extends Seeder
                 'title' => 'Module',
                 'icon' => "fa-solid fa-star",
                 'sorting' => 1,
-                'route' => 'admin.module.index'
+                'route' => 'Module.index'
             ],
             //id 11
             [
@@ -109,23 +109,23 @@ class BackendMenuSeeder extends Seeder
                 'title' => 'Setting',
                 'icon' => "fa-solid fa-gears",
                 'sorting' => 2,
-                'route' => 'admin.setting.index'
+                'route' => 'Setting.index'
             ],
             //id 12
             [
                 'parent_id' => null,
-                'title' => 'Recycle',
+                'title' => 'Recycle Bin',
                 'icon' => "fa-solid fa-trash-can",
                 'sorting' => 6,
-                'route' => 'admin.recycle.index'
+                'route' => 'RecycleBin.index'
             ],
             //id 13
             [
                 'parent_id' => null,
-                'title' => 'Activity-log',
+                'title' => 'Activity Log',
                 'icon' => "fa-solid fa-clock-rotate-left",
                 'sorting' => 4,
-                'route' => 'admin.activity-log.index'
+                'route' => 'ActivityLog.index'
             ],
 
             //id 14

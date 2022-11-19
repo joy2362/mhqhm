@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Base;
 use App\Http\Controllers\Controller;
 use App\Models\System\BackendMenu;
 use App\Models\System\Setting;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 
@@ -12,10 +14,11 @@ class BaseController extends Controller
 {
     public function __construct()
     {
-        $setting = Setting::first();
-        $menus = BackendMenu::with('subMenu')->orderBy('sorting','asc')->whereNull('parent_id')->get();
+        $systemSetting = App::make("SystemSetting");
+        $menus = App::make("BackendMenu");
+        //dd($menus);
         // Sharing is caring
-        View::share(['menus' => $menus, 'setting'=> $setting ]);
+        View::share(['menus' => $menus, 'systemSetting'=> $systemSetting ]);
     }
 
     protected function upload( $file, $path, $old = null ) {

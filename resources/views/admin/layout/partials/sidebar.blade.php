@@ -2,19 +2,23 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <p class="sidebar-brand" >
-            <span class="align-middle">{{$setting->name}}</span>
+            <span class="align-middle">{{$systemSetting['siteName']}}</span>
         </p>
         <ul class="sidebar-nav">
             @foreach( $menus as $menu )
-                @if(count($menu->subMenu) == 0)
-                    @if(Auth::guard('admin')->user()->can('index '.lcfirst($menu->title)) )
+                @if(count($menu->subMenu) == 0 && !empty($menu->route))
+                    @php
+                        $permissionName = explode(".",$menu->route);
+                        $permission = $permissionName[1] . " " . $permissionName[0];
+                    @endphp
+                    @if(Auth::guard('admin')->user()->can($permission) )
                         <li class="sidebar-item {{ request()->routeIs($menu->route) ? 'active' : '' }}">
                             <a class="sidebar-link" href=" {{ route($menu->route) }}  ">
                                 <i class="align-middle {{ $menu->icon }}"></i> <span class="align-middle">{{$menu->title}}</span>
                             </a>
                         </li>
                     @endif
-                @else
+                @elseif(count($menu->subMenu) > 0 )
                     <li class="sidebar-item ">
                         @php
                             $pNames = explode(' ',$menu->title);
@@ -25,7 +29,11 @@
                         </a>
                         <ul id="{{$pName}}" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             @foreach( $menu->subMenu as $sub )
-                                @if(Auth::guard('admin')->user()->can('index '.lcfirst($sub->title)) )
+                                @php
+                                    $permissionName = explode(".",$sub->route);
+                                    $permission = $permissionName[1] . " " . $permissionName[0];
+                                @endphp
+                                @if(Auth::guard('admin')->user()->can($permission) )
                                     <li class="sidebar-item {{ request()->routeIs($sub->route) ? 'active' : '' }}">
                                         <a class="sidebar-link" href=" {{ route($sub->route) }}  ">
                                             <i class="align-middle {{ $sub->icon }}"></i> <span class="align-middle">{{$sub->title}}</span>
@@ -37,8 +45,6 @@
                     </li>
                 @endif
             @endforeach
-
-
         </ul>
     </div>
 </nav>

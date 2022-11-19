@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend\Core;
 
 use App\Http\Controllers\Base\BaseController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends BaseController
 {
@@ -14,7 +13,7 @@ class DashboardController extends BaseController
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\never
      */
-    public function __invoke(Request $request)
+    public function index(Request $request)
     {
         return view('admin.pages.dashboard.index');
     }

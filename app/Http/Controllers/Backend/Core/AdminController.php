@@ -116,10 +116,15 @@ class AdminController extends BaseController
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        //
+        Admin::destroy($id);
+        $notification = array(
+            'messege' => "Admin Delete Successful!!!",
+            'alert-type' => 'success'
+        );
+        return Redirect()->back()->with($notification);
     }
 }

@@ -6,8 +6,8 @@
     <main class="content">
         <div class="container-fluid p-0">
             <h1 class="h3 fw-bold">User
-                @if(Auth::guard('admin')->user()->can('create user'))
-                    <a href="{{route('admin.user.create')}}" class="float-end rounded btn btn-sm btn-success" >Add User</a>
+                @if(Auth::guard('admin')->user()->can('create User'))
+                    <a href="{{route('User.create')}}" class="float-end rounded btn btn-sm btn-primary" ><i class="fa-solid fa-plus"></i></a>
                 @endif
             </h1>
             <div class="row">
@@ -39,10 +39,10 @@
                                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                                 </span>
                                                 <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item" href="{{route('admin.user.status.update',['id'=>$row->id,'status'=>"active"])}}">Mark as Active</a></li>
-                                                    <li><a class="dropdown-item" href="{{route('admin.user.status.update',['id'=>$row->id,'status'=>"inactive"])}}">Mark as Inactive</a></li>
+                                                    <li><a class="dropdown-item" href="{{route('User.changeStatus',['id'=>$row->id,'status'=>"active"])}}">Mark as Active</a></li>
+                                                    <li><a class="dropdown-item" href="{{route('User.changeStatus',['id'=>$row->id,'status'=>"inactive"])}}">Mark as Inactive</a></li>
                                                     <li>
-                                                        <form method="post" action="{{ route('admin.user.destroy', $row->id) }}">
+                                                        <form method="post" action="{{ route('User.destroy', $row->id) }}">
                                                             @csrf
                                                             @method('DELETE')
                                                             <span type="submit" id="destroy" class="m-2">Delete</span>

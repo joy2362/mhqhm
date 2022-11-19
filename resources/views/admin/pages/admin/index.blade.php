@@ -6,8 +6,8 @@
     <main class="content">
         <div class="container-fluid p-0">
             <h1 class="h3 fw-bold">Admin
-                @if(Auth::guard('admin')->user()->can('create admin'))
-                    <a href="{{route('admin.admin.create')}}" class="float-end rounded btn btn-sm btn-success" >Add admin</a>
+                @if(Auth::guard('admin')->user()->can('create Admin'))
+                    <a href="{{route('Admin.create')}}" class="float-end rounded btn btn-sm btn-primary" ><i class="fa-solid fa-plus"></i></a>
                 @endif
             </h1>
             <div class="row">
@@ -28,7 +28,7 @@
                                 @foreach($admins as $row)
                                     <tr>
                                         <td> {{ $loop->index + 1 }}</td>
-                                        <td><a href="{{$row->avatar}}"><img src="{{$row->avatar}}" alt="{{$row->name}}" width="100" height="70"></a> </td>
+                                        <td><a href="{{$row->avatar}}"><img src="{{$row->avatar}}" alt="{{$row->name}}" width="60" height="60"></a> </td>
                                         <td> {{ $row->name }}</td>
                                         <td> {{ $row->email }}</td>
                                         <td>
@@ -38,7 +38,7 @@
                                                 </span>
                                                 <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton1">
                                                     <li>
-                                                        <form method="post" action="{{ route('admin.admin.destroy', $row->id) }}">
+                                                        <form method="post" action="{{ route('Admin.destroy', $row->id) }}">
                                                             @csrf
                                                             @method('DELETE')
                                                             <span type="submit" id="destroy" class="m-2">Delete</span>
@@ -65,24 +65,6 @@
             $('#data').DataTable({
                 "order":false
             });
-            $(document).on("click", "#destroy", function(e){
-                e.preventDefault();
-                var form = $(this).parents('form');
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {form.submit();}
-                });
-
-            });
-
         });
-
     </script>
 @endsection

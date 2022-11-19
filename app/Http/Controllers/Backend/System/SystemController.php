@@ -8,28 +8,60 @@ use Database\Seeders\PermissionSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 class SystemController extends Controller
 {
+
+    private function getControllerName(string $controllerInfo): string
+    {
+        $names = explode("@" , $controllerInfo);
+        $functionName = $names[1]??"";
+        $controllerName = class_basename($names[0]);
+        $name = str_replace("Controller",'',$controllerName);
+        return $functionName . " " .$name;
+    }
+
+    private function getNameRoute(string $name = ""): string
+    {
+        $names = explode(".",$name);
+        $action = $names[1] ?? "";
+        $module = $names[0] ?? "";
+        return $action  . " " . $module ;
+    }
     /**
      * @return string
      */
     public function update(): string
     {
+        Cache::flush();
+//        $routes = Route::getRoutes();
+//        $permissions=[];
+//        foreach ($routes as $route){
+//            if(in_array('permission:admin',$route->action['middleware'])){
+//                $permission = $this->getControllerName($route->action['controller']);
+//                //  dd($this->getNameRoute($route->action['as']));
+//                if($permission == $this->getNameRoute($route->action['as'])){
+//                    $permissions[] = $permission;
+//                }
+//            }
+//
+//        }
+//        dd($permissions);
         //get all available module
         $modules = DB::table('modules')->get();
         $sorting = DB::table('backend_menus')->max('sorting') + 1;
 
         //create menu for all module if not available yet
         foreach ($modules as $module){
-            if (class_exists("App\\Models\\" . ucfirst($module->name)) && Route::has("admin.".lcfirst($module->name) .".index") ) {
-               $menu = DB::table('backend_menus')->where('route',"admin.".lcfirst($module->name) .".index")->first();
+            if (class_exists("App\\Models\\" . ucfirst($module->name)) && Route::has($module->name . ".index") ) {
+               $menu = DB::table('backend_menus')->where('route',$module->name . ".index")->first();
                 if(empty($menu)){
                     DB::table('backend_menus')->insert([
-                        'route' => "admin.".lcfirst($module->name) .".index",
+                        'route' => ucfirst($module->name) . ".index",
                         'title' => ucfirst($module->name),
                         'sorting'=>$sorting,
                     ]);

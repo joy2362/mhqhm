@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('title');
+            $table->string('name')->nullable();
             $table->string('route')->nullable();
             $table->string('icon')->default('fa-solid fa-grip');
             $table->integer('sorting');
