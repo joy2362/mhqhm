@@ -40,7 +40,11 @@ function delete_handler(model, id) {
                         $('#data').DataTable().draw();
 
                     }
+                },
+                error: (error)=>{
+                    notification("error",error.responseText ?? "something went wrong")
                 }
+
             })
         }
     })
@@ -55,12 +59,14 @@ function edit_btn_handler(model, id) {
         dataType: 'json',
         success: function (res) {
             return res;
+        },
+        error: (error)=>{
+            notification("error",error.responseText ?? "something went wrong")
         }
     });
 }
 
 function edit_form_handle(model, id, formData) {
-
     formData.append('_method', 'PUT');
     ajaxsetup();
     $.ajax({
@@ -69,6 +75,7 @@ function edit_form_handle(model, id, formData) {
         url: `${model}/${id}`,
         data: formData,
         contentType: false,
+        accepts: "application/json",
         processData: false,
         success: function (res) {
             console.log(res)
@@ -88,6 +95,9 @@ function edit_form_handle(model, id, formData) {
                 $('#data').DataTable().draw();
                 notification("success", res.message)
             }
+        },
+        error: (error)=>{
+            notification("error",error.responseText ?? "something went wrong")
         }
     })
 }
@@ -99,9 +109,10 @@ function store_handler(url, formData) {
         enctype: 'multipart/form-data',
         url: url,
         data: formData,
+        accepts: "application/json",
         processData: false,
         contentType: false,
-        success: function (response) {
+        success:  (response) =>{
             const list = $('#save_errorList');
             if (response.status === 400) {
                 list.html("");
@@ -121,7 +132,10 @@ function store_handler(url, formData) {
                 $('#data').DataTable().draw();
                 notification("success", response.message)
             }
-        }
+        },
+        error: (error)=>{
+        notification("error",error.responseText ?? "something went wrong")
+    }
     })
 }
 

@@ -15,9 +15,7 @@ class BackendMenuSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('backend_menus')->truncate();
-        BackendMenu::insert([
-            //id 1
+        $menus = [
             [
                 'parent_id' => null,
                 'title' => 'Dashboard',
@@ -26,7 +24,6 @@ class BackendMenuSeeder extends Seeder
                 'route' => 'Dashboard.index'
 
             ],
-            //id 2
             [
                 'parent_id' => null,
                 'title' => 'Master Setup',
@@ -34,8 +31,6 @@ class BackendMenuSeeder extends Seeder
                 'sorting' => 2,
                 'route' => null,
             ],
-
-            //id 3
             [
                 'parent_id' => null,
                 'title' => 'User',
@@ -43,26 +38,6 @@ class BackendMenuSeeder extends Seeder
                 'sorting' => 3,
                 'route' => null,
             ],
-
-            //id 4
-            [
-                'parent_id' => 3,
-                'title' => 'User Role',
-                'icon' => "fa-solid fa-user-shield",
-                'sorting' => 1,
-                'route' => 'UserRole.index'
-            ],
-
-            //id 5
-            [
-                'parent_id' => 3,
-                'title' => 'User',
-                'icon' => "fa-solid fa-user-group",
-                'sorting' => 2,
-                'route' => 'User.index'
-            ],
-
-            // id 6
             [
                 'parent_id' => null,
                 'title' => 'Admin',
@@ -70,48 +45,13 @@ class BackendMenuSeeder extends Seeder
                 'sorting' => 4,
                 'route' => null,
             ],
-            //id 7
-            [
-                'parent_id' => 6,
-                'title' => 'Admin Role',
-                'icon' => "fa-solid fa-user-gear",
-                'sorting' => 1,
-                'route' => 'AdminRole.index'
-            ],
-            //id 8
-            [
-                'parent_id' => 6,
-                'title' => 'Admin',
-                'icon' => "fa-solid fa-user-gear",
-                'sorting' => 2,
-                'route' => 'Admin.index'
-            ],
-
-            // id 9
             [
                 'parent_id' => null,
                 'title' => 'System Setting',
                 'icon' => "fa-solid fa-gears",
-                'sorting' => 4,
+                'sorting' => 5,
                 'route' => null,
             ],
-            //id 9
-            [
-                'parent_id' => 9,
-                'title' => 'Module',
-                'icon' => "fa-solid fa-star",
-                'sorting' => 1,
-                'route' => 'Module.index'
-            ],
-            //id 11
-            [
-                'parent_id' => 9,
-                'title' => 'Setting',
-                'icon' => "fa-solid fa-gears",
-                'sorting' => 2,
-                'route' => 'Setting.index'
-            ],
-            //id 12
             [
                 'parent_id' => null,
                 'title' => 'Recycle Bin',
@@ -119,25 +59,67 @@ class BackendMenuSeeder extends Seeder
                 'sorting' => 6,
                 'route' => 'RecycleBin.index'
             ],
-            //id 13
+
+        ];
+        foreach ($menus as $menu){
+            if(empty(BackendMenu::where('title',$menu['title'])->first())){
+                BackendMenu::firstOrCreate($menu);
+            }
+        }
+        $adminSub = [
             [
-                'parent_id' => null,
+                'title' => 'Admin Role',
+                'icon' => "fa-solid fa-user-gear",
+                'sorting' => 1,
+                'route' => 'AdminRole.index'
+            ],
+            [
+                'title' => 'Admin',
+                'icon' => "fa-solid fa-user-gear",
+                'sorting' => 2,
+                'route' => 'Admin.index'
+            ],
+        ];
+        $userSub = [
+            [
+                'title' => 'User Role',
+                'icon' => "fa-solid fa-user-shield",
+                'sorting' => 1,
+                'route' => 'UserRole.index'
+            ],
+            [
+                'title' => 'User',
+                'icon' => "fa-solid fa-user-group",
+                'sorting' => 2,
+                'route' => 'User.index'
+            ],
+        ];
+
+        $settingSub = [
+            [
+                'title' => 'Module',
+                'icon' => "fa-solid fa-star",
+                'sorting' => 1,
+                'route' => 'Module.index'
+            ],
+            [
+                'title' => 'Setting',
+                'icon' => "fa-solid fa-gears",
+                'sorting' => 2,
+                'route' => 'Setting.index'
+            ],
+            [
                 'title' => 'Activity Log',
                 'icon' => "fa-solid fa-clock-rotate-left",
                 'sorting' => 4,
                 'route' => 'ActivityLog.index'
             ],
-
-            //id 14
-//            [
-//                'parent_id' => 2,
-//                'title' => 'Category',
-//                'icon' => "fa-solid fa-clock-rotate-left",
-//                'sorting' => 1,
-//                'route' => 'admin.category.index'
-//            ],
-
-
-        ]);
+        ];
+        $masterSub = [];
+        //create sub menu
+        BackendMenu::where("title","User")->first()->subMenu()->createMany($userSub);
+        BackendMenu::where("title","Admin")->first()->subMenu()->createMany($adminSub);
+        BackendMenu::where("title","System Setting")->first()->subMenu()->createMany($settingSub);
+        BackendMenu::where("title","Master Setup")->first()->subMenu()->createMany($masterSub);
     }
 }

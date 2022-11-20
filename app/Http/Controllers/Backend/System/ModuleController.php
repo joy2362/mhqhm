@@ -83,7 +83,7 @@ class ModuleController extends BaseController
             'messege' => 'Module Create Successfully!',
             'alert-type' => 'success'
         );
-        return redirect()->route('admin.module.instruction',['name'=>$request->name])->with($notification);
+        return redirect()->route('Module.instruction',['name'=>$request->name])->with($notification);
     }
 
     public function instruction($name): Factory|View|Application

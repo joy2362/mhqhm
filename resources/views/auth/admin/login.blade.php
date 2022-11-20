@@ -10,8 +10,8 @@
     <link rel="shortcut icon" href="{{asset('asset/img/icons/icon-48x48.png')}}"/>
     <title>Admin Login</title>
 
-    <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('asset/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('asset/css/app.css') }}" rel="stylesheet">
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -75,7 +75,7 @@
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous"></script>
-<script src="{{asset('admin/js/app.js')}}"></script>
+<script src="{{asset('asset/js/app.js')}}"></script>
 @vite('resources/js/app.js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 

@@ -15,23 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 class SystemController extends Controller
 {
-
-    private function getControllerName(string $controllerInfo): string
-    {
-        $names = explode("@" , $controllerInfo);
-        $functionName = $names[1]??"";
-        $controllerName = class_basename($names[0]);
-        $name = str_replace("Controller",'',$controllerName);
-        return $functionName . " " .$name;
-    }
-
-    private function getNameRoute(string $name = ""): string
-    {
-        $names = explode(".",$name);
-        $action = $names[1] ?? "";
-        $module = $names[0] ?? "";
-        return $action  . " " . $module ;
-    }
     /**
      * @return string
      */

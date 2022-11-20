@@ -258,13 +258,12 @@ class Module
      */
     public static function addRoute($name): bool|int
     {
-       // $search = "Route::group(['as'=>'admin.','prefix'=>'admin','middleware'=>'auth:admin'],function() {";
         $search = "//module routes";
         $url = self::lcFirst($name);
 
         $controller = self::ucFirst($name)."Controller";
 
-        $route = "Route::resource('". $url ."', ".$controller."::Class);";
+        $route = "Route::resource('". $url ."', ".$controller."::Class,['names'=>'".self::ucFirst($name)."']);";
 
         $replace = $search. "\n \t".  $route;
 
@@ -389,7 +388,7 @@ class Module
             }
 
             $addition = '';
-            if(!empty($field['char'][$key]) && $type == "char"){
+            if(!empty($field['char'][$key]) && ($type == "char" || $type == "string")){
                 $addition .= ",{$field['char'][$key]}";
             }
             if(!empty($field['enum1'][$key]) && !empty($field['enum2'][$key]) && $type == "enum"){
@@ -400,14 +399,15 @@ class Module
             }
             if(!empty($field['foreign'][$key]) && ($type == "bigInteger" || $type == "unsignedBigInteger" || $type == "unsignedInteger" || $type == "unsignedMediumInteger" || $type == "unsignedSmallInteger" || $type == "unsignedTinyInteger")){
                 $table =  App::make( 'App\\Models\\'. $field['foreign'][$key] )->getTable();
-                $foreign = "\$table->foreign('{$field['name'][$key]}')->references('id')->on('{$table}');\n \t \t \t";
+                $foreign = "\$table->foreign('{$field['name'][$key]}')->references('id')->on('{$table}')->onDelete('cascade');\n";
             }
-            $tableField .= "\$table->{$type}('{$field['name'][$key]}'{$addition}){$condition};\n \t \t \t";
+            $tableField .= "\$table->{$type}('{$field['name'][$key]}'{$addition}){$condition};\n";
             if(!empty($foreign)){
                 $tableField .= $foreign;
             }
 
         }
+        //dd($tableField);
         return $tableField;
     }
 

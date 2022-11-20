@@ -6,6 +6,7 @@ use Closure;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 class AdminAccess
@@ -21,23 +22,21 @@ class AdminAccess
     {
         $route = Route::current();
         $permission = $this->getNameRoute($route->action["as"]);
+
         if(!empty($guard) && !empty($permission)){
             if(!Auth::guard($guard)->user()->can($permission)){
-                if($request->wantsJson()){
+                if($request->ajax()){
                     return response("You Dont Have Enough permission",403);
                 }
-               // throw new exception("You Dont Have Enough permission");
-                return abort('403',"You Dont Have Enough permission");
+                return abort('403',"permission");
             }
         }else{
-
-            if($request->wantsJson()){
+            if($request->ajax()){
                 return response("You Dont Have Enough permission",403);
             }
-            //throw new exception("You Dont Have Enough permission");
-            return abort('403',['error'=>"ok"]);
-        }
+            return abort('403',"permission");
 
+        }
         return $next($request);
     }
 

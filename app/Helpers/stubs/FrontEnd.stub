@@ -136,7 +136,7 @@
             e.preventDefault();
             let formData = new FormData($('#addForm')[0]);
 
-            store_handler( "{{route('$NAME$.store')}}" ,formData );
+            store_handler( "{{route('$MODEL$.store')}}" ,formData );
         });
 
         //edit form handle

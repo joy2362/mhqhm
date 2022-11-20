@@ -3,14 +3,41 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
+
+    /**
+     * @param string $controllerInfo
+     * @return array
+     */
+    private function getControllerName(string $controllerInfo): array
+    {
+        $names = explode("@" , $controllerInfo);
+        $functionName = $names[1]??"";
+        $controllerName = class_basename($names[0]);
+        $name = str_replace("Controller",'',$controllerName);
+        return [
+            "name" => $functionName . " " .$name,
+            "group_name" =>  $name
+        ];
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function getNameRoute(string $name = ""): string
+    {
+        $names = explode(".",$name);
+        $action = $names[1] ?? "";
+        $module = $names[0] ?? "";
+        return $action  . " " . $module ;
+    }
     /**
      * Run the database seeds.
      *
@@ -18,93 +45,30 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $modules = DB::table('modules')->get();
-        $permissions = [
-            ['name'=>'index Dashboard','guard_name'=>'admin','group_name' => 'Dashboard'],
-            ['name'=>'index Module','guard_name'=>'admin','group_name' => 'Module'],
-            ['name'=>'store Module','guard_name'=>'admin','group_name' => 'Module'],
-            
-            ['name'=>'index ActivityLog','guard_name'=>'admin','group_name' => 'ActivityLog'],
+        $routes = Route::getRoutes();
+        $permissions=[];
+        foreach ($routes as $route){
+            if(in_array('permission:admin',$route->action['middleware'])){
+                $permission = $this->getControllerName($route->action['controller']);
+                if($permission['name'] == $this->getNameRoute($route->action['as'])){
+                    $permissions[] =  [
+                        'name'=> $permission['name'],
+                        'guard_name'=>'admin',
+                        'group_name' =>  $permission['group_name']
+                    ];
+                }
+            }
 
-            ['name'=>'index User','guard_name'=>'admin','group_name' => 'User'],
-            ['name'=>'create User','guard_name'=>'admin','group_name' => 'User'],
-            ['name'=>'store User','guard_name'=>'admin','group_name' => 'User'],
-            ['name'=>'show User','guard_name'=>'admin','group_name' => 'User'],
-            ['name'=>'edit User','guard_name'=>'admin','group_name' => 'User'],
-            ['name'=>'update User','guard_name'=>'admin','group_name' => 'User'],
-            ['name'=>'destroy user','guard_name'=>'admin','group_name' => 'User'],
-            ['name'=>'changeStatus User','guard_name'=>'admin','group_name' => 'User'],
+        }
 
-            ['name'=>'index Admin','guard_name'=>'admin','group_name' => 'Admin'],
-            ['name'=>'create Admin','guard_name'=>'admin','group_name' => 'Admin'],
-            ['name'=>'store Admin','guard_name'=>'admin','group_name' => 'Admin'],
-            ['name'=>'show Admin','guard_name'=>'admin','group_name' => 'Admin'],
-            ['name'=>'edit Admin','guard_name'=>'admin','group_name' => 'Admin'],
-            ['name'=>'update Admin','guard_name'=>'admin','group_name' => 'Admin'],
-            ['name'=>'destroy Admin','guard_name'=>'admin','group_name' => 'Admin'],
-
-            ['name'=>'index RecycleBin','guard_name'=>'admin','group_name' => 'RecycleBin'],
-            ['name'=>'recover RecycleBin','guard_name'=>'admin','group_name' => 'RecycleBin'],
-            ['name'=>"delete RecycleBin",'guard_name'=>'admin','group_name' => 'RecycleBin'],
-
-            ['name'=>"index Setting",'guard_name'=>'admin','group_name' => 'Setting'],
-            ['name'=>"store Setting",'guard_name'=>'admin','group_name' => 'Setting'],
-            ['name'=>"destroy Setting",'guard_name'=>'admin','group_name' => 'Setting'],
-            ['name'=>"update Setting",'guard_name'=>'admin','group_name' => 'Setting'],
-
-            ['name'=>"index AdminRole",'guard_name'=>'admin','group_name' => 'AdminRole'],
-            ['name'=>"create AdminRole",'guard_name'=>'admin','group_name' => 'AdminRole'],
-            ['name'=>"store AdminRole",'guard_name'=>'admin','group_name' => 'AdminRole'],
-            ['name'=>"show AdminRole",'guard_name'=>'admin','group_name' => 'AdminRole'],
-            ['name'=>"edit AdminRole",'guard_name'=>'admin','group_name' => 'AdminRole'],
-            ['name'=>"update AdminRole",'guard_name'=>'admin','group_name' => 'AdminRole'],
-            ['name'=>"destroy AdminRole",'guard_name'=>'admin','group_name' => 'AdminRole'],
-
-            ['name'=>"index UserRole",'guard_name'=>'admin','group_name' => 'user-role'],
-            ['name'=>"create UserRole",'guard_name'=>'admin','group_name' => 'user-role'],
-            ['name'=>"store UserRole",'guard_name'=>'admin','group_name' => 'user-role'],
-            ['name'=>"show UserRole",'guard_name'=>'admin','group_name' => 'user-role'],
-            ['name'=>"edit UserRole",'guard_name'=>'admin','group_name' => 'user-role'],
-            ['name'=>"update UserRole",'guard_name'=>'admin','group_name' => 'user-role'],
-            ['name'=>"destroy UserRole",'guard_name'=>'admin','group_name' => 'user-role'],
-        ];
         foreach($permissions as $permission){
-            Permission::updateOrCreate(
-                $permission
-            );
+            if(empty(Permission::whereName($permission["name"])->first())){
+                Permission::firstOrCreate(
+                    $permission
+                );
+            }
         }
 
-        foreach ($modules as $module){
-            Permission::updateOrCreate(
-                ['name' => 'show ' . $module->name] ,
-                ['guard_name'=>'admin','group_name'=> $module->name]
-            );
-
-            Permission::updateOrCreate(
-                ['name' => 'index ' . $module->name] ,
-                ['guard_name'=>'admin','group_name'=> $module->name]
-            );
-
-            Permission::updateOrCreate(
-                ['name' => 'create ' . $module->name] ,
-                ['guard_name'=>'admin','group_name'=> $module->name]
-            );
-
-            Permission::updateOrCreate(
-                ['name' => 'edit ' . $module->name] ,
-                ['guard_name'=>'admin','group_name'=> $module->name]
-            );
-
-            Permission::updateOrCreate(
-                ['name' => 'destroy ' . $module->name] ,
-                ['guard_name'=>'admin','group_name'=> $module->name]
-            );
-
-            Permission::updateOrCreate(
-                ['name' => 'store ' . $module->name] ,
-                ['guard_name'=>'admin','group_name'=> $module->name]
-            );
-        }
 
         $role = Role::where('name','Super Admin')->first();
         if(!empty($role)){

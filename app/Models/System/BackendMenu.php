@@ -11,7 +11,7 @@ class BackendMenu extends Model
      */
     protected $guarded = ['id'];
 
-    public function subMenu (): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function subMenu(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(BackendMenu::class,'parent_id','id');
     }

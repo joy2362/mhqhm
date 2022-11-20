@@ -13,8 +13,6 @@ use App\Http\Controllers\Backend\System\ModuleController;
 use App\Http\Controllers\Backend\System\SettingController;
 use App\Http\Controllers\Backend\System\SystemController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\ProductController;
-use App\Http\Controllers\Backend\CategoryController;
 
 use Laravel\Fortify\Http\Controllers\PasswordController;
 use Laravel\Fortify\Http\Controllers\ProfileInformationController;
@@ -35,7 +33,7 @@ use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
 //'as'=>'admin.',
 Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
     //mandatory route
-    Route::get('module/instruction/{name}', [ModuleController::class,'instruction'])->name('module.instruction');
+    Route::get('module/instruction/{name}', [ModuleController::class,'instruction'])->name('Module.instruction');
     Route::get('system-update', [SystemController::class,'update'])->name('system.update');
 
     Route::put('/password/change', [PasswordController::class, 'update'])->name('password.change');
@@ -80,8 +78,6 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
         Route::get('dashboard', [DashboardController::class,'index'])->name('Dashboard.index');
 
         //module routes
- 	Route::resource('product', ProductController::Class,['names'=>'Product']);
- 	Route::resource('category', CategoryController::Class,['names'=>'Category']);
 
     });
 });

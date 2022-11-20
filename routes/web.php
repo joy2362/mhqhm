@@ -20,6 +20,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/clear', function () {
+    \Illuminate\Support\Facades\Artisan::call('cache:clear');
+    return \Illuminate\Support\Facades\Artisan::output();
+});
+
 Route::get('/test', function () {
     $routes = Route::getRoutes();
     foreach ($routes as $route){
