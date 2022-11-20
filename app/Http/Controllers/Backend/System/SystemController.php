@@ -21,19 +21,6 @@ class SystemController extends Controller
     public function update(): string
     {
         Cache::flush();
-//        $routes = Route::getRoutes();
-//        $permissions=[];
-//        foreach ($routes as $route){
-//            if(in_array('permission:admin',$route->action['middleware'])){
-//                $permission = $this->getControllerName($route->action['controller']);
-//                //  dd($this->getNameRoute($route->action['as']));
-//                if($permission == $this->getNameRoute($route->action['as'])){
-//                    $permissions[] = $permission;
-//                }
-//            }
-//
-//        }
-//        dd($permissions);
         //get all available module
         $modules = DB::table('modules')->get();
         $sorting = DB::table('backend_menus')->max('sorting') + 1;

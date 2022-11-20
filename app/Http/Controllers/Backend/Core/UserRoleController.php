@@ -53,7 +53,7 @@ class UserRoleController extends BaseController
             'messege' => 'Role added Successfully!',
             'alert-type' => 'success'
         );
-        return Redirect()->route('admin.user-role.index')->with($notification);
+        return Redirect()->route('UserRole.index')->with($notification);
     }
 
     /**
@@ -101,7 +101,7 @@ class UserRoleController extends BaseController
             'messege' => 'Role updated Successfully!',
             'alert-type' => 'success'
         );
-        return Redirect()->route('admin.user-role.index')->with($notification);
+        return Redirect()->route('UserRole.index')->with($notification);
     }
 
     /**
@@ -117,6 +117,6 @@ class UserRoleController extends BaseController
             'messege' => 'Role removed Successfully!',
             'alert-type' => 'success'
         );
-        return Redirect()->route('admin.user-role.index')->with($notification);
+        return Redirect()->route('UserRole.index')->with($notification);
     }
 }

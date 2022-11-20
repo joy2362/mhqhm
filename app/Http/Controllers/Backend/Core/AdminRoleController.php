@@ -55,7 +55,7 @@ class AdminRoleController extends BaseController
             'messege' => 'Role added Successfully!',
             'alert-type' => 'success'
         );
-        return Redirect()->route('admin.admin-role.index')->with($notification);
+        return Redirect()->route('AdminRole.index')->with($notification);
     }
 
     /**
@@ -103,7 +103,7 @@ class AdminRoleController extends BaseController
             'messege' => 'Role updated Successfully!',
             'alert-type' => 'success'
         );
-        return Redirect()->route('admin.admin-role.index')->with($notification);
+        return Redirect()->route('AdminRole.index')->with($notification);
     }
 
     /**
@@ -119,6 +119,6 @@ class AdminRoleController extends BaseController
             'messege' => 'Role removed Successfully!',
             'alert-type' => 'success'
         );
-        return Redirect()->route('admin.admin-role.index')->with($notification);
+        return Redirect()->route('AdminRole.index')->with($notification);
     }
 }

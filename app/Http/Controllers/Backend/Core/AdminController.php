@@ -64,14 +64,14 @@ class AdminController extends BaseController
                 'messege' => "admin created successfully!!",
                 'alert-type' => 'success'
             );
-            return Redirect()->route('admin.admin.index')->with($notification);
+            return Redirect()->route('Admin.index')->with($notification);
         }catch (\Exception $ex){
             DB::rollback();
             $notification = array(
                 'messege' => $ex->getMessage(),
                 'alert-type' => 'error'
             );
-            return Redirect()->route('admin.admin.create')->with($notification);
+            return Redirect()->route('Admin.create')->with($notification);
         }
 
 

@@ -42,7 +42,7 @@ class ProfileController extends BaseController
         $admin = Admin::find(Auth::guard('admin')->id());
 
         $image = $request->file('image');
-        $url = $this->upload($image , "avatar/admin",$admin->avatar);
+        $url = $this->upload($image , "admin/avatar",$admin->avatar);
 
         $admin->avatar = $url;
         $admin->save();
