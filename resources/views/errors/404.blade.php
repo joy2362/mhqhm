@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>404 | {{ config("app.name")}}</title>
-    <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet"></head>
+    <link href="{{ asset('asset/css/bootstrap.min.css') }}" rel="stylesheet"></head>
 <body>
 <div class="d-flex align-items-center justify-content-center vh-100">
     <div class="text-center">

@@ -25,6 +25,11 @@ Route::get('/clear', function () {
     return \Illuminate\Support\Facades\Artisan::output();
 });
 
+Route::get('/storage-link', function () {
+    \Illuminate\Support\Facades\Artisan::call('storage:link');
+    return \Illuminate\Support\Facades\Artisan::output();
+});
+
 Route::get('/test', function () {
     $routes = Route::getRoutes();
     foreach ($routes as $route){

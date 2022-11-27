@@ -13,6 +13,12 @@ use App\Http\Controllers\Backend\System\ModuleController;
 use App\Http\Controllers\Backend\System\SettingController;
 use App\Http\Controllers\Backend\System\SystemController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\DonationController;
+use App\Http\Controllers\Backend\GroupSubjectController;
+use App\Http\Controllers\Backend\SubjectController;
+use App\Http\Controllers\Backend\FeeController;
+use App\Http\Controllers\Backend\FeeTypeController;
+use App\Http\Controllers\Backend\GroupController;
 
 use Laravel\Fortify\Http\Controllers\PasswordController;
 use Laravel\Fortify\Http\Controllers\ProfileInformationController;
@@ -78,6 +84,12 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
         Route::get('dashboard', [DashboardController::class,'index'])->name('Dashboard.index');
 
         //module routes
+ 	Route::resource('donation', DonationController::Class,['names'=>'Donation']);
+ 	Route::resource('groupSubject', GroupSubjectController::Class,['names'=>'GroupSubject']);
+ 	Route::resource('subject', SubjectController::Class,['names'=>'Subject']);
+ 	Route::resource('fee', FeeController::Class,['names'=>'Fee']);
+ 	Route::resource('feeType', FeeTypeController::Class,['names'=>'FeeType']);
+ 	Route::resource('group', GroupController::Class,['names'=>'Group']);
 
     });
 });

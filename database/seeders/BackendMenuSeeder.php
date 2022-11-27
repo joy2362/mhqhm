@@ -33,7 +33,7 @@ class BackendMenuSeeder extends Seeder
             ],
             [
                 'parent_id' => null,
-                'title' => 'User',
+                'title' => 'Student',
                 'icon' => "fa-solid fa-user" ,
                 'sorting' => 3,
                 'route' => null,
@@ -44,6 +44,13 @@ class BackendMenuSeeder extends Seeder
                 'icon' => "fa-solid fa-user-secret",
                 'sorting' => 4,
                 'route' => null,
+            ],
+            [
+                'parent_id' => null,
+                'title' => 'Donation',
+                'icon' => "fa-solid fa-hand-holding-dollar",
+                'sorting' => 5,
+                'route' => "Donation.index",
             ],
             [
                 'parent_id' => null,
@@ -88,7 +95,7 @@ class BackendMenuSeeder extends Seeder
                 'route' => 'UserRole.index'
             ],
             [
-                'title' => 'User',
+                'title' => 'All Student',
                 'icon' => "fa-solid fa-user-group",
                 'sorting' => 2,
                 'route' => 'User.index'
@@ -115,7 +122,34 @@ class BackendMenuSeeder extends Seeder
                 'route' => 'ActivityLog.index'
             ],
         ];
-        $masterSub = [];
+        $masterSub = [
+            [
+                'title' => 'Group',
+                'icon' => "fa-solid fa-users-rectangle",
+                'sorting' => 1,
+                'route' => 'Group.index'
+            ],
+            [
+                'title' => 'Fee Type',
+                'icon' => "fa-solid fa-comments-dollar",
+                'sorting' => 2,
+                'route' => 'FeeType.index'
+            ],
+
+            [
+                'title' => 'Fee',
+                'icon' => "fa-solid fa-comments-dollar",
+                'sorting' => 3,
+                'route' => 'Fee.index'
+            ],
+            [
+                'title' => 'Subject',
+                'icon' => "fa-solid fa-comments-dollar",
+                'sorting' => 4,
+                'route' => 'Subject.index'
+            ],
+
+        ];
         //create sub menu
         BackendMenu::where("title","User")->first()->subMenu()->createMany($userSub);
         BackendMenu::where("title","Admin")->first()->subMenu()->createMany($adminSub);

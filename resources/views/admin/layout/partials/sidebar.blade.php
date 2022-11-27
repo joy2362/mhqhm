@@ -2,7 +2,7 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <p class="sidebar-brand" >
-            <span class="align-middle">{{$systemSetting['siteName']}}</span>
+            <span class="align-middle">{{$systemSetting['shortName']}}</span>
         </p>
         <ul class="sidebar-nav">
             @foreach( $menus as $menu )

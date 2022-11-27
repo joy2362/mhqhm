@@ -46,15 +46,9 @@ class Module
         $formBuilder = self::makeInputField($field);
         $indexData = self::makeIndexData($field);
 
-        //create model and migration and model
-       $migration = self::generateModelAndMigration($name,$indexData['files']);
+        //create model and migration and model and add database field
+       $migration = self::generateModelAndMigration($name,$indexData['files'],$dbField);
        if(!$migration){
-           return false;
-       }
-
-       //add database field
-        $generateSchema = self::generateSchema($migration, $dbField);
-       if(!$generateSchema){
            return false;
        }
 
@@ -97,9 +91,9 @@ class Module
     /**
      * @param $db
      * @param $field
-     * @return bool|int
+     * @return
      */
-    public static function generateSchema($db , $field): bool|int
+    public static function generateSchema($db , $field)
     {
         if(!self::checkFile(base_path().'\database\migrations\\' . $db.".php")){
             return false;
@@ -114,9 +108,9 @@ class Module
     /**
      * @param $name
      * @param $files
-     * @return array|bool|string
+     * @return
      */
-    public static function generateModelAndMigration($name,$files): array|bool|string
+    public static function generateModelAndMigration( $name, $files , $field )
     {
         try {
             if(!self::checkFile(app_path('Models/' . ucfirst($name) . '.php'))){
@@ -124,7 +118,7 @@ class Module
                 Artisan::call('make:model',['name'=> self::ucFirst($name), '-m' => 'default']);
                 $result = explode("\r\n",Artisan::output());
 
-                if( $result[0] != "Model created successfully."){
+                if(!str_contains( $result[0],"created successfully.")){
                     return false;
                 }
 
@@ -133,8 +127,10 @@ class Module
                 $search = '//add your model content here';
                 $replace = $fileAttribute. "\n".  $search;
                 self::addFileContent($search, $replace, app_path('Models/' . ucfirst($name) . '.php'));
-
-                return str_replace("Created Migration: ", "", $result[1] );
+                $migration = str_replace("INFO  Created migration [", "", $result[1] );
+                $actualMigrationFile = trim(str_replace('].','',$migration));
+                self::generateSchema($actualMigrationFile , $field );
+                return $actualMigrationFile;
             }else{
                 return false;
             }
@@ -167,9 +163,9 @@ class Module
     /**
      * @param $name
      * @param array $fileData
-     * @return bool|\Exception|Exception
+     * @return
      */
-    public static function generateController($name, array $fileData = []): Exception|\Exception|bool
+    public static function generateController($name, array $fileData = [])
     {
         try {
             if (!self::checkFile(app_path('Http/Controllers/Backend/' . ucfirst($name) . 'Controller.php'))) {
@@ -187,7 +183,7 @@ class Module
 
                 self::addFileContent($searchFiles, $files, app_path('Http/Controllers/Backend/' . ucfirst($name) . 'Controller.php'));
                 self::addFileContent($searchModelName, $modelName, app_path('Http/Controllers/Backend/' . ucfirst($name) . 'Controller.php'));
-                return $result[0] == "Controller created successfully.";
+                return str_contains($result[0], "created successfully.");
             } else {
                 return false;
             }

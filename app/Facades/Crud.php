@@ -16,18 +16,20 @@ class Crud
     public function test(){
         return $this->input('email');
     }
+
     /**
      * @param $model
      * @param string $type
      * @param array $files
+     * @param array $relation
      * @return JsonResponse
      * @throws Exception
      */
-    public function getAll($model, string $type = 'datatable' , array $files = []): JsonResponse
+    public function getAll($model, string $type = 'datatable' , array $files = [], array $relation = [])
     {
-        $data = App::make( 'App\\Models\\'.$model )->where('is_deleted','no')->get();
-        if($type  == "api"){
-            return response()->json(['data'=>$data]);
+        $data = App::make( 'App\\Models\\'.$model )->where('is_deleted','no')->with($relation)->get();
+        if($type  == 'api'){
+            return $data;
         }
         $dates =  Datatables::of($data)
             ->addIndexColumn()
