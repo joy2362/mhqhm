@@ -17,11 +17,5 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        if (User::count() == 0){
-            User::updateOrCreate(
-                ['name' => "Abdullah zahid joy",
-                    'password' => Hash::make('123456')],
-                ['email' => "abdullahzahidjoy@gmail.com"]);
-        }
     }
 }

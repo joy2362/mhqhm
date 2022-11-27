@@ -7,7 +7,6 @@ use App\Http\Controllers\Backend\Core\RecycleBinController;
 use App\Http\Controllers\Backend\Core\DashboardController;
 use App\Http\Controllers\Backend\Core\AdminRoleController;
 use App\Http\Controllers\Backend\Core\UserController;
-use App\Http\Controllers\Backend\Core\UserRoleController;
 use App\Http\Controllers\Backend\Core\ProfileController;
 use App\Http\Controllers\Backend\System\ModuleController;
 use App\Http\Controllers\Backend\System\SettingController;
@@ -61,7 +60,6 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
     Route::group(['middleware'=>'permission:admin'],function(){
         Route::resource('admin-role', AdminRoleController::Class,['names'=>"AdminRole"]);
         Route::resource('admin', AdminController::Class,['names'=>"Admin"]);
-        Route::resource('user-role', UserRoleController::Class,['names'=>"UserRole"]);
 
         Route::resource('setting', SettingController::Class,['names'=>"Setting"])->only('index','store','update');
         Route::get('setting/{id}', [SettingController::Class,"destroy"])->name('Setting.destroy');

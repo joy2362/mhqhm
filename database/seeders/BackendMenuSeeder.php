@@ -89,12 +89,6 @@ class BackendMenuSeeder extends Seeder
         ];
         $userSub = [
             [
-                'title' => 'User Role',
-                'icon' => "fa-solid fa-user-shield",
-                'sorting' => 1,
-                'route' => 'UserRole.index'
-            ],
-            [
                 'title' => 'All Student',
                 'icon' => "fa-solid fa-user-group",
                 'sorting' => 2,
@@ -151,7 +145,7 @@ class BackendMenuSeeder extends Seeder
 
         ];
         //create sub menu
-        BackendMenu::where("title","User")->first()->subMenu()->createMany($userSub);
+        BackendMenu::where("title","Student")->first()->subMenu()->createMany($userSub);
         BackendMenu::where("title","Admin")->first()->subMenu()->createMany($adminSub);
         BackendMenu::where("title","System Setting")->first()->subMenu()->createMany($settingSub);
         BackendMenu::where("title","Master Setup")->first()->subMenu()->createMany($masterSub);

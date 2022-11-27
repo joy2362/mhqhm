@@ -20,8 +20,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
+        'username',
         'password',
         "avatar"
     ];
@@ -52,6 +52,14 @@ class User extends Authenticatable
         if (!empty($value)) {
             return Storage::url($value) ;
         }
-        return null;
+        return Storage::url("upload/user/avatar/default.jpg");
+    }
+
+    public function details(){
+        return $this->hasOne(UserDetails::class);
+    }
+
+    public function group(){
+        return $this->belongsToMany(Group::class,'user_groups','user_id',"group_id",);
     }
 }

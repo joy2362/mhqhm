@@ -1,11 +1,11 @@
 @extends('admin.layout.master')
 @section('title')
-   User
+   Student
 @endsection
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
-            <h1 class="h3 fw-bold">User
+            <h1 class="h3 fw-bold">Student
                 @if(Auth::guard('admin')->user()->can('create User'))
                     <a href="{{route('User.create')}}" class="float-end rounded btn btn-sm btn-primary" ><i class="fa-solid fa-plus"></i></a>
                 @endif
@@ -17,10 +17,10 @@
                             <table class="table table-border text-center" id="data">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>Id</th>
                                     <th>Avatar</th>
                                     <th>Name</th>
-                                    <th>Email</th>
+                                    <th>Group</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -28,10 +28,11 @@
                                 <tbody>
                                 @foreach($users as $row)
                                     <tr>
-                                        <td> {{ $loop->index + 1 }}</td>
+                                        <td> {{ $row->username }}</td>
                                         <td><a href="{{$row->avatar}}"><img src="{{$row->avatar}}" alt="{{$row->name}}" width="100" height="70"></a> </td>
-                                        <td> {{ $row->name }}</td>
-                                        <td> {{ $row->email }}</td>
+
+                                        <td> {{ $row->details->first_name ." ".$row->details->last_name }}</td>
+                                        <td> {{ $row->group[0]->name }}</td>
                                         <td> <span @class(["badge", "bg-success"=>$row->status == "active" , "bg-danger"=>$row->status == "inactive" ]) >{{ ucfirst($row->status) }}</span></td>
                                         <td>
                                             <div class="dropdown">
