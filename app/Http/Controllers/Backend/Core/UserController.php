@@ -33,9 +33,13 @@ class UserController extends BaseController
      */
     public function create(Request $request)
     {
+        $years = [];
+        for($i=2010;$i<=now()->format("Y");$i++){
+            $years[]=$i;
+        }
         $groups = Group::all();
-        $type = $request->type ?? "create";
-        return view('admin.pages.user.create',[ "groups"=>$groups,"type" => $type]);
+        $type = $request->type ?? "admission";
+        return view('admin.pages.user.create',[ "groups"=>$groups,"type" => $type , 'years'=>$years]);
 
     }
 
@@ -51,20 +55,20 @@ class UserController extends BaseController
 
         try {
             DB::beginTransaction();
-            $userName = $this->generateUserName($request->group_id);
+           // dd($request->all());
+            $userName = $this->generateUserName($request->group_id , $request->year);
             $password = $this->generatePassword($userName);
 
-            $user = $request->only('email');
+            $user = $request->only('email','group_id');
             $user['username'] = $userName;
             $user['password'] = Hash::make($password);
-
-
             $file = $request->avatar;
             if(!empty($file)){
                 $user['avatar'] = $this->upload($file , "user/avatar");
             }
 
             $details = $request->except("avatar","email","group_id");
+
             $student = User::create($user);
             $student->details()->create($details);
             $group = $request->only("group_id");
@@ -75,6 +79,7 @@ class UserController extends BaseController
             DB::commit();
         }catch (\Exception $ex){
             DB::rollBack();
+            dd($ex->getMessage());
             $notification = array(
                 'messege' => "something went wrong!!!",
                 'alert-type' => 'error'
@@ -167,7 +172,6 @@ class UserController extends BaseController
             'parent_contact_number' => 'required|regex:/(01)[0-9]{9}/',
             'contact_number' => 'nullable|regex:/(01)[0-9]{9}/',
             'father_occupation' => 'required',
-
             'present_address' => 'required',
             'permanent_address' => 'required',
             'group_id' => 'required|numeric',
@@ -175,18 +179,23 @@ class UserController extends BaseController
     }
 
 
-    public function generateUserName($id){
-        $newId = now()->format('Y').str_pad($id, 3, '0', STR_PAD_LEFT);
+    public function generateUserName($id, $year = ""){
+        $newId = $year ?? now()->format('Y');
+        $newId .= str_pad($id, 3, '0', STR_PAD_LEFT);
+
         $group = group::with('student')->find($id);
-        if(count($group->student) == 0){
+        $users = User::where("username",'like','%' .$newId . "%")->orderBy('id', 'DESC')->get();
+
+        if(count($group->student) == 0 || count($users) == 0){
             $newId .= str_pad(1, 3, '0', STR_PAD_LEFT);
         }else{
-
+            $newId = $users[0]->username +=1;
         }
+
         return $newId;
     }
 
     public function generatePassword($userName){
-        return $userName .Str::random(3);
+        return $userName . Str::random(3);
     }
 }

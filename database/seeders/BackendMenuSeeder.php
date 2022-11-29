@@ -89,6 +89,12 @@ class BackendMenuSeeder extends Seeder
         ];
         $userSub = [
             [
+                'title' => 'Admission',
+                'icon' => "fa-solid fa-user-plus",
+                'sorting' => 1,
+                'route' => 'User.create'
+            ],
+            [
                 'title' => 'All Student',
                 'icon' => "fa-solid fa-user-group",
                 'sorting' => 2,

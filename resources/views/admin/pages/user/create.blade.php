@@ -136,14 +136,19 @@
                                             </div>
                                         </div>
                                         @if($type == "create")
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-floating g-2 mb-3">
-                                                    <input type="number" class="form-control @error('id') is-invalid @enderror" placeholder="Id" id="userName" name="id" value="{{ old('id') }}">
-                                                    <label for="userName">Id <span class="text-danger">*</span></label>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-floating g-2 mb-3">
+                                                        <select class="form-select @error('year') is-invalid @enderror" id="year" aria-label="Year" name="year" >
+                                                            <option selected value="">Choose one</option>
+                                                            @foreach($years as $row)
+                                                                <option  value="{{$row}}">{{$row}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <label for="year">Admission Year<span class="text-danger">*</span></label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                         @endif
                                     </div>
                                 </div>
@@ -160,7 +165,6 @@
 @endsection
 @section('script')
     <script>
-        $(document).ready(function(){
-        });
+        $(document).ready(function(){});
     </script>
 @endsection

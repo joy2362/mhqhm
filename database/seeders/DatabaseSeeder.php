@@ -24,11 +24,11 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             BackendMenuSeeder::class,
-            AdminSeeder::class,
-            UserSeeder::class,
-            SettingSeeder::class,
-            RoleSeeder::class,
-            PermissionSeeder::class,
+//            AdminSeeder::class,
+//            UserSeeder::class,
+//            SettingSeeder::class,
+//            RoleSeeder::class,
+//            PermissionSeeder::class,
         ]);
     }
 }
