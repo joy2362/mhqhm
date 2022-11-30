@@ -55,7 +55,7 @@ class UserController extends BaseController
 
         try {
             DB::beginTransaction();
-           // dd($request->all());
+
             $userName = $this->generateUserName($request->group_id , $request->year);
             $password = $this->generatePassword($userName);
 
@@ -67,7 +67,7 @@ class UserController extends BaseController
                 $user['avatar'] = $this->upload($file , "user/avatar");
             }
 
-            $details = $request->except("avatar","email","group_id");
+            $details = $request->except("avatar","email","group_id","year");
 
             $student = User::create($user);
             $student->details()->create($details);
@@ -77,9 +77,13 @@ class UserController extends BaseController
             UserGroup::create($group);
 
             DB::commit();
+            $notification = [
+                'messege' => 'Student Create Successfully!',
+                'alert-type' => 'success'
+            ];
+            return Redirect()->route('User.index')->with($notification);
         }catch (\Exception $ex){
             DB::rollBack();
-            dd($ex->getMessage());
             $notification = array(
                 'messege' => "something went wrong!!!",
                 'alert-type' => 'error'
@@ -87,11 +91,7 @@ class UserController extends BaseController
             return Redirect()->back()->with($notification);
         }
 
-        $notification = [
-            'messege' => 'Student Create Successfully!',
-            'alert-type' => 'success'
-        ];
-        return Redirect()->route('User.index')->with($notification);
+
     }
 
     /**
@@ -177,7 +177,6 @@ class UserController extends BaseController
             'group_id' => 'required|numeric',
         ]);
     }
-
 
     public function generateUserName($id, $year = ""){
         $newId = $year ?? now()->format('Y');

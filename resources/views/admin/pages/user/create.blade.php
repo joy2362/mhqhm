@@ -152,8 +152,6 @@
                                         @endif
                                     </div>
                                 </div>
-
-                                <input type="hidden" name="type" value="{{$type}}">
                                 <button type="submit" class="btn btn-success btn-lg g-2 ">Save</button>
                             </form>
                         </div>

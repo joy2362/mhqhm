@@ -148,6 +148,12 @@ class BackendMenuSeeder extends Seeder
                 'sorting' => 4,
                 'route' => 'Subject.index'
             ],
+            [
+                'title' => 'Group Subject',
+                'icon' => "fa-solid fa-users-rectangle",
+                'sorting' => 4,
+                'route' => 'GroupSubject.index'
+            ],
 
         ];
         //create sub menu

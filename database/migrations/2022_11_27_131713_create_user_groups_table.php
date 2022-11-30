@@ -16,13 +16,10 @@ return new class extends Migration
         Schema::create('user_groups', function (Blueprint $table) {
             $table->id();
             $table->string('type')->default("admission");
-            //add your columns name from here
             $table->unsignedBigInteger('group_id');
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            //mandatory fields
             $table->userLog();
             $table->status();
 

@@ -1,13 +1,13 @@
 <!-- @abdullah zahid joy-->
 @extends('admin.layout.master')
 @section('title')
-    FeeType
+    Fee Type
 @endsection
 @section('content')
 <main class="content">
 	<div class="container-fluid p-0">
 
-		<h1 class="h3 fw-bold">FeeType
+		<h1 class="h3 fw-bold">Fee Type
 			<a href="#" class="float-end btn btn-sm btn-primary rounded" data-bs-toggle="modal" data-bs-target="#add"> <i class="fa-solid fa-plus"></i> </a>
 		</h1>
 
@@ -16,24 +16,24 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="add_Label">Add FeeType</h5>
+						<h5 class="modal-title" id="add_Label">Add Fee Type</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<form method="post" enctype="multipart/form-data" id="addForm">
 						<div class="modal-body">
 							<ul class="alert alert-danger d-none" id="save_errorList"></ul>
 							<div class="form-group mb-3"> 
-	<label for="name" class="form-label ">Name</label>
-	<input type="text" class="form-control" id="name" name="name"  required>
-</div>
-<div class="form-group mb-3"> 
-	<label for="bn_name" class="form-label ">Bn_name</label>
-	<input type="text" class="form-control" id="bn_name" name="bn_name"  required>
-</div>
-<div class="form-group mb-3"> 
-	<label for="arabic_name" class="form-label ">Arabic_name</label>
-	<input type="text" class="form-control" id="arabic_name" name="arabic_name"  required>
-</div>
+							<label for="name" class="form-label ">Name</label>
+							<input type="text" class="form-control" id="name" name="name"  required>
+						</div>
+						<div class="form-group mb-3">
+							<label for="bn_name" class="form-label ">Bn name</label>
+							<input type="text" class="form-control" id="bn_name" name="bn_name"  required>
+						</div>
+						<div class="form-group mb-3">
+							<label for="arabic_name" class="form-label ">Arabic name</label>
+							<input type="text" class="form-control" id="arabic_name" name="arabic_name"  required>
+						</div>
 
 						</div>
 						<div class="modal-footer">
