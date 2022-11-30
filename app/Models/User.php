@@ -23,7 +23,8 @@ class User extends Authenticatable
         'email',
         'username',
         'password',
-        "avatar"
+        "avatar",
+        "group_id"
     ];
 
     /**
@@ -60,6 +61,6 @@ class User extends Authenticatable
     }
 
     public function group(){
-        return $this->belongsToMany(Group::class,'user_groups','user_id',"group_id",);
+        return $this->belongsTo(Group::class);
     }
 }

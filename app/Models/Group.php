@@ -15,7 +15,7 @@ class Group extends BaseModel
     }
 
     public function student(){
-        return $this->belongsToMany(User::class,'user_groups','group_id','user_id');
+        return $this->hasMany(User::class);
     }
 
     public function subject(){
