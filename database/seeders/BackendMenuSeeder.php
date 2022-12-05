@@ -15,6 +15,8 @@ class BackendMenuSeeder extends Seeder
      */
     public function run()
     {
+
+        BackendMenu::query()->truncate();
         $menus = [
             [
                 'parent_id' => null,
@@ -40,30 +42,37 @@ class BackendMenuSeeder extends Seeder
             ],
             [
                 'parent_id' => null,
+                'title' => 'Fee',
+                'icon' => "fa-solid fa-user" ,
+                'sorting' => 4,
+                'route' => null,
+            ],
+            [
+                'parent_id' => null,
                 'title' => 'Admin',
                 'icon' => "fa-solid fa-user-secret",
-                'sorting' => 4,
+                'sorting' => 5,
                 'route' => null,
             ],
             [
                 'parent_id' => null,
                 'title' => 'Donation',
                 'icon' => "fa-solid fa-hand-holding-dollar",
-                'sorting' => 5,
+                'sorting' => 6,
                 'route' => "Donation.index",
             ],
             [
                 'parent_id' => null,
                 'title' => 'System Setting',
                 'icon' => "fa-solid fa-gears",
-                'sorting' => 5,
+                'sorting' => 7,
                 'route' => null,
             ],
             [
                 'parent_id' => null,
                 'title' => 'Recycle Bin',
                 'icon' => "fa-solid fa-trash-can",
-                'sorting' => 6,
+                'sorting' => 8,
                 'route' => 'RecycleBin.index'
             ],
 
@@ -73,6 +82,7 @@ class BackendMenuSeeder extends Seeder
                 BackendMenu::firstOrCreate($menu);
             }
         }
+
         $adminSub = [
             [
                 'title' => 'Admin Role',
@@ -101,7 +111,6 @@ class BackendMenuSeeder extends Seeder
                 'route' => 'User.index'
             ],
         ];
-
         $settingSub = [
             [
                 'title' => 'Module',
@@ -156,6 +165,15 @@ class BackendMenuSeeder extends Seeder
             ],
 
         ];
+        $feeSub = [
+            [
+                'title' => 'Payment',
+                'icon' => "fa-solid fa-users-rectangle",
+                'sorting' => 1,
+                'route' => 'Payment.index'
+            ]
+        ];
+
         //create sub menu
         BackendMenu::where("title","Student")->first()->subMenu()->createMany($userSub);
         BackendMenu::where("title","Admin")->first()->subMenu()->createMany($adminSub);

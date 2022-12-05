@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\Core;
 
 use App\Http\Controllers\Base\BaseController;
+use App\Models\Fee;
 use App\Models\Group;
 use App\Models\User;
 use App\Models\UserGroup;
@@ -75,6 +76,16 @@ class UserController extends BaseController
             $group["user_id"] = $student->id;
 
             UserGroup::create($group);
+
+            $fees = Fee::where("group_id",$request->group_id)->get();
+            foreach ($fees as $fee ){
+                $feeDetails["fee_type_id"] = $fee->fee_type_id;
+                $feeDetails["total_amount"] = $fee->amount;
+                $feeDetails["total_due"] = $fee->amount;
+                $feeDetails["date"] = now()->format("m-Y");
+
+                $student->invoice()->create($feeDetails);
+            }
 
             DB::commit();
             $notification = [

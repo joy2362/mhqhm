@@ -60,6 +60,10 @@ class User extends Authenticatable
         return $this->hasOne(UserDetails::class);
     }
 
+    public function invoice(){
+        return $this->hasOne(Invoice::class);
+    }
+
     public function group(){
         return $this->belongsTo(Group::class);
     }

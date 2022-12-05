@@ -27,13 +27,20 @@
 							<input type="text" class="form-control" id="name" name="name"  required>
 						</div>
 						<div class="form-group mb-3">
-							<label for="bn_name" class="form-label ">Bn name</label>
-							<input type="text" class="form-control" id="bn_name" name="bn_name"  required>
+							<label for="bn_name" class="form-label ">Bangla name</label>
+							<input type="text" class="form-control" id="bn_name" name="bn_name"  >
 						</div>
+
 						<div class="form-group mb-3">
-							<label for="arabic_name" class="form-label ">Arabic name</label>
-							<input type="text" class="form-control" id="arabic_name" name="arabic_name"  required>
+							<label for="type_id" class="form-label ">Type</label>
+							<select class="form-select" id="type_id" name="type"  required>
+								<option selected>Choose...</option>
+								<option value="monthly">Monthly</option>
+								<option value="fixed">One Time</option>
+
+							</select>
 						</div>
+
 
 						</div>
 						<div class="modal-footer">
@@ -60,17 +67,22 @@
 							<input type="hidden" id="edit_id" name="id" >
 
 							<div class="form-group mb-3 edit_name"> 
-	<label for="edit_name" class="form-label ">Name</label>
-	<input type="text" class="form-control" id="edit_name" name="name"  required>
-</div>
-<div class="form-group mb-3 edit_bn_name"> 
-	<label for="edit_bn_name" class="form-label ">Bn_name</label>
-	<input type="text" class="form-control" id="edit_bn_name" name="bn_name"  required>
-</div>
-<div class="form-group mb-3 edit_arabic_name"> 
-	<label for="edit_arabic_name" class="form-label ">Arabic_name</label>
-	<input type="text" class="form-control" id="edit_arabic_name" name="arabic_name"  required>
-</div>
+								<label for="edit_name" class="form-label ">Name</label>
+								<input type="text" class="form-control" id="edit_name" name="name"  required>
+							</div>
+							<div class="form-group mb-3 edit_bn_name">
+								<label for="edit_bn_name" class="form-label ">Bangla name</label>
+								<input type="text" class="form-control" id="edit_bn_name" name="bn_name"  >
+							</div>
+							<div class="form-group mb-3">
+								<label for="edit_type" class="form-label ">Type</label>
+								<select class="form-select" id="edit_type" name="type"  required>
+									<option selected>Choose...</option>
+									<option value="monthly">Monthly</option>
+									<option value="fixed">One Time</option>
+
+								</select>
+							</div>
 
 
 							<div class="form-group mb-3 edit_status">
@@ -106,9 +118,8 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th> 
-<th>Bn_name</th> 
-<th>Arabic_name</th> 
-
+								<th>Bangla name</th>
+								<th>Type</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -152,9 +163,8 @@
 					columns:[
 						{data:"id",name:'#'},
 						{data:'name',name:'Name'}, 
-{data:'bn_name',name:'Bn_name'}, 
-{data:'arabic_name',name:'Arabic_name'}, 
-
+						{data:'bn_name',name:'Bangla name'},
+						{data:'type',name:'Type'},
 						{data:"actions",name:'Actions'},
 					]
 				});
@@ -182,10 +192,11 @@
             e.preventDefault();
             edit_btn_handler(model,$(this).val()).then(function(res){
                 if(res.status === 200){
+					console.log(res.data);
                     $('#edit_id').val(res.data.id);
                     $('#edit_name').val(res.data.name);
-$('#edit_bn_name').val(res.data.bn_name);
-$('#edit_arabic_name').val(res.data.arabic_name);
+					$('#edit_bn_name').val(res.data.bn_name);
+					$('#edit_type').val(res.data.type);
 
                     $(`.edit_status > input[type="radio"]`).each((index , input) =>{
                         if(res.data.status === input.value){
