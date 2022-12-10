@@ -18,9 +18,14 @@ class AdminSeeder extends Seeder
     {
         if (Admin::count() < 1){
             Admin::updateOrCreate(
-                ['name' => "Abdullah zahid joy",
-                    'password' => Hash::make('1234')],
-                ['email' => "abdullahzahidjoy@gmail.com"]);
+                [
+                    'name' => "Abdullah zahid joy",
+                    'avatar' => "upload/admin/avatar/221207071706-6677.jpg",
+                    'password' => Hash::make('1234')
+                ],
+                [
+                    'email' => "abdullahzahidjoy@gmail.com"
+                ]);
         }
 
     }
