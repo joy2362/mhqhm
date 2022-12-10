@@ -83,11 +83,16 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
         Route::get('dashboard', [DashboardController::class,'index'])->name('Dashboard.index');
 
         Route::group(['as'=>'Payment','prefix'=>'payment'], function (){
-            Route::get('/', [PaymentController::class,'index'])->name('.index');
-            Route::get('/due', [PaymentController::class,'due'])->name('.due');
-            Route::get('/invoice', [PaymentController::class,'invoice'])->name('.invoice');
-            Route::post('/due', [PaymentController::class,'pay'])->name('.pay');
+            Route::controller(PaymentController::class)->group(function() {
+                Route::get('/', 'index')->name('.index');
+                Route::get('/due', 'due')->name('.due');
+                Route::get('invoice', 'invoice')->name('.invoice');
+                Route::post('due', 'pay')->name('.pay');
+                Route::get('pdf/{id}', 'pdf')->name('.pdf');
+            });
         });
+
+
         //module routes
         Route::resource('donation', DonationController::Class,['names'=>'Donation']);
         Route::resource('groupSubject', GroupSubjectController::Class,['names'=>'GroupSubject']);

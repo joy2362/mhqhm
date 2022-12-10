@@ -43,7 +43,7 @@ class BackendMenuSeeder extends Seeder
             [
                 'parent_id' => null,
                 'title' => 'Fee',
-                'icon' => "fa-solid fa-user" ,
+                'icon' => "fa-solid fa-receipt" ,
                 'sorting' => 4,
                 'route' => null,
             ],

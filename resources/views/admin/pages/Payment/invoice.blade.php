@@ -14,7 +14,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <table class="table caption-top">
+                                    <table class="table caption-top" id="data">
                                         <thead>
                                         <tr>
                                             <th scope="col">Id</th>
@@ -22,23 +22,24 @@
                                             <th scope="col">Group</th>
                                             <th scope="col">Fee Type</th>
                                             <th scope="col">Amount</th>
-                                            <th scope="col">paid</th>
                                             <th scope="col">Month</th>
                                             <th scope="col">Status</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($invoices as $invoice )
+                                        @foreach($payments as $payment )
                                             <tr>
-
-                                                <td>{{$invoice->user->username ?? "" }}</td>
-                                                <td>{{$invoice->user->details->first_name . " " .$invoice->user->details->last_name }}</td>
-                                                <td>{{$invoice->user->group->name  }}  {{$invoice->user->group->bn_name ? "/ ".$invoice->user->group->bn_name : "" }}</td>
-                                                <td>{{$invoice->feeType->name}}</td>
-                                                <td>{{$invoice->total_amount}}</td>
-                                                <td>{{$invoice->total_paid}}</td>
-                                                <td>{{$invoice->date}}</td>
-                                                <td>{{ucfirst($invoice->status)}}</td>
+                                                <td>{{$payment->invoice->user->username ?? "" }}</td>
+                                                <td>{{$payment->invoice->user->details->first_name . " " .$payment->invoice->user->details->last_name }}</td>
+                                                <td>{{$payment->invoice->user->group->name  }}  {{$payment->invoice->user->group->bn_name ? "/ ".$payment->invoice->user->group->bn_name : "" }}</td>
+                                                <td>{{$payment->invoice->feeType->name}}</td>
+                                                <td> {{$payment->amount}} </td>
+                                                <td>{{$payment->created_at->format("d-m-Y")}}</td>
+                                                <td>{{$payment->status}}</td>
+                                                <td>
+                                                    <a class="btn btn-success rounded btn-sm px-3 " type="button" href="{{route('Payment.pdf',$payment->id)}}">Print</a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                         </tbody>
@@ -56,6 +57,10 @@
 
 @section('script')
     <script>
-        document.addEventListener("DOMContentLoaded", function() {});
+        document.addEventListener("DOMContentLoaded", function() {
+            $('#data').DataTable({
+                "order":false
+            });
+        });
     </script>
 @endsection

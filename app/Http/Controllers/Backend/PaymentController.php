@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Base\BaseController;
 use App\Models\Invoice;
+use App\Models\Payment;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +41,7 @@ class PaymentController extends BaseController
                 'messege' => "payment Successful.",
                 'alert-type' => 'success'
             );
-            return Redirect()->route('Payment.index')->with($notification);
+            return Redirect()->route('Payment.invoice')->with($notification);
 
         }catch (Exception $ex){
             DB::rollBack();
@@ -62,11 +64,26 @@ class PaymentController extends BaseController
     }
 
     public function invoice(){
-        $invoices = Invoice::whereHas("payments")->with(['feeType:id,name,bn_name', 'user'=> function($q){
-            $q->with(['details','group:id,name,bn_name']);
-        }])->get();
+        $payments = Payment::with(['invoice' => function($q){
+            $q->with(['feeType:id,name,bn_name' , 'user'=> function($q){
+                $q->with(['details','group:id,name,bn_name']);
+            } ]);
+        }])->orderByDesc("id")->get();
 
-        return view('admin.pages.payment.invoice' , ['invoices' => $invoices]);
+        return view('admin.pages.payment.invoice' , ['payments' => $payments]);
+    }
+
+    public function pdf($id){
+        $payment = Payment::with(['invoice' => function($q){
+            $q->with(['feeType:id,name,bn_name' , 'user'=> function($q){
+                $q->with(['details','group:id,name,bn_name']);
+            } ]);
+        }])->orderByDesc("id")->find($id);
+
+        $pdf = PDF::loadView('pdf.invoice' , ["payment"=>$payment]);
+
+        return $pdf->stream('itsolutionstuff.pdf');
+
     }
 
 }
