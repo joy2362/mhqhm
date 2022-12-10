@@ -27,12 +27,8 @@
 								<input type="text" class="form-control" id="name" name="name"  required>
 							</div>
 							<div class="form-group mb-3">
-								<label for="bn_name" class="form-label ">Bn name</label>
+								<label for="bn_name" class="form-label ">Bangla name</label>
 								<input type="text" class="form-control" id="bn_name" name="bn_name" >
-							</div>
-							<div class="form-group mb-3">
-								<label for="araic_name" class="form-label ">Araic name</label>
-								<input type="text" class="form-control" id="araic_name" name="araic_name" >
 							</div>
 
 						</div>
@@ -64,14 +60,9 @@
 								<input type="text" class="form-control" id="edit_name" name="name"  required>
 							</div>
 							<div class="form-group mb-3 edit_bn_name">
-								<label for="edit_bn_name" class="form-label ">Bn name</label>
+								<label for="edit_bn_name" class="form-label ">Bangla name</label>
 								<input type="text" class="form-control" id="edit_bn_name" name="bn_name" >
 							</div>
-							<div class="form-group mb-3 edit_araic_name">
-								<label for="edit_araic_name" class="form-label ">Araic_name</label>
-								<input type="text" class="form-control" id="edit_araic_name" name="araic_name" >
-							</div>
-
 
 							<div class="form-group mb-3 edit_status">
                                 <label  >Status: </label>
@@ -106,9 +97,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th> 
-								<th>Bn name</th>
-								<th>Araic_name</th>
-
+								<th>Bangla name</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -152,9 +141,7 @@
 					columns:[
 						{data:"id",name:'#'},
 						{data:'name',name:'Name'}, 
-						{data:'bn_name',name:'Bn name'},
-						{data:'araic_name',name:'Araic_name'},
-
+						{data:'bn_name',name:'Bangla name'},
 						{data:"actions",name:'Actions'},
 					]
 				});
@@ -185,7 +172,6 @@
                     $('#edit_id').val(res.data.id);
                     $('#edit_name').val(res.data.name);
 					$('#edit_bn_name').val(res.data.bn_name);
-					$('#edit_araic_name').val(res.data.araic_name);
 
                     $(`.edit_status > input[type="radio"]`).each((index , input) =>{
                         if(res.data.status === input.value){

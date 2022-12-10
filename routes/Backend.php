@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\Core\DashboardController;
 use App\Http\Controllers\Backend\Core\AdminRoleController;
 use App\Http\Controllers\Backend\Core\UserController;
 use App\Http\Controllers\Backend\Core\ProfileController;
+use App\Http\Controllers\Backend\PaymentController;
 use App\Http\Controllers\Backend\System\ModuleController;
 use App\Http\Controllers\Backend\System\SettingController;
 use App\Http\Controllers\Backend\System\SystemController;
@@ -68,6 +69,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
 
         Route::resource('user', UserController::Class,['names'=>'User']);
         Route::get('user/{id}/status/{status}', [UserController::class,'changeStatus'])->name('User.changeStatus');
+        Route::get('user/{id}/admission', [UserController::class,'print'])->name('User.print');
 
         Route::group(['as'=>'RecycleBin','prefix'=>'recycle','middleware'=>'permission:admin'],function (){
             Route::get('/', [RecycleBinController::class,'index'])->name('.index');
@@ -81,13 +83,23 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
         });
         Route::get('dashboard', [DashboardController::class,'index'])->name('Dashboard.index');
 
+        Route::group(['as'=>'Payment','prefix'=>'payment'], function (){
+            Route::controller(PaymentController::class)->group(function() {
+                Route::get('/', 'index')->name('.index');
+                Route::get('/due', 'due')->name('.due');
+                Route::get('invoice', 'invoice')->name('.invoice');
+                Route::post('due', 'pay')->name('.pay');
+                Route::get('pdf/{id}', 'pdf')->name('.pdf');
+            });
+        });
+
         //module routes
- 	Route::resource('donation', DonationController::Class,['names'=>'Donation']);
- 	Route::resource('groupSubject', GroupSubjectController::Class,['names'=>'GroupSubject']);
- 	Route::resource('subject', SubjectController::Class,['names'=>'Subject']);
- 	Route::resource('fee', FeeController::Class,['names'=>'Fee']);
- 	Route::resource('feeType', FeeTypeController::Class,['names'=>'FeeType']);
- 	Route::resource('group', GroupController::Class,['names'=>'Group']);
+        Route::resource('donation', DonationController::Class,['names'=>'Donation']);
+        Route::resource('groupSubject', GroupSubjectController::Class,['names'=>'GroupSubject']);
+        Route::resource('subject', SubjectController::Class,['names'=>'Subject']);
+        Route::resource('fee', FeeController::Class,['names'=>'Fee']);
+        Route::resource('feeType', FeeTypeController::Class,['names'=>'FeeType']);
+        Route::resource('group', GroupController::Class,['names'=>'Group']);
 
     });
 });

@@ -18,9 +18,6 @@ return new class extends Migration
             //add your columns name from here
  	 	 	$table->string('name',255);
             $table->string('bn_name',255)->nullable();
-            $table->string('araic_name',255)->nullable();
-
-
             //mandatory fields
             $table->userLog();
             $table->status();

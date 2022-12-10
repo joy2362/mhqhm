@@ -8,7 +8,6 @@
             <div class="mb-3">
                 <h1 class="h3 d-inline align-middle">Application Setting
                     <button class="float-end btn btn-sm btn-primary rounded"  data-bs-toggle="modal" data-bs-target="#add" > <i class="fa-solid fa-plus"></i> </button>
-
                 </h1>
             </div>
 

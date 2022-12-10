@@ -17,10 +17,8 @@ return new class extends Migration
             $table->id();
             //add your columns name from here
  	 	 	$table->string('name',255);
-            $table->string('bn_name',255);
-            $table->string('arabic_name',255);
-
-
+            $table->string('bn_name',255)->nullable();
+            $table->enum('type',["monthly","fixed"]);
             //mandatory fields
             $table->userLog();
             $table->status();

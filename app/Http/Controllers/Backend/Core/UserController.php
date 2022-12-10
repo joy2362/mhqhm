@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Backend\Core;
 
 use App\Http\Controllers\Base\BaseController;
+use App\Models\Fee;
 use App\Models\Group;
 use App\Models\User;
 use App\Models\UserGroup;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +42,6 @@ class UserController extends BaseController
         $groups = Group::all();
         $type = $request->type ?? "admission";
         return view('admin.pages.user.create',[ "groups"=>$groups,"type" => $type , 'years'=>$years]);
-
     }
 
     /**
@@ -55,7 +56,7 @@ class UserController extends BaseController
 
         try {
             DB::beginTransaction();
-           // dd($request->all());
+
             $userName = $this->generateUserName($request->group_id , $request->year);
             $password = $this->generatePassword($userName);
 
@@ -67,7 +68,7 @@ class UserController extends BaseController
                 $user['avatar'] = $this->upload($file , "user/avatar");
             }
 
-            $details = $request->except("avatar","email","group_id");
+            $details = $request->except("avatar","email","group_id","year");
 
             $student = User::create($user);
             $student->details()->create($details);
@@ -76,10 +77,24 @@ class UserController extends BaseController
 
             UserGroup::create($group);
 
+            $fees = Fee::where("group_id",$request->group_id)->get();
+            foreach ($fees as $fee ){
+                $feeDetails["fee_type_id"] = $fee->fee_type_id;
+                $feeDetails["total_amount"] = $fee->amount;
+                $feeDetails["total_due"] = $fee->amount;
+                $feeDetails["date"] = now()->format("m-Y");
+
+                $student->invoice()->create($feeDetails);
+            }
+
             DB::commit();
+            $notification = [
+                'messege' => 'Student Create Successfully!',
+                'alert-type' => 'success'
+            ];
+            return Redirect()->route('User.index')->with($notification);
         }catch (\Exception $ex){
             DB::rollBack();
-            dd($ex->getMessage());
             $notification = array(
                 'messege' => "something went wrong!!!",
                 'alert-type' => 'error'
@@ -87,11 +102,7 @@ class UserController extends BaseController
             return Redirect()->back()->with($notification);
         }
 
-        $notification = [
-            'messege' => 'Student Create Successfully!',
-            'alert-type' => 'success'
-        ];
-        return Redirect()->route('User.index')->with($notification);
+
     }
 
     /**
@@ -160,6 +171,13 @@ class UserController extends BaseController
         return redirect()->back()->with($notification);
     }
 
+    public function print($id ){
+        $user = User::with(['group','details'])->find($id);
+
+        $pdf = PDF::loadView('pdf.admission' , ["user" => $user]);
+
+        return $pdf->stream('itsolutionstuff.pdf');
+    }
 
     public function storeValidation (Request $request){
         $request->validate([
@@ -178,7 +196,6 @@ class UserController extends BaseController
         ]);
     }
 
-
     public function generateUserName($id, $year = ""){
         $newId = $year ?? now()->format('Y');
         $newId .= str_pad($id, 3, '0', STR_PAD_LEFT);
@@ -191,7 +208,6 @@ class UserController extends BaseController
         }else{
             $newId = $users[0]->username +=1;
         }
-
         return $newId;
     }
 

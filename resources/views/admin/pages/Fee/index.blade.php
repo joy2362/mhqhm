@@ -33,10 +33,10 @@
 							</div>
 							<div class="form-group mb-3">
 								<label for="feeType_id" class="form-label ">Fee Type</label>
-								<select class="form-select" id="feeType_id" name="feeType_id"  required>
+								<select class="form-select" id="feeType_id" name="fee_type_id"  required>
 									<option selected>Choose...</option>
 									@foreach($relation['FeeType'] as $type)
-										<option value="{{$type->id}}">{{$type->name}} / {{$type->bn_name}}</option>
+										<option value="{{$type->id}}">{{$type->name}} / {{$type->bn_name ?? "-"}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -78,8 +78,8 @@
 								</select>
 							</div>
 							<div class="form-group mb-3 edit_feeType_id">
-								<label for="edit_feeType_id" class="form-label ">Fee Type</label>
-								<select class="form-select" id="edit_feeType_id" name="feeType_id"  required>
+								<label for="edit_fee_type_id" class="form-label ">Fee Type</label>
+								<select class="form-select" id="edit_fee_type_id" name="fee_type_id"  required>
 									<option selected>Choose...</option>
 									@foreach($relation['FeeType'] as $type)
 										<option value="{{$type->id}}">{{$type->name}} / {{$type->bn_name}}</option>
@@ -199,7 +199,7 @@
                 if(res.status === 200){
                     $('#edit_id').val(res.data.id);
                     $('#edit_group_id').val(res.data.group_id);
-					$('#edit_feeType_id').val(res.data.feeType_id);
+					$('#edit_fee_type_id').val(res.data.fee_type_id);
 					$('#edit_amount').val(res.data.amount);
                     $(`.edit_status > input[type="radio"]`).each((index , input) =>{
                         if(res.data.status === input.value){

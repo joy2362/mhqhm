@@ -20,7 +20,7 @@ class SettingSeeder extends Seeder
            Setting::updateOrCreate([
                'name' => 'siteName',
            ],[
-               'value' => 'CMS',
+               'value' => 'Markazul Uloom Qoumi Hafizia Boy & Girls Madrasa',
                'type' => 'text',
                'deleteAble' => 'no',
            ]);
@@ -28,7 +28,7 @@ class SettingSeeder extends Seeder
            Setting::updateOrCreate([
                'name' => 'shortName',
            ],[
-               'value' => 'CMS',
+               'value' => 'MUQHBGM',
                'type' => 'text',
                'deleteAble' => 'no',
            ]);
@@ -60,7 +60,7 @@ class SettingSeeder extends Seeder
            Setting::updateOrCreate([
                'name' => 'logo',
            ],[
-               'value' => '',
+               'value' => 'upload/setting/221210044831-3469.png',
                'type' => 'image',
                'deleteAble' => 'no',
            ]);
@@ -68,8 +68,23 @@ class SettingSeeder extends Seeder
            Setting::updateOrCreate([
                'name' => 'favicon',
            ],[
-               'value' => '',
+               'value' => 'upload/setting/221210030212-9690.png',
                'type' => 'image',
+               'deleteAble' => 'no',
+           ]);
+
+           Setting::updateOrCreate([
+               'name' => 'currency',
+           ],[
+               'value' => 'BDT',
+               'type' => 'text',
+               'deleteAble' => 'no',
+           ]);
+           Setting::updateOrCreate([
+               'name' => 'currencySymbol',
+           ],[
+               'value' => '৳',
+               'type' => 'text',
                'deleteAble' => 'no',
            ]);
 
