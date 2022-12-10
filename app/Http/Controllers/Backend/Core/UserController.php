@@ -7,6 +7,7 @@ use App\Models\Fee;
 use App\Models\Group;
 use App\Models\User;
 use App\Models\UserGroup;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -41,7 +42,6 @@ class UserController extends BaseController
         $groups = Group::all();
         $type = $request->type ?? "admission";
         return view('admin.pages.user.create',[ "groups"=>$groups,"type" => $type , 'years'=>$years]);
-
     }
 
     /**
@@ -171,6 +171,13 @@ class UserController extends BaseController
         return redirect()->back()->with($notification);
     }
 
+    public function print($id ){
+        $user = User::with(['group','details'])->find($id);
+
+        $pdf = PDF::loadView('pdf.admission' , ["user" => $user]);
+
+        return $pdf->stream('itsolutionstuff.pdf');
+    }
 
     public function storeValidation (Request $request){
         $request->validate([
@@ -201,7 +208,6 @@ class UserController extends BaseController
         }else{
             $newId = $users[0]->username +=1;
         }
-
         return $newId;
     }
 

@@ -39,9 +39,8 @@
             border-collapse: collapse;
         }
         .pi td, th {
-
             padding: 10px 5px;
-            min-width: 175px;
+            min-width: 160px;
             background: white;
             box-sizing: border-box;
             text-align: left;
@@ -132,7 +131,7 @@
     <div class="pi">
         <div class="guardianSignature">
             <p class="guardian basic_info">
-                Guardian signature
+                Guardian's signature
             </p>
             <p class="author"></p>
         </div>
@@ -140,7 +139,7 @@
 
     <div class="signature">
         <p class="guardian basic_info">
-            Recipient signature
+            Author's signature
         </p>
         <p class="author"></p>
     </div>
@@ -206,7 +205,7 @@
     <div class="pi">
         <div class="guardianSignature">
             <p class="guardian basic_info">
-                Guardian signature
+                Guardian's signature
             </p>
             <p class="author"></p>
         </div>
@@ -214,7 +213,7 @@
 
     <div class="signature">
         <p class="guardian basic_info">
-            Recipient signature
+            Author's signature
         </p>
         <p class="author"></p>
     </div>

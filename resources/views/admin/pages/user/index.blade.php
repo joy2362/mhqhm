@@ -40,14 +40,15 @@
                                                 <span class="btn btn-success rounded btn-sm px-3 " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                                 </span>
-                                                <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton1">
+                                                <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
+                                                    <li><a class="dropdown-item" href="{{route('User.print',['id'=>$row->id])}}">Print Admission Form</a></li>
                                                     <li><a class="dropdown-item" href="{{route('User.changeStatus',['id'=>$row->id,'status'=>"active"])}}">Mark as Active</a></li>
                                                     <li><a class="dropdown-item" href="{{route('User.changeStatus',['id'=>$row->id,'status'=>"inactive"])}}">Mark as Inactive</a></li>
                                                     <li>
                                                         <form method="post" action="{{ route('User.destroy', $row->id) }}">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <span type="submit" id="destroy" class="m-2">Delete</span>
+                                                            <span type="submit" id="destroy " class="dropdown-item">Delete</span>
                                                         </form>
                                                     </li>
                                                 </ul>

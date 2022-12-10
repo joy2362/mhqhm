@@ -69,6 +69,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
 
         Route::resource('user', UserController::Class,['names'=>'User']);
         Route::get('user/{id}/status/{status}', [UserController::class,'changeStatus'])->name('User.changeStatus');
+        Route::get('user/{id}/admission', [UserController::class,'print'])->name('User.print');
 
         Route::group(['as'=>'RecycleBin','prefix'=>'recycle','middleware'=>'permission:admin'],function (){
             Route::get('/', [RecycleBinController::class,'index'])->name('.index');
@@ -91,7 +92,6 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
                 Route::get('pdf/{id}', 'pdf')->name('.pdf');
             });
         });
-
 
         //module routes
         Route::resource('donation', DonationController::Class,['names'=>'Donation']);
