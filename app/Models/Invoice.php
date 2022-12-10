@@ -13,4 +13,13 @@ class Invoice extends Model
      * @var string[]
      */
     protected $guarded = ['id'];
+
+
+    public function feeType(){
+        return $this->belongsTo(FeeType::class);
+    }
+    public function payments(){
+        return $this->hasMany(Payment::class);
+    }
+
 }

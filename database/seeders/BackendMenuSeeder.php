@@ -179,5 +179,6 @@ class BackendMenuSeeder extends Seeder
         BackendMenu::where("title","Admin")->first()->subMenu()->createMany($adminSub);
         BackendMenu::where("title","System Setting")->first()->subMenu()->createMany($settingSub);
         BackendMenu::where("title","Master Setup")->first()->subMenu()->createMany($masterSub);
+        BackendMenu::where("title","Fee")->first()->subMenu()->createMany($feeSub   );
     }
 }
