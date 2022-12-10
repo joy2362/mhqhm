@@ -168,10 +168,16 @@ class BackendMenuSeeder extends Seeder
         $feeSub = [
             [
                 'title' => 'Payment',
-                'icon' => "fa-solid fa-users-rectangle",
+                'icon' => "fa-solid fa-credit-card",
                 'sorting' => 1,
                 'route' => 'Payment.index'
-            ]
+            ],
+            [
+            'title' => 'Invoice',
+            'icon' => "fa-solid fa-file-invoice",
+            'sorting' => 2,
+            'route' => 'Payment.invoice'
+        ]
         ];
 
         //create sub menu

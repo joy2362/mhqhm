@@ -11,15 +11,14 @@ use Illuminate\Support\Facades\DB;
 
 class PaymentController extends BaseController
 {
-    public function index(Request $request){
-
+    public function index(){
         return view('admin.pages.payment.index');
     }
 
     public function due(Request $request){
             $student = User::with(['invoice' => function($q){
                 $q->with('feeType')->whereNot('status',"paid");
-            },'group:id,name'
+            },'group:id,name,bn_name'
             ])->where('username',$request->username)->first();
 
             return $student ? view('admin.pages.payment.index',['student'=>$student]) : redirect()->route("Payment.index");
@@ -60,6 +59,14 @@ class PaymentController extends BaseController
         if($data["total_due"] == 0) $data["status"] = "paid";
         $invoice->payments()->create(['amount'=>$amount]);
         return $data;
+    }
+
+    public function invoice(){
+        $invoices = Invoice::whereHas("payments")->with(['feeType:id,name,bn_name', 'user'=> function($q){
+            $q->with(['details','group:id,name,bn_name']);
+        }])->get();
+
+        return view('admin.pages.payment.invoice' , ['invoices' => $invoices]);
     }
 
 }

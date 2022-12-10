@@ -82,9 +82,10 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
         });
         Route::get('dashboard', [DashboardController::class,'index'])->name('Dashboard.index');
 
-            Route::group(['as'=>'Payment','prefix'=>'payment'],function (){
+        Route::group(['as'=>'Payment','prefix'=>'payment'], function (){
             Route::get('/', [PaymentController::class,'index'])->name('.index');
             Route::get('/due', [PaymentController::class,'due'])->name('.due');
+            Route::get('/invoice', [PaymentController::class,'invoice'])->name('.invoice');
             Route::post('/due', [PaymentController::class,'pay'])->name('.pay');
         });
         //module routes
