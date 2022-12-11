@@ -160,10 +160,15 @@ class BackendMenuSeeder extends Seeder
             [
                 'title' => 'Group Subject',
                 'icon' => "fa-solid fa-users-rectangle",
-                'sorting' => 4,
+                'sorting' => 5,
                 'route' => 'GroupSubject.index'
             ],
-
+            [
+                'title' => 'Class Time',
+                'icon' => "fa-solid fa-business-time",
+                'sorting' => 6,
+                'route' => 'ClassTime.index'
+            ],
         ];
         $feeSub = [
             [

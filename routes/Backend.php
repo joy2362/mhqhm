@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\System\ModuleController;
 use App\Http\Controllers\Backend\System\SettingController;
 use App\Http\Controllers\Backend\System\SystemController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\ClassTimeController;
 use App\Http\Controllers\Backend\DonationController;
 use App\Http\Controllers\Backend\GroupSubjectController;
 use App\Http\Controllers\Backend\SubjectController;
@@ -94,6 +95,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
         });
 
         //module routes
+ 	    Route::resource('classTime', ClassTimeController::Class,['names'=>'ClassTime']);
         Route::resource('donation', DonationController::Class,['names'=>'Donation']);
         Route::resource('groupSubject', GroupSubjectController::Class,['names'=>'GroupSubject']);
         Route::resource('subject', SubjectController::Class,['names'=>'Subject']);
