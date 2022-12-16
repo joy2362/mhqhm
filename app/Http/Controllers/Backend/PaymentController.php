@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 class PaymentController extends BaseController
 {
     public function index(){
-        return view('admin.pages.payment.index');
+        return view('admin.pages.Payment.index');
     }
 
     public function due(Request $request){
@@ -23,7 +23,7 @@ class PaymentController extends BaseController
             },'group:id,name,bn_name'
             ])->where('username',$request->username)->first();
 
-            return $student ? view('admin.pages.payment.index',['student'=>$student]) : redirect()->route("Payment.index");
+            return $student ? view('admin.pages.Payment.index',['student'=>$student]) : redirect()->route("Payment.index");
     }
 
     public function pay(Request $request){
@@ -70,7 +70,7 @@ class PaymentController extends BaseController
             } ]);
         }])->orderByDesc("id")->get();
 
-        return view('admin.pages.payment.invoice' , ['payments' => $payments]);
+        return view('admin.pages.Payment.invoice' , ['payments' => $payments]);
     }
 
     public function pdf($id){
@@ -82,7 +82,8 @@ class PaymentController extends BaseController
 
         $pdf = PDF::loadView('pdf.invoice' , ["payment"=>$payment]);
 
-        return $pdf->stream('itsolutionstuff.pdf');
+        $name = "invoice-{$payment->id}.pdf";
+        return $pdf->stream($name);
 
     }
 

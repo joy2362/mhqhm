@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Base\BaseModel;
 use Illuminate\Support\Facades\Storage;
 
-class Donation extends BaseModel
+class Donor extends BaseModel
 {
     
 //add your model content here
