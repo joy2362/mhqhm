@@ -102,6 +102,5 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
         Route::resource('fee', FeeController::Class,['names'=>'Fee']);
         Route::resource('feeType', FeeTypeController::Class,['names'=>'FeeType']);
         Route::resource('group', GroupController::Class,['names'=>'Group']);
-
     });
 });

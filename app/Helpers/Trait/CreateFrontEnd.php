@@ -25,7 +25,7 @@ trait CreateFrontEnd
      */
     public function getSourceFrontEndPath($name): string
     {
-        return base_path('resources\\views\\admin\\pages') .'\\' .$name.'\\' . 'index.blade.php';
+        return base_path('resources/views/admin/pages') .'/' .$name.'/' . 'index.blade.php';
     }
 
     /**

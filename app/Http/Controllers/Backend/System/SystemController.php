@@ -22,23 +22,30 @@ class SystemController extends Controller
     {
         Cache::flush();
         //get all available module
-        $modules = DB::table('modules')->get();
+        $controller = [];
+        $controllers  = scandir(app_path("Http/Controllers/Backend"));
+        foreach ($controllers as $row){
+            if(str_contains($row , "Controller.php"))
+                $controller[] = [
+                    "model" => str_replace("Controller.php","",$row),
+                    "controller" => $row,
+                ];
+        }
+
+        $modules = collect($controller);
         $sorting = DB::table('backend_menus')->max('sorting') + 1;
 
         //create menu for all module if not available yet
         foreach ($modules as $module){
-            if (class_exists("App\\Models\\" . ucfirst($module->name)) && Route::has($module->name . ".index") ) {
-               $menu = DB::table('backend_menus')->where('route',$module->name . ".index")->first();
-                if(empty($menu)){
-                    DB::table('backend_menus')->insert([
-                        'route' => ucfirst($module->name) . ".index",
-                        'title' => ucfirst($module->name),
-                        'sorting'=>$sorting,
-                    ]);
-                }
-
-                $sorting++;
+           $menu = DB::table('backend_menus')->where('route',$module["model"] . ".index")->first();
+            if(empty($menu)){
+                DB::table('backend_menus')->insert([
+                    'route' => $module["model"] . ".index",
+                    'title' => $module["model"],
+                    'sorting'=>$sorting,
+                ]);
             }
+            $sorting++;
         }
 
         //regenerate permission
