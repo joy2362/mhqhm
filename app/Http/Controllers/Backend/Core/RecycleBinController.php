@@ -29,7 +29,7 @@ class RecycleBinController extends BaseController
            $data[$module] = App::make( 'App\\Models\\'. $module )->where('is_deleted','yes')->with('deletedBy')->get();
         }
 
-        return view('admin.pages.recycle.index',["dates" => $data ]);
+        return view('admin.pages.Recycle.index',["dates" => $data ]);
     }
 
     public function delete($model , $id){

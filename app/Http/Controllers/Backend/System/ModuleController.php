@@ -20,7 +20,7 @@ class ModuleController extends BaseController
         $models = Module::getAllModel();
         $dataType = Module::getAllDatatype();
         $inputType = Module::getAllInputType();
-        return view('admin.pages.module.index',['dataType'=> $dataType ,'availableModels' => $models ,'inputType'=> $inputType ]);
+        return view('admin.pages.Module.index',['dataType'=> $dataType ,'availableModels' => $models ,'inputType'=> $inputType ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -88,6 +88,6 @@ class ModuleController extends BaseController
 
     public function instruction($name): Factory|View|Application
     {
-        return view('admin.pages.module.instruction',['name'=>$name]);
+        return view('admin.pages.Module.instruction',['name'=>$name]);
     }
 }

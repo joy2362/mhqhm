@@ -30,7 +30,7 @@ class DashboardController extends BaseController
         $totalDonation = Donation::sum("amount") ?? 0;
         $totalFee = Payment::where("status" , "success")->sum("amount") ?? 0;
         $studentByGender = userDetails::select('gender',DB::raw("count(*) as total"))->groupBy('gender')->get();
-        return view('admin.pages.dashboard.index',[
+        return view('admin.pages.Dashboard.index',[
             'studentByGender'   =>$studentByGender ,
             'totalStudent'      => $totalStudent,
             'totalAdmin'        => $totalAdmin,
