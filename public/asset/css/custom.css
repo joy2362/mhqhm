@@ -28,3 +28,10 @@ ul.timeline > li:before {
     height: 20px;
     z-index: 400;
 }
+.fs-18{
+    font-size: 18px;
+}
+
+.auth{
+    background: #2e3192;
+}

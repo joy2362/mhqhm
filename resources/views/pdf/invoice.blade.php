@@ -8,9 +8,6 @@
             height: 500px;
             margin-bottom: 10px;
         }
-        .office_section{
-            margin-top: 50px;
-        }
         .header_container{
             width: 100%;
             text-align: center;
@@ -24,6 +21,11 @@
             font-size: 24px;
             font-weight: bold;
         }
+        .info{
+            margin-top: 15px;
+            height: 60px;
+            width: 100%;
+        }
         .basic_info{
             width: 100%;
             font-size: 15px;
@@ -35,23 +37,9 @@
         .date{
             text-align: right;
         }
-        .pi{
-            border-collapse: collapse;
-        }
-        .pi td, th {
-            padding: 10px 5px;
-            min-width: 160px;
-            background: white;
-            box-sizing: border-box;
-            text-align: left;
-        }
         .admission{
             text-align: center;
             font-size: 18px;
-        }
-        .guardianSignature{
-            float: left;
-            margin-top: 30px;
         }
         .signature{
             float: right;
@@ -61,12 +49,18 @@
             border-top: 1px solid #000;
             float: left;
         }
-        .value{
-            border-bottom: 2px dotted;
-
+        .pi{
+            border-collapse: collapse;
+            background: red;
         }
-        .divider{
-            border-top: 2px dotted #0a0a0a;
+        .pi td, th {
+            border: 1px solid #000;
+            padding: 10px 2px;
+            min-width: 165px;
+
+            background: white;
+            box-sizing: border-box;
+            text-align: left;
         }
     </style>
 </head>
@@ -81,7 +75,7 @@
     </div>
 
     <div>
-        <h4 class="admission">Money Receipt (student copy)</h4>
+        <h4 class="admission">Money Receipt</h4>
     </div>
 
     <table class="basic_info">
@@ -90,126 +84,65 @@
                 <span >Sl No: #{{ str_pad( $payment->id, 5, '0', STR_PAD_LEFT) }}</span>
             </td>
             <td class="basic_info_text date">
-                <span>Date: {{$payment->created_at->format("d-m-Y")}}</span>
+                <span>Date: {{$payment->date}}</span>
             </td>
         </tr>
     </table>
+
+    <div class="info">
+        <table class="basic_info">
+            <tr>
+                <td class="basic_info_text">
+                    <span>ID: {{$payment->user->username}}</span>
+                </td>
+                <td class="basic_info_text">
+                    <span>Name: {{$payment->user->details->first_name . ' ' . $payment->user->details->last_name}}</span>
+                </td>
+                <td class="basic_info_text">
+                    <span>Class: {{$payment->user->group->name}}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
 
     <table class="pi">
         <tr >
-            <td >
-                <span class="basic_info">Id:</span>
-                <span class="value">{{$payment->invoice->user->username ?? "" }} </span>
-            </td>
-            <td >
-                <span class="basic_info">Student name:</span>
-                <span class="value">
-                    {{$payment->invoice->user->details->first_name . " " .$payment->invoice->user->details->last_name }}
-                </span>
+            <th >
+                <span class="text-center">Name</span>
+            </th>
+            <th >
+                <span class="text-center">Actual amount</span>
+            </th>
+            <th >
+                <span class="text-center">Due amount</span>
+            </th>
+            <th >
+                <span class="text-center">Paid amount</span>
+            </th>
 
-            </td>
         </tr>
-    </table>
-
-    <table class="pi">
-        <tr >
-            <td >
-                <span class="basic_info">Class:</span>
-                <span class="value"> {{$payment->invoice->user->group->name}} </span>
-            </td>
-            <td class="basic_info">
-                <span >
-                    {{$payment->invoice->feeType->name}}
-                </span>
-            </td>
-            <td >
-                <span class="basic_info">Amount:</span>
-                <span class="value">Tk {{$payment->amount}}</span>
-            </td>
-        </tr>
-    </table>
-    <div class="pi">
-        <div class="guardianSignature">
-            <p class="guardian basic_info">
-                Guardian's signature
-            </p>
-            <p class="author"></p>
-        </div>
-    </div>
-
-    <div class="signature">
-        <p class="guardian basic_info">
-            Author's signature
-        </p>
-        <p class="author"></p>
-    </div>
-</div>
-<div class="divider"></div>
-<div class="office_section">
-    <div class="header_container ">
-        <div class="logo">
-            <img src="{{ url($systemSetting['logo']) }}" class="logo" alt="logo" style="width:70px;height:70px;">
-        </div>
-        <p class="InstituteName">{{$systemSetting['siteName']}}</p>
-        <small>{{ $systemSetting['address'] }}</small>
-    </div>
-
-    <div>
-        <h4 class="admission">Money Receipt (office copy)</h4>
-    </div>
-
-    <table class="basic_info">
+        @foreach($payment->details as $invoice)
         <tr>
-            <td class="basic_info_text">
-                <span >Sl No: #{{ str_pad( $payment->id, 5, '0', STR_PAD_LEFT) }}</span>
+            <td class="text-center">
+                <span >{{$invoice->feeType->name}} </span>
             </td>
-            <td class="basic_info_text date">
-                <span>Date: {{$payment->created_at->format("d-m-Y")}}</span>
+            <td><span >{{$invoice->actual_amount}} </span></td>
+            <td><span >{{$invoice->due_amount}} </span></td>
+            <td><span >{{$invoice->paid_amount}} </span></td>
+        </tr>
+        @endforeach
+
+        <tr>
+            <td colspan="3"></td>
+            <td>
+                <div>
+                    <p> <span style="font-weight: bold"> Total actual amount: {{$payment->total_actual_amount}} </span></p>
+                    <p> <span style="font-weight: bold"> Total Due amount: {{$payment->total_due_amount}} </span></p>
+                    <p> <span style="font-weight: bold"> Total Paid amount: {{$payment->total_paid_amount}} </span></p>
+                </div>
             </td>
         </tr>
     </table>
-
-    <table class="pi">
-        <tr >
-            <td >
-                <span class="basic_info">Id:</span>
-                <span class="value">{{$payment->invoice->user->username ?? "" }} </span>
-            </td>
-            <td >
-                <span class="basic_info">Student name:</span>
-                <span class="value">
-                    {{$payment->invoice->user->details->first_name . " " .$payment->invoice->user->details->last_name }}
-                </span>
-            </td>
-        </tr>
-    </table>
-
-    <table class="pi">
-        <tr >
-            <td >
-                <span class="basic_info">Class:</span>
-                <span class="value"> {{$payment->invoice->user->group->name}} </span>
-
-            </td>
-            <td class="basic_info">
-                <span >
-                    {{$payment->invoice->feeType->name}}
-                </span>
-            </td>
-            <td >
-                <span class="basic_info">Amount:</span>
-                <span class="value">Tk{{$payment->amount}}</span>
-            </td>
-        </tr>
-    </table>
-    <div class="pi">
-        <div class="guardianSignature">
-            <p class="guardian basic_info">
-                Guardian's signature
-            </p>
-            <p class="author"></p>
-        </div>
-    </div>
 
     <div class="signature">
         <p class="guardian basic_info">
@@ -218,7 +151,6 @@
         <p class="author"></p>
     </div>
 </div>
-
 
 </body>
 </html>

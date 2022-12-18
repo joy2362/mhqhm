@@ -7,27 +7,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="shortcut icon" href="{{asset('asset/img/icons/icon-48x48.png')}}"/>
-    <title>Admin Login</title>
+    <link rel="shortcut icon" href="{{$systemSetting['favicon']}}" />
+    <title>Admin Login | {{$systemSetting['shortName'] ?? config("app.name")}}</title>
 
     <link href="{{ asset('asset/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('asset/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('asset/css/toastr.min.css') }}" rel="stylesheet">
+    <script src="{{asset('asset/js/fontawesome.min.js')}}"></script>
+    <link href="{{ asset('asset/css/custom.css') }}" rel="stylesheet">
     @vite('resources/css/app.css')
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body class="auth">
 <main class="d-flex w-100">
     <div class="container d-flex flex-column">
         <div class="row vh-100">
-            <div class="col-sm-10 col-md-8 col-lg-4 mx-auto d-table h-100">
+            <div class="col-sm-6 mx-auto d-table h-100">
                 <div class="d-table-cell align-middle">
 
-                    <div class="text-center mt-4">
-                        <h1 class="h2">Welcome</h1>
+                    <div class="text-center text-white mt-4">
+                        <div>
+                            <img src="{{$systemSetting['logo']}}" alt="{{$systemSetting['siteName']}}" class="img-fluid rounded-circle" width="132" height="132" />
+                        </div>
                         <p class="lead">
-                            Sign in to your account to continue
+                            {{$systemSetting['siteName']}}
                         </p>
                     </div>
 
@@ -38,7 +43,7 @@
                                     @csrf
                                     <div class="mb-3">
                                         <label for="email"  class="form-label">Email</label>
-                                        <input class="form-control form-control-lg @error('email') is-invalid @enderror " id="email" type="email" name="email" placeholder="Enter your email" required value="abdullahzahidjoy@gmail.com" autocomplete="email" autofocus />
+                                        <input class="form-control form-control-lg @error('email') is-invalid @enderror " id="email" type="email" name="email" placeholder="Enter your email" required autocomplete="email" autofocus />
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -47,19 +52,19 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Password</label>
-                                        <input class="form-control form-control-lg @error('password') is-invalid @enderror" required id="password"  type="password" name="password" placeholder="Enter your password" value="1234" />
+                                        <input class="form-control form-control-lg @error('password') is-invalid @enderror" required id="password"  type="password" name="password" placeholder="Enter your password"  />
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
 
-                                        <small>
+                                        <span>
                                             <a href="{{ route('admin.password.request') }}">Forgot password?</a>
-                                        </small>
+                                        </span>
                                     </div>
                                     <div class="text-end mt-3">
-                                        <button type="submit" class="btn btn-sm rounded btn-success ">Sign in</button>
+                                        <button type="submit" class="btn rounded btn-success ">Sign in</button>
                                         <!-- <button type="submit" class="btn btn-lg btn-primary">Sign in</button> -->
                                     </div>
                                 </form>

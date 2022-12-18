@@ -13,4 +13,8 @@ class Payment extends BaseModel
     public function details(){
         return $this->hasMany(PaymentDetails::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

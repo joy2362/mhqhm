@@ -152,7 +152,7 @@ class UserController extends BaseController
     {
         User::destroy($id);
         $notification = array(
-            'messege' => 'User Account delete Successfully!',
+            'messege' => 'Student delete Successfully!',
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);

@@ -66,7 +66,7 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col mt-0">
-                                                <h5 class="card-title">Total Collection</h5>
+                                                <h5 class="card-title">Collection</h5>
                                             </div>
 
                                             <div class="col-auto">
@@ -87,7 +87,7 @@
                     <div class="card flex-fill w-100">
                         <div class="card-header">
 
-                            <h5 class="card-title mb-0">Total Collection</h5>
+                            <h5 class="card-title mb-0">Collection per month</h5>
                         </div>
                         <div class="card-body py-3">
                             <div class="chart chart-sm">
@@ -117,8 +117,8 @@
                             <tbody>
                             @foreach($donations as $donation)
                             <tr>
-                                <td>{{$donation->name}}</td>
-                                <td class="d-none d-xl-table-cell">01/01/2021</td>
+                                <td>{{$donation->donor->name}}</td>
+                                <td class="d-none d-xl-table-cell">{{$donation->donor->phone ?? "-"}}</td>
                                 <td>{{$donation->amount}}{{$systemSetting['currency']}}</td>
                                 <td>
                                     @if($donation->status == "active")

@@ -8,4 +8,8 @@ use Illuminate\Support\Facades\Storage;
 class PaymentDetails extends BaseModel
 {
     //add your model content here
+
+    public function feeType(){
+        return $this->belongsTo(FeeType::class);
+    }
 }

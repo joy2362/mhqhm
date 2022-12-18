@@ -87,6 +87,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
         Route::group(['as'=>'Payment','prefix'=>'payment'], function (){
             Route::controller(PaymentController::class)->group(function() {
                 Route::get('/', 'index')->name('.index');
+                Route::get('/view/{id}', 'view')->name('.view');
                 Route::get('/due', 'due')->name('.due');
                 Route::get('invoice', 'invoice')->name('.invoice');
                 Route::post('due', 'pay')->name('.pay');
@@ -95,7 +96,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
         });
 
         //module routes
- 	Route::resource('donor', DonorController::Class,['names'=>'Donor']);
+ 	    Route::resource('donor', DonorController::Class,['names'=>'Donor']);
  	    Route::resource('classTime', ClassTimeController::Class,['names'=>'ClassTime']);
         Route::resource('donation', DonationController::Class,['names'=>'Donation']);
         Route::resource('groupSubject', GroupSubjectController::Class,['names'=>'GroupSubject']);

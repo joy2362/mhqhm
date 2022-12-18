@@ -14,11 +14,10 @@ class BaseController extends Controller
 {
     public function __construct()
     {
-        $systemSetting = App::make("SystemSetting");
         $menus = App::make("BackendMenu");
 
         // Sharing is caring
-        View::share(['menus' => $menus, 'systemSetting'=> $systemSetting ]);
+        View::share(['menus' => $menus ]);
     }
 
     protected function upload( $file, $path, $old = null ) {

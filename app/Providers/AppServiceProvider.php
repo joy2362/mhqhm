@@ -6,7 +6,9 @@ use App\Models\System\BackendMenu;
 use App\Models\System\Setting;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -43,6 +45,8 @@ class AppServiceProvider extends ServiceProvider
             $this->enum('status', ['inactive', 'active'])->default('active');
             $this->enum('is_deleted', ['yes', 'no'])->default('no');
         });
+
+
     }
 
     /**
@@ -52,6 +56,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $systemSetting = App::make("SystemSetting");
 
+        // Sharing is caring
+        View::share([ 'systemSetting'=> $systemSetting ]);
     }
 }

@@ -35,7 +35,6 @@ class PaymentController extends BaseController
             $data["date"] = now();
             $payment = Payment::create($data);
 
-            //dd($payment);
             foreach ($request->invoice as $key=>$value){
                 if(!empty($request->amount[$key])){
                     $data = $this->calculateDue($payment,$value ,$request->amount[$key]);
@@ -51,7 +50,6 @@ class PaymentController extends BaseController
             return Redirect()->route('Payment.invoice')->with($notification);
 
         }catch (Exception $ex){
-            dd($ex->getMessage());
             DB::rollBack();
             $notification = array(
                 'messege' => $ex->getMessage(),
@@ -78,27 +76,34 @@ class PaymentController extends BaseController
     }
 
     public function invoice(){
-        $payments = Payment::with(['invoice' => function($q){
-            $q->with(['feeType:id,name,bn_name' , 'user'=> function($q){
-                $q->with(['details','group:id,name,bn_name']);
-            } ]);
-        }])->orderByDesc("id")->get();
-
+        $payments = Payment::with(['user' => function($q){
+            $q->with(['details','group:id,name,bn_name']);
+        },'details'])->orderByDesc("id")->get();
         return view('admin.pages.Payment.invoice' , ['payments' => $payments]);
     }
 
     public function pdf($id){
-        $payment = Payment::with(['invoice' => function($q){
-            $q->with(['feeType:id,name,bn_name' , 'user'=> function($q){
-                $q->with(['details','group:id,name,bn_name']);
-            } ]);
+        $payment = Payment::with(['user' => function($q){
+            $q->with(['details','group:id,name,bn_name']);
+        },'details'=>function($q){
+            $q->with('feeType');
         }])->orderByDesc("id")->find($id);
 
         $pdf = PDF::loadView('pdf.invoice' , ["payment"=>$payment]);
 
         $name = "invoice-{$payment->id}.pdf";
         return $pdf->stream($name);
+    }
 
+
+    public function view( $id ){
+        $payment = Payment::with(['user' => function($q){
+            $q->with(['details','group:id,name,bn_name']);
+        },'details'=>function($q){
+            $q->with('feeType');
+        }])->orderByDesc("id")->find($id);
+
+        return view('admin.pages.Payment.view',['payment'=>$payment]);
     }
 
 }

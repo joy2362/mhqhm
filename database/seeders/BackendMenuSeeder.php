@@ -41,7 +41,7 @@ class BackendMenuSeeder extends Seeder
             ],
             [
                 'parent_id' => null,
-                'title' => 'Fees',
+                'title' => 'Account',
                 'icon' => "fa-solid fa-receipt" ,
                 'sorting' => 4,
                 'route' => null,
@@ -176,7 +176,7 @@ class BackendMenuSeeder extends Seeder
                 'route' => 'ClassTime.index'
             ],
         ];
-        $feeSub = [
+        $accountSub = [
             [
                 'title' => 'Payment',
                 'icon' => "fa-solid fa-credit-card",
@@ -196,6 +196,6 @@ class BackendMenuSeeder extends Seeder
         BackendMenu::where("title","Admin")->first()->subMenu()->createMany($adminSub);
         BackendMenu::where("title","System Setting")->first()->subMenu()->createMany($settingSub);
         BackendMenu::where("title","Master Setup")->first()->subMenu()->createMany($masterSub);
-        BackendMenu::where("title","Fees")->first()->subMenu()->createMany($feeSub);
+        BackendMenu::where("title","Account")->first()->subMenu()->createMany($accountSub);
     }
 }
