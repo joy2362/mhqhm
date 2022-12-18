@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\System\Setting;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class SettingSeeder extends Seeder
@@ -60,7 +59,7 @@ class SettingSeeder extends Seeder
            Setting::updateOrCreate([
                'name' => 'logo',
            ],[
-               'value' => 'upload/setting/221210044831-3469.png',
+               'value' => 'upload/setting/221218064451-9920.png',
                'type' => 'image',
                'deleteAble' => 'no',
            ]);
@@ -68,7 +67,7 @@ class SettingSeeder extends Seeder
            Setting::updateOrCreate([
                'name' => 'favicon',
            ],[
-               'value' => 'upload/setting/221210030212-9690.png',
+               'value' => 'upload/setting/221218064502-3708.png',
                'type' => 'image',
                'deleteAble' => 'no',
            ]);

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -51,6 +50,12 @@ class ModuleSeeder extends Seeder
                 "controller"=>"DonationController",
                 "route"=>"donation.index",
                 "migration"=>"2022_11_23_194338_create_donations_table",
+            ],
+            [
+                "name"=>"ClassTime",
+                "controller"=>"ClassTimeController",
+                "route"=>"classTime.index",
+                "migration"=>"2022_12_11_060323_create_class_times_table",
             ],
         ];
         if(DB::table('modules')->count() == 0){

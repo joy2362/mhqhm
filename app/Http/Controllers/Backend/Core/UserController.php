@@ -24,8 +24,7 @@ class UserController extends BaseController
     public function index()
     {
         $users = User::with("group","details")->get();
-        //dd($users[0]->group[0]);
-        return view('admin.pages.user.index',['users'=>$users ]);
+        return view('admin.pages.User.index',['users'=>$users ]);
     }
 
     /**
@@ -41,7 +40,7 @@ class UserController extends BaseController
         }
         $groups = Group::all();
         $type = $request->type ?? "admission";
-        return view('admin.pages.user.create',[ "groups"=>$groups,"type" => $type , 'years'=>$years]);
+        return view('admin.pages.User.create',[ "groups"=>$groups,"type" => $type , 'years'=>$years]);
     }
 
     /**
@@ -72,6 +71,7 @@ class UserController extends BaseController
 
             $student = User::create($user);
             $student->details()->create($details);
+
             $group = $request->only("group_id");
             $group["user_id"] = $student->id;
 
@@ -80,10 +80,9 @@ class UserController extends BaseController
             $fees = Fee::where("group_id",$request->group_id)->get();
             foreach ($fees as $fee ){
                 $feeDetails["fee_type_id"] = $fee->fee_type_id;
-                $feeDetails["total_amount"] = $fee->amount;
-                $feeDetails["total_due"] = $fee->amount;
+                $feeDetails["actual_amount"] = $fee->amount;
+                $feeDetails["due"] = $fee->amount;
                 $feeDetails["date"] = now()->format("m-Y");
-
                 $student->invoice()->create($feeDetails);
             }
 
@@ -176,7 +175,7 @@ class UserController extends BaseController
 
         $pdf = PDF::loadView('pdf.admission' , ["user" => $user]);
 
-        return $pdf->stream('itsolutionstuff.pdf');
+        return $pdf->stream("admission-{$user->username}.pdf");
     }
 
     public function storeValidation (Request $request){

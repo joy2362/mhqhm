@@ -19,7 +19,7 @@ class SettingController extends BaseController
     public function index()
     {
         $settings = Setting::get();
-        return view('admin.pages.setting.index',['settings'=>$settings]);
+        return view('admin.pages.Setting.index',['settings'=>$settings]);
     }
 
     public function store(Request $request){

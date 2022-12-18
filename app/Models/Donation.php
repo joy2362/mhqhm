@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Storage;
 
 class Donation extends BaseModel
 {
-    
+
 //add your model content here
+    public function donor(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Donor::class);
+    }
+
+
 }

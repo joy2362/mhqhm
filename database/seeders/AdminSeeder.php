@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,7 +19,7 @@ class AdminSeeder extends Seeder
             Admin::updateOrCreate(
                 [
                     'name' => "Abdullah zahid joy",
-                    'avatar' => "upload/admin/avatar/221207071706-6677.jpg",
+                    'avatar' => "upload/admin/avatar/221218063121-2483.jpg",
                     'password' => Hash::make('1234')
                 ],
                 [

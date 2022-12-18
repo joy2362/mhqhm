@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\System\BackendMenu;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class BackendMenuSeeder extends Seeder
 {
@@ -42,7 +41,7 @@ class BackendMenuSeeder extends Seeder
             ],
             [
                 'parent_id' => null,
-                'title' => 'Fee',
+                'title' => 'Fees',
                 'icon' => "fa-solid fa-receipt" ,
                 'sorting' => 4,
                 'route' => null,
@@ -56,23 +55,30 @@ class BackendMenuSeeder extends Seeder
             ],
             [
                 'parent_id' => null,
+                'title' => 'Donor',
+                'icon' => "fa-solid fa-users",
+                'sorting' => 6,
+                'route' => "Donor.index",
+            ],
+            [
+                'parent_id' => null,
                 'title' => 'Donation',
                 'icon' => "fa-solid fa-hand-holding-dollar",
-                'sorting' => 6,
+                'sorting' => 7,
                 'route' => "Donation.index",
             ],
             [
                 'parent_id' => null,
                 'title' => 'System Setting',
                 'icon' => "fa-solid fa-gears",
-                'sorting' => 7,
+                'sorting' => 8,
                 'route' => null,
             ],
             [
                 'parent_id' => null,
                 'title' => 'Recycle Bin',
                 'icon' => "fa-solid fa-trash-can",
-                'sorting' => 8,
+                'sorting' => 9,
                 'route' => 'RecycleBin.index'
             ],
 
@@ -153,17 +159,22 @@ class BackendMenuSeeder extends Seeder
             ],
             [
                 'title' => 'Subject',
-                'icon' => "fa-solid fa-comments-dollar",
+                'icon' => "fa-solid fa-book",
                 'sorting' => 4,
                 'route' => 'Subject.index'
             ],
             [
                 'title' => 'Group Subject',
                 'icon' => "fa-solid fa-users-rectangle",
-                'sorting' => 4,
+                'sorting' => 5,
                 'route' => 'GroupSubject.index'
             ],
-
+            [
+                'title' => 'Class Time',
+                'icon' => "fa-solid fa-business-time",
+                'sorting' => 6,
+                'route' => 'ClassTime.index'
+            ],
         ];
         $feeSub = [
             [
@@ -185,6 +196,6 @@ class BackendMenuSeeder extends Seeder
         BackendMenu::where("title","Admin")->first()->subMenu()->createMany($adminSub);
         BackendMenu::where("title","System Setting")->first()->subMenu()->createMany($settingSub);
         BackendMenu::where("title","Master Setup")->first()->subMenu()->createMany($masterSub);
-        BackendMenu::where("title","Fee")->first()->subMenu()->createMany($feeSub   );
+        BackendMenu::where("title","Fees")->first()->subMenu()->createMany($feeSub);
     }
 }

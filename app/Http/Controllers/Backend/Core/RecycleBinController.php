@@ -16,13 +16,20 @@ class RecycleBinController extends BaseController
      */
     public function index()
     {
-        $data = [];
-        $modules = DB::table('modules')->get();
-        foreach($modules as $module){
-           $data[$module->name] = App::make( 'App\\Models\\'. ucfirst( $module->name) )->where('is_deleted','yes')->with('deletedBy')->get();
+        $modules = [];
+        $controllers  = scandir(app_path("Http/Controllers/Backend"));
+
+        foreach ($controllers as $row){
+            if(str_contains($row , "Controller.php")) $modules[] = str_replace("Controller.php","",$row);
         }
 
-        return view('admin.pages.recycle.index',['modules' => $modules , "dates" => $data ]);
+        $data = [];
+
+        foreach($modules as $module){
+           $data[$module] = App::make( 'App\\Models\\'. $module )->where('is_deleted','yes')->with('deletedBy')->get();
+        }
+
+        return view('admin.pages.Recycle.index',["dates" => $data ]);
     }
 
     public function delete($model , $id){

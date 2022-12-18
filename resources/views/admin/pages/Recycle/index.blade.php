@@ -5,8 +5,8 @@
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
-            @foreach($modules as $row)
-            <h1 class="h3 fw-bold">{{$row->name}}</h1>
+            @foreach($dates as $key => $data)
+            <h1 class="h3 fw-bold">{{$key}}</h1>
 
             <div class="row mb-5">
                 <div class="col-12">
@@ -20,9 +20,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($dates as $key => $data)
-                                @if($key == $row->name)
-                                @foreach($data as $value)
+                        @foreach($data as $value)
                                 <tr>
                                     <td>{{$loop->index + 1}}</td>
                                     <td>{{$value->id}}</td>
@@ -42,9 +40,6 @@
                                     </td>
                                 </tr>
                                 @endforeach
-                                @endif
-                            @endforeach
-
                         </tbody>
                     </table>
                 </div>

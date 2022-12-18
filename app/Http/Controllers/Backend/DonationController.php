@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Base\BaseController;
+use App\Models\Donor;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use crud;
@@ -23,6 +24,7 @@ class DonationController extends BaseController
       * @var array|string[]
       */
       private array $files  = [];
+      private array $relations  = ["donor"];
 
     /**
      * Display a listing of the resource.
@@ -32,9 +34,11 @@ class DonationController extends BaseController
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return crud::getAll($this->modelName,'datatable',$this->files);
+            return crud::getAll($this->modelName,'datatable',$this->files,$this->relations);
         }
-        return view('admin.pages.'. $this->modelName .'.index');
+
+        $donor = Donor::all();
+        return view('admin.pages.'. $this->modelName .'.index',['donor'=>$donor]);
     }
 
     /**

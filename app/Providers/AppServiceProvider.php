@@ -24,14 +24,13 @@ class AppServiceProvider extends ServiceProvider
                 return Setting::all()->pluck('value','name');
             });
         });
-        if(request()->is('admin/*')){
 
-            $this->app->singleton('BackendMenu', function(){
-                return Cache::rememberForever("backendMenu",function(){
-                   return BackendMenu::with('subMenu')->orderBy('sorting','asc')->whereNull('parent_id')->get();
-                });
+        $this->app->singleton('BackendMenu', function(){
+            return Cache::rememberForever("backendMenu",function(){
+               return BackendMenu::with('subMenu')->orderBy('sorting','asc')->whereNull('parent_id')->get();
             });
-        }
+        });
+
         Blueprint::macro('userLog',function(){
             $this->unsignedBigInteger('created_by')->nullable();
             $this->unsignedBigInteger('updated_by')->nullable();

@@ -9,7 +9,8 @@ class Payment extends BaseModel
 {
     //add your model content here
 
-    public function invoice(){
-        return $this->belongsTo(Invoice::class);
+
+    public function details(){
+        return $this->hasMany(PaymentDetails::class);
     }
 }

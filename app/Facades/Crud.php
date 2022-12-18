@@ -13,10 +13,6 @@ use Yajra\DataTables\DataTables;
  */
 class Crud
 {
-    public function test(){
-        return $this->input('email');
-    }
-
     /**
      * @param $model
      * @param string $type

@@ -20,7 +20,7 @@ class AdminController extends BaseController
     public function index()
     {
         $admins = Admin::all();
-        return view('admin.pages.admin.index',['admins'=>$admins]);
+        return view('admin.pages.Admin.index',['admins'=>$admins]);
     }
 
     /**
@@ -31,7 +31,7 @@ class AdminController extends BaseController
     public function create()
     {
         $roles = Role::where('guard_name','admin')->get();
-        return view('admin.pages.admin.create',['roles'=>$roles]);
+        return view('admin.pages.Admin.create',['roles'=>$roles]);
     }
 
     /**

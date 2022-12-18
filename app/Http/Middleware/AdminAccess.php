@@ -28,13 +28,13 @@ class AdminAccess
                 if($request->ajax()){
                     return response("You Dont Have Enough permission",403);
                 }
-                return abort('403',"permission");
+                return abort('403',"You Dont Have Enough permission");
             }
         }else{
             if($request->ajax()){
                 return response("You Dont Have Enough permission",403);
             }
-            return abort('403',"permission");
+            return abort('403',"You Dont Have Enough permission");
 
         }
         return $next($request);

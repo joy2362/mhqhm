@@ -1,25 +1,26 @@
 <?php
 //@abdullah zahid joy
 
+use App\Http\Controllers\Backend\ClassTimeController;
 use App\Http\Controllers\Backend\Core\ActivityLogController;
 use App\Http\Controllers\Backend\Core\AdminController;
-use App\Http\Controllers\Backend\Core\RecycleBinController;
-use App\Http\Controllers\Backend\Core\DashboardController;
 use App\Http\Controllers\Backend\Core\AdminRoleController;
-use App\Http\Controllers\Backend\Core\UserController;
+use App\Http\Controllers\Backend\Core\DashboardController;
+use App\Http\Controllers\Backend\Core\PaymentController;
 use App\Http\Controllers\Backend\Core\ProfileController;
-use App\Http\Controllers\Backend\PaymentController;
+use App\Http\Controllers\Backend\Core\RecycleBinController;
+use App\Http\Controllers\Backend\Core\UserController;
+use App\Http\Controllers\Backend\DonationController;
+use App\Http\Controllers\Backend\FeeController;
+use App\Http\Controllers\Backend\FeeTypeController;
+use App\Http\Controllers\Backend\GroupController;
+use App\Http\Controllers\Backend\GroupSubjectController;
+use App\Http\Controllers\Backend\SubjectController;
 use App\Http\Controllers\Backend\System\ModuleController;
 use App\Http\Controllers\Backend\System\SettingController;
 use App\Http\Controllers\Backend\System\SystemController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\DonationController;
-use App\Http\Controllers\Backend\GroupSubjectController;
-use App\Http\Controllers\Backend\SubjectController;
-use App\Http\Controllers\Backend\FeeController;
-use App\Http\Controllers\Backend\FeeTypeController;
-use App\Http\Controllers\Backend\GroupController;
-
+use App\Http\Controllers\Backend\DonorController;
 use Laravel\Fortify\Http\Controllers\PasswordController;
 use Laravel\Fortify\Http\Controllers\ProfileInformationController;
 use Laravel\Fortify\Http\Controllers\RecoveryCodeController;
@@ -39,7 +40,7 @@ use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
 //'as'=>'admin.',
 Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
     //mandatory route
-    Route::get('module/instruction/{name}', [ModuleController::class,'instruction'])->name('Module.instruction');
+    Route::get('module/{name}', [ModuleController::class,'instruction'])->name('Module.instruction');
     Route::get('system-update', [SystemController::class,'update'])->name('system.update');
 
     Route::put('/password/change', [PasswordController::class, 'update'])->name('password.change');
@@ -94,12 +95,13 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
         });
 
         //module routes
+ 	Route::resource('donor', DonorController::Class,['names'=>'Donor']);
+ 	    Route::resource('classTime', ClassTimeController::Class,['names'=>'ClassTime']);
         Route::resource('donation', DonationController::Class,['names'=>'Donation']);
         Route::resource('groupSubject', GroupSubjectController::Class,['names'=>'GroupSubject']);
         Route::resource('subject', SubjectController::Class,['names'=>'Subject']);
         Route::resource('fee', FeeController::Class,['names'=>'Fee']);
         Route::resource('feeType', FeeTypeController::Class,['names'=>'FeeType']);
         Route::resource('group', GroupController::Class,['names'=>'Group']);
-
     });
 });

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend\Core;
 
 use App\Http\Controllers\Base\BaseController;
 use App\Models\Invoice;
@@ -10,11 +10,12 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function GuzzleHttp\Promise\all;
 
 class PaymentController extends BaseController
 {
     public function index(){
-        return view('admin.pages.payment.index');
+        return view('admin.pages.Payment.index');
     }
 
     public function due(Request $request){
@@ -23,15 +24,21 @@ class PaymentController extends BaseController
             },'group:id,name,bn_name'
             ])->where('username',$request->username)->first();
 
-            return $student ? view('admin.pages.payment.index',['student'=>$student]) : redirect()->route("Payment.index");
+            return $student ? view('admin.pages.Payment.index',['student'=>$student]) : redirect()->route("Payment.index");
     }
 
     public function pay(Request $request){
+
         try {
             DB::beginTransaction();
+            $data = $request->except("amount","invoice");
+            $data["date"] = now();
+            $payment = Payment::create($data);
+
+            //dd($payment);
             foreach ($request->invoice as $key=>$value){
                 if(!empty($request->amount[$key])){
-                    $data = $this->calculateDue($value ,$request->amount[$key]);
+                    $data = $this->calculateDue($payment,$value ,$request->amount[$key]);
                     Invoice::find($value)->update($data);
 
                 }
@@ -44,6 +51,7 @@ class PaymentController extends BaseController
             return Redirect()->route('Payment.invoice')->with($notification);
 
         }catch (Exception $ex){
+            dd($ex->getMessage());
             DB::rollBack();
             $notification = array(
                 'messege' => $ex->getMessage(),
@@ -54,12 +62,18 @@ class PaymentController extends BaseController
 
     }
 
-    private function calculateDue($id , $amount){
+    private function calculateDue($payment,$id , $amount){
         $invoice = Invoice::find($id);
-        $data["total_due"] = $invoice->total_due - $amount;
-        $data["total_paid"] = $invoice->total_paid + $amount;
-        if($data["total_due"] == 0) $data["status"] = "paid";
-        $invoice->payments()->create(['amount'=>$amount]);
+        $data["due"] = $invoice->due - $amount;
+        $data["paid"] = $invoice->paid + $amount;
+
+        $paymentDetails["fee_type_id"] = $invoice->fee_type_id;
+        $paymentDetails["paid_amount"] = $amount;
+        $paymentDetails["due_amount"] = $data["due"];
+        $paymentDetails["actual_amount"] = $invoice->actual_amount;
+
+        if($data["due"] == 0) $data["status"] = "paid";
+        $payment->details()->create($paymentDetails);
         return $data;
     }
 
@@ -70,7 +84,7 @@ class PaymentController extends BaseController
             } ]);
         }])->orderByDesc("id")->get();
 
-        return view('admin.pages.payment.invoice' , ['payments' => $payments]);
+        return view('admin.pages.Payment.invoice' , ['payments' => $payments]);
     }
 
     public function pdf($id){
@@ -82,7 +96,8 @@ class PaymentController extends BaseController
 
         $pdf = PDF::loadView('pdf.invoice' , ["payment"=>$payment]);
 
-        return $pdf->stream('itsolutionstuff.pdf');
+        $name = "invoice-{$payment->id}.pdf";
+        return $pdf->stream($name);
 
     }
 

@@ -161,7 +161,6 @@
         let month = [];
         let value = [];
 
-
         document.addEventListener("DOMContentLoaded", function() {
             $.each(dueCollectBymonth,function(key,val){
                 month.push(val.month);

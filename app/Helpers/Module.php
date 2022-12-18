@@ -7,6 +7,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use PharIo\Version\Exception;
 
 /**
@@ -47,33 +48,19 @@ class Module
         $indexData = self::makeIndexData($field);
 
         //create model and migration and model and add database field
-       $migration = self::generateModelAndMigration($name,$indexData['files'],$dbField);
-       if(!$migration){
-           return false;
-       }
+        if(! $migration = self::generateModelAndMigration($name,$indexData['files'],$dbField) ) return false;
 
         //generate view file
-        $generateFrontend = self::generateFrontend($name , $formBuilder, $indexData);
-        if(!$generateFrontend){
-            return false;
-        }
+        if(! self::generateFrontend($name , $formBuilder, $indexData)) return false;
 
         //create controller
-        $generateController = self::generateController($name , $indexData['files']);
-
-        if(!$generateController){
-            return false;
-        }
+        if(! self::generateController($name , $indexData['files'])) return false;
 
         //add route name in backend.php
-        $route = self::addRoute($name);
+        if(! self::addRoute($name)) return false;
 
-        if(!$route){
-            return false;
-        }else{
-            //import controller name
-            self::importControllerInRoute($name);
-        }
+        //import controller name
+        self::importControllerInRoute($name);
 
         //save module recode
         return self::storeModuleInfo( $name , $migration );
@@ -93,51 +80,51 @@ class Module
      * @param $field
      * @return
      */
-    public static function generateSchema($db , $field)
+    public static function generateSchema($db , $field): bool|int
     {
-        if(!self::checkFile(base_path().'\database\migrations\\' . $db.".php")){
-            return false;
-        }else{
-            $search = "//add your columns name from here";
-            $replace = $search. "\n \t \t \t".  $field;
+        if(!self::checkFile(base_path().'/database/migrations/' . $db)) return false;
+        $search = "//add your columns name from here";
+        $replace = $search. "\n \t \t \t".  $field;
 
-            return self::addFileContent($search,$replace,base_path().'\database\migrations\\' . $db.".php");
-        }
+        return self::addFileContent($search,$replace,base_path().'/database/migrations/' . $db);
+
     }
 
     /**
      * @param $name
      * @param $files
-     * @return
+     * @param $field
+     * @return \Exception|false|mixed|Exception|null
      */
     public static function generateModelAndMigration( $name, $files , $field )
     {
         try {
-            if(!self::checkFile(app_path('Models/' . ucfirst($name) . '.php'))){
-                //create model and migration file
-                Artisan::call('make:model',['name'=> self::ucFirst($name), '-m' => 'default']);
-                $result = explode("\r\n",Artisan::output());
+            if(self::checkFile(app_path('Models/' . ucfirst($name) . '.php'))) return false;
 
-                if(!str_contains( $result[0],"created successfully.")){
-                    return false;
-                }
+            //create model and migration file
+            Artisan::call('make:model',['name'=> self::ucFirst($name), '-m' => 'default']) ;
 
-                $fileAttribute = self::makeFileAttributeForModel($files);
+            if(!self::checkFile(app_path('Models/' . ucfirst($name) . '.php')) ) return false;
 
-                $search = '//add your model content here';
-                $replace = $fileAttribute. "\n".  $search;
-                self::addFileContent($search, $replace, app_path('Models/' . ucfirst($name) . '.php'));
-                $migration = str_replace("INFO  Created migration [", "", $result[1] );
-                $actualMigrationFile = trim(str_replace('].','',$migration));
-                self::generateSchema($actualMigrationFile , $field );
-                return $actualMigrationFile;
-            }else{
-                return false;
-            }
+            $fileAttribute = self::makeFileAttributeForModel($files);
+
+            $search = '//add your model content here';
+            $replace = $fileAttribute. "\n".  $search;
+            self::addFileContent($search, $replace, app_path('Models/' . ucfirst($name) . '.php'));
+            $migration = self::getFileName(lcfirst($name));
+            self::generateSchema($migration , $field );
+            return $migration;
+
         }catch (Exception $ex){
             return $ex;
         }
+    }
 
+    static function getFileName(string $keyWord, string $basePath='database/migrations', string $fileBegin='_create_'){
+        $files = scandir(base_path($basePath));
+        foreach($files as $file){
+            if(str_contains($file,$fileBegin.Str::snake(trim($keyWord)))) return $file;
+        }
     }
 
     /**
@@ -168,7 +155,8 @@ class Module
     public static function generateController($name, array $fileData = [])
     {
         try {
-            if (!self::checkFile(app_path('Http/Controllers/Backend/' . ucfirst($name) . 'Controller.php'))) {
+            if (self::checkFile(app_path('Http/Controllers/Backend/' . ucfirst($name) . 'Controller.php'))) return false;
+
                 $controller = "Backend/" . self::ucFirst($name) . "Controller";
                 Artisan::call('make:controller', ['name' => $controller, '--type' => "custom"]);
                 $result = explode("\r\n", Artisan::output());
@@ -184,9 +172,7 @@ class Module
                 self::addFileContent($searchFiles, $files, app_path('Http/Controllers/Backend/' . ucfirst($name) . 'Controller.php'));
                 self::addFileContent($searchModelName, $modelName, app_path('Http/Controllers/Backend/' . ucfirst($name) . 'Controller.php'));
                 return str_contains($result[0], "created successfully.");
-            } else {
-                return false;
-            }
+
         }catch (Exception $ex){
             return $ex;
         }
@@ -220,16 +206,15 @@ class Module
 
         $front_end = $module->getSourceFrontEndPath(self::ucFirst($name));
 
-        $module->makeDirectory( dirname( $front_end ) );
+        $module->makeDirectory( dirname(base_path().'/resources/views/admin/pages/'.ucfirst($name) .'/*' ));
 
         $contents =  $module->getSourceFrontEnd(self::lcFirst($name),self::ucFirst($name),$formBuilder, $indexData);
 
-        if (!$file->exists($contents)) {
-            $file->put($front_end, $contents);
-            return true;
-        }else{
-            return false;
-        }
+        if ($file->exists($contents)) return false;
+
+        $file->put($front_end, $contents);
+
+        return true;
     }
 
     /**
@@ -238,13 +223,11 @@ class Module
      * @param  $path
      * @return string
      */
-    protected static function makeDirectory($path): string
+    protected static function makeDirectory($path): void
     {
         $file = new Filesystem();
-        if (! $file->isDirectory($path)) {
-            $file->makeDirectory($path, 0777, true, true);
-        }
-        return $path;
+        if (! $file->isDirectory($path)) $file->makeDirectory($path, 0777, true, true);
+
     }
 
 
@@ -327,7 +310,7 @@ class Module
             'unsignedMediumInteger',
             'unsignedSmallInteger',
             'unsignedTinyInteger',
-          
+
         ])->toArray();
     }
 

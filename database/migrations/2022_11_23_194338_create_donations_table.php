@@ -16,11 +16,9 @@ return new class extends Migration
         Schema::create('donations', function (Blueprint $table) {
             $table->id();
             //add your columns name from here
- 	 	 	$table->string('name',255);
-            $table->string('mobile',255)->nullable();
-            $table->text('address')->nullable();
+ 	 	 	$table->unsignedBigInteger('donor_id');
             $table->integer('amount');
-
+            $table->foreign('donor_id')->references('id')->on('donors')->onDelete('cascade');
 
             //mandatory fields
             $table->userLog();

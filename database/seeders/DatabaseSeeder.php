@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\BackendMenu;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -30,6 +29,12 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             RoleSeeder::class,
             PermissionSeeder::class,
+            GroupSeeder::class,
+            FeeTypeSeeder::class,
+            SubjectSeeder::class,
+            FeeSeeder::class,
+            ClassTimeSeeder::class,
+            GroupSubjectSeeder::class,
         ]);
     }
 }

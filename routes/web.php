@@ -31,12 +31,10 @@ Route::get('/storage-link', function () {
 });
 
 Route::get('/test', function () {
-    $routes = Route::getRoutes();
-    foreach ($routes as $route){
-        if(in_array('permission:admin',$route->action['middleware'])){
-
-            dd(class_basename(explode("@",$route->action['controller'])[0]));
-        }
-        //dd($route->getActionName());
+    $controller = [];
+    $controllers  = scandir(app_path("Http/Controllers/Backend"));
+    foreach ($controllers as $row){
+        if(str_contains($row , "Controller.php")) $controller []= $row;
     }
+    dd($controller);
 });

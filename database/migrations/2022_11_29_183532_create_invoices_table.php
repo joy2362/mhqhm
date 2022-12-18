@@ -20,9 +20,9 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->onDelete("cascade");
             $table->foreignIdFor(FeeType::class)->constrained()->onDelete("cascade");
             $table->string('date')->nullable();
-            $table->double("total_amount",10,2);
-            $table->double("total_due",10,2);
-            $table->double("total_paid",10,2)->default(0);
+            $table->double("actual_amount",10,2);
+            $table->double("due",10,2);
+            $table->double("paid",10,2)->default(0);
             $table->enum('status', ['paid', 'due'])->default('due');
             $table->timestamps();
         });

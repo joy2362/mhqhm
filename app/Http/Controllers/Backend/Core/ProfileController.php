@@ -13,21 +13,21 @@ class ProfileController extends BaseController
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function privacy(){
-        return view('admin.pages.profile.privacy');
+        return view('admin.pages.Profile.privacy');
     }
 
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function profile(){
-        return view('admin.pages.profile.index');
+        return view('admin.pages.Profile.index');
     }
 
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function recovery(){
-        return view('admin.pages.profile.recovery');
+        return view('admin.pages.Profile.recovery');
     }
 
     /**
