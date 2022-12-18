@@ -22,13 +22,13 @@ class DashboardController extends BaseController
     public function index()
     {
 
-        $collectByMonth = Payment::select(DB::raw("sum(amount) as total_amount"),DB::raw("DATE_FORMAT(created_at,'%b-%Y') as month"))
+        $collectByMonth = Payment::select(DB::raw("sum(total_paid_amount) as total_amount"),DB::raw("DATE_FORMAT(created_at,'%b-%Y') as month"))
             ->groupBy(DB::raw("DATE_FORMAT(created_at,'%b-%Y')"))->get();
         $donations = Donation::orderByDesc('id')->take(5)->get();
         $totalStudent = User::count() ?? 0;
         $totalAdmin = Admin::count() ?? 0;
         $totalDonation = Donation::sum("amount") ?? 0;
-        $totalFee = Payment::where("status" , "success")->sum("amount") ?? 0;
+        $totalFee = Payment::where("status" , "success")->sum("total_paid_amount") ?? 0;
         $studentByGender = userDetails::select('gender',DB::raw("count(*) as total"))->groupBy('gender')->get();
         return view('admin.pages.Dashboard.index',[
             'studentByGender'   =>$studentByGender ,
