@@ -40,7 +40,7 @@ use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
 //'as'=>'admin.',
 Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
     //mandatory route
-    Route::get('module/instruction/{name}', [ModuleController::class,'instruction'])->name('Module.instruction');
+    Route::get('module/{name}', [ModuleController::class,'instruction'])->name('Module.instruction');
     Route::get('system-update', [SystemController::class,'update'])->name('system.update');
 
     Route::put('/password/change', [PasswordController::class, 'update'])->name('password.change');

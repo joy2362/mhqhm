@@ -16,7 +16,7 @@ class BaseController extends Controller
     {
         $systemSetting = App::make("SystemSetting");
         $menus = App::make("BackendMenu");
-        //dd($menus);
+
         // Sharing is caring
         View::share(['menus' => $menus, 'systemSetting'=> $systemSetting ]);
     }

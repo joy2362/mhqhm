@@ -28,7 +28,7 @@
                                 {!! Auth::user()->twoFactorQrCodeSvg()  !!}
                                 <div class="mt-3">
 
-                                    <form action="{{route('admin.two-factor.disable')}}" method="post">
+                                    <form action="{{route('two-factor.disable')}}" method="post">
                                         @csrf
                                         @method('delete')
                                         <a class="btn btn-primary btn-sm " href="{{route('admin.profile.recovery')}}">Recovery Codes</a>
@@ -49,7 +49,7 @@
                         <div class="card-body h-100">
 
                             <div class="d-flex align-items-start">
-                                <form class="flex-grow-1" method="POST" action="{{ route('admin.password.change') }}">
+                                <form class="flex-grow-1" method="POST" action="{{ route('password.change') }}">
                                     @csrf
                                     @method('put')
                                     <div class="form-group g-2">

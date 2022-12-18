@@ -160,7 +160,7 @@ class BackendMenuSeeder extends Seeder
             ],
             [
                 'title' => 'Subject',
-                'icon' => "fa-solid fa-comments-dollar",
+                'icon' => "fa-solid fa-book",
                 'sorting' => 4,
                 'route' => 'Subject.index'
             ],
