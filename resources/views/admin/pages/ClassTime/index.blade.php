@@ -22,10 +22,14 @@
 					<form method="post" enctype="multipart/form-data" id="addForm">
 						<div class="modal-body">
 							<ul class="alert alert-danger d-none" id="save_errorList"></ul>
-							<div class="form-group mb-3"> 
+							<div class="form-group mb-3">
 								<label for="name" class="form-label ">Name</label>
 								<input type="text" class="form-control" id="name" name="name"  required>
 							</div>
+                            <div class="form-group mb-3">
+                                <label for="bn_name" class="form-label ">Bangla name</label>
+                                <input type="text" class="form-control" id="bn_name" name="bn_name" >
+                            </div>
 							<div class="form-group mb-3">
 								<label for="start_time" class="form-label ">Start Time</label>
 								<input type="time" class="form-control" id="start_time" name="start_time"  required>
@@ -57,10 +61,14 @@
 						<div class="modal-body">
 							<ul class="alert alert-danger d-none" id="edit_errorList"></ul>
 							<input type="hidden" id="edit_id" name="id" >
-							<div class="form-group mb-3 edit_name"> 
+							<div class="form-group mb-3 edit_name">
 								<label for="edit_name" class="form-label ">Name</label>
 								<input type="text" class="form-control" id="edit_name" name="name"  required>
 							</div>
+                            <div class="form-group mb-3 edit_bn_name">
+                                <label for="edit_bn_name" class="form-label ">Bangla name</label>
+                                <input type="text" class="form-control" id="edit_bn_name" name="bn_name"  >
+                            </div>
 							<div class="form-group mb-3 edit_start_time">
 								<label for="edit_start_time" class="form-label ">Start Time</label>
 								<input type="time" class="form-control" id="edit_start_time" name="start_time"  required>
@@ -103,7 +111,8 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th> 
+                                <th>Name</th>
+                                <th>Bangla name</th>
 								<th>Start</th>
 								<th>End</th>
                                 <th>Actions</th>
@@ -148,7 +157,8 @@
 					ajax: model,
 					columns:[
 						{data:"id",name:'#'},
-						{data:'name',name:'Name'}, 
+						{data:'name',name:'Name'},
+                        {data:'bn_name',name:'Bangla name'},
 						{data:'start_time',name:'Start'},
 						{data:'end_time',name:'End'},
 
@@ -181,6 +191,7 @@
                 if(res.status === 200){
                     $('#edit_id').val(res.data.id);
                     $('#edit_name').val(res.data.name);
+                    $('#edit_bn_name').val(res.data.bn_name);
 					$('#edit_start_time').val(res.data.start_time);
 					$('#edit_end_time').val(res.data.end_time);
 

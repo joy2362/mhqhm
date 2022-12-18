@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             //add your columns name from here
  	 	 	$table->string('name',255);
+ 	 	 	$table->string('bn_name',255)->nullable();
             $table->time('start_time');
             $table->time('end_time');
 
