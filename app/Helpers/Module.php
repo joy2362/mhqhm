@@ -82,7 +82,7 @@ class Module
      */
     public static function generateSchema($db , $field): bool|int
     {
-        if(self::checkFile(base_path().'/database/migrations/' . $db)) return false;
+        if(!self::checkFile(base_path().'/database/migrations/' . $db)) return false;
         $search = "//add your columns name from here";
         $replace = $search. "\n \t \t \t".  $field;
 

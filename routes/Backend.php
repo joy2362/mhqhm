@@ -1,26 +1,26 @@
 <?php
 //@abdullah zahid joy
 
+use App\Http\Controllers\Backend\ClassTimeController;
 use App\Http\Controllers\Backend\Core\ActivityLogController;
 use App\Http\Controllers\Backend\Core\AdminController;
-use App\Http\Controllers\Backend\Core\RecycleBinController;
-use App\Http\Controllers\Backend\Core\DashboardController;
 use App\Http\Controllers\Backend\Core\AdminRoleController;
-use App\Http\Controllers\Backend\Core\UserController;
+use App\Http\Controllers\Backend\Core\DashboardController;
+use App\Http\Controllers\Backend\Core\PaymentController;
 use App\Http\Controllers\Backend\Core\ProfileController;
-use App\Http\Controllers\Backend\PaymentController;
+use App\Http\Controllers\Backend\Core\RecycleBinController;
+use App\Http\Controllers\Backend\Core\UserController;
+use App\Http\Controllers\Backend\DonationController;
+use App\Http\Controllers\Backend\FeeController;
+use App\Http\Controllers\Backend\FeeTypeController;
+use App\Http\Controllers\Backend\GroupController;
+use App\Http\Controllers\Backend\GroupSubjectController;
+use App\Http\Controllers\Backend\SubjectController;
 use App\Http\Controllers\Backend\System\ModuleController;
 use App\Http\Controllers\Backend\System\SettingController;
 use App\Http\Controllers\Backend\System\SystemController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\ClassTimeController;
-use App\Http\Controllers\Backend\DonationController;
-use App\Http\Controllers\Backend\GroupSubjectController;
-use App\Http\Controllers\Backend\SubjectController;
-use App\Http\Controllers\Backend\FeeController;
-use App\Http\Controllers\Backend\FeeTypeController;
-use App\Http\Controllers\Backend\GroupController;
-
+use App\Http\Controllers\Backend\DonorController;
 use Laravel\Fortify\Http\Controllers\PasswordController;
 use Laravel\Fortify\Http\Controllers\ProfileInformationController;
 use Laravel\Fortify\Http\Controllers\RecoveryCodeController;
@@ -95,6 +95,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
         });
 
         //module routes
+ 	Route::resource('donor', DonorController::Class,['names'=>'Donor']);
  	    Route::resource('classTime', ClassTimeController::Class,['names'=>'ClassTime']);
         Route::resource('donation', DonationController::Class,['names'=>'Donation']);
         Route::resource('groupSubject', GroupSubjectController::Class,['names'=>'GroupSubject']);

@@ -42,7 +42,7 @@ class BackendMenuSeeder extends Seeder
             ],
             [
                 'parent_id' => null,
-                'title' => 'Fee',
+                'title' => 'Fees',
                 'icon' => "fa-solid fa-receipt" ,
                 'sorting' => 4,
                 'route' => null,
@@ -56,23 +56,30 @@ class BackendMenuSeeder extends Seeder
             ],
             [
                 'parent_id' => null,
+                'title' => 'Donor',
+                'icon' => "fa-solid fa-users",
+                'sorting' => 6,
+                'route' => "Donor.index",
+            ],
+            [
+                'parent_id' => null,
                 'title' => 'Donation',
                 'icon' => "fa-solid fa-hand-holding-dollar",
-                'sorting' => 6,
+                'sorting' => 7,
                 'route' => "Donation.index",
             ],
             [
                 'parent_id' => null,
                 'title' => 'System Setting',
                 'icon' => "fa-solid fa-gears",
-                'sorting' => 7,
+                'sorting' => 8,
                 'route' => null,
             ],
             [
                 'parent_id' => null,
                 'title' => 'Recycle Bin',
                 'icon' => "fa-solid fa-trash-can",
-                'sorting' => 8,
+                'sorting' => 9,
                 'route' => 'RecycleBin.index'
             ],
 

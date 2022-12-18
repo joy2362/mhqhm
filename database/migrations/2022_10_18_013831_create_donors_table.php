@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('donations', function (Blueprint $table) {
+        Schema::create('donors', function (Blueprint $table) {
             $table->id();
             //add your columns name from here
- 	 	 	$table->unsignedBigInteger('donor_id');
-            $table->integer('amount');
-            $table->foreign('donor_id')->references('id')->on('donors')->onDelete('cascade');
+            $table->string('name',255);
+            $table->string('phone',255)->nullable();
+            $table->text('address')->nullable();
+
 
             //mandatory fields
             $table->userLog();
@@ -35,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('donations');
+        Schema::dropIfExists('donors');
     }
 };
