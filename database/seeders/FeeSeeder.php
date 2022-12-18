@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\FeeType;
 use App\Models\Group;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class FeeSeeder extends Seeder

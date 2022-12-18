@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Subject;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class SubjectSeeder extends Seeder
@@ -45,8 +44,12 @@ class SubjectSeeder extends Seeder
                 "bn_name"=> "বিশ্ব পরিচয়",
             ],
             [
+                "name"=> "Environmental familiarity",
+                "bn_name"=> "পরিবেশ পরিচিতি",
+            ],
+            [
                 "name"=> "Science",
-                "bn_name"=> "বিশ্ব পরিচয়",
+                "bn_name"=> "বিজ্ঞান",
             ],
             [
                 "name"=> "Quran",

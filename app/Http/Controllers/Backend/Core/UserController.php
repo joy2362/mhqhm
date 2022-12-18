@@ -71,6 +71,7 @@ class UserController extends BaseController
 
             $student = User::create($user);
             $student->details()->create($details);
+
             $group = $request->only("group_id");
             $group["user_id"] = $student->id;
 
@@ -79,10 +80,9 @@ class UserController extends BaseController
             $fees = Fee::where("group_id",$request->group_id)->get();
             foreach ($fees as $fee ){
                 $feeDetails["fee_type_id"] = $fee->fee_type_id;
-                $feeDetails["total_amount"] = $fee->amount;
-                $feeDetails["total_due"] = $fee->amount;
+                $feeDetails["actual_amount"] = $fee->amount;
+                $feeDetails["due"] = $fee->amount;
                 $feeDetails["date"] = now()->format("m-Y");
-
                 $student->invoice()->create($feeDetails);
             }
 
