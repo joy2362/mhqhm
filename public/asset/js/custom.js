@@ -189,7 +189,7 @@ $(document).on("click", "#delete", function (e) {
     })
 });
 
-$(document).on("click", "#destroy", function(e){
+$(document).on("click", ".destroy", function(e){
     e.preventDefault();
     var form = $(this).parents('form');
     Swal.fire({

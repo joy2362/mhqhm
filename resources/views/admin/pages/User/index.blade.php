@@ -48,7 +48,7 @@
                                                         <form method="post" action="{{ route('User.destroy', $row->id) }}">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <span type="submit" id="destroy " class="dropdown-item">Delete</span>
+                                                            <span type="submit" class="destroy" class="dropdown-item">Delete</span>
                                                         </form>
                                                     </li>
                                                 </ul>

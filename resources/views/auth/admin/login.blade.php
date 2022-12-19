@@ -65,7 +65,6 @@
                                     </div>
                                     <div class="text-end mt-3">
                                         <button type="submit" class="btn rounded btn-success ">Sign in</button>
-                                        <!-- <button type="submit" class="btn btn-lg btn-primary">Sign in</button> -->
                                     </div>
                                 </form>
                             </div>
@@ -94,7 +93,5 @@
     });
 
 </script>
-
 </body>
-
 </html>
