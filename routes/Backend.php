@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\Core\DashboardController;
 use App\Http\Controllers\Backend\Core\PaymentController;
 use App\Http\Controllers\Backend\Core\ProfileController;
 use App\Http\Controllers\Backend\Core\RecycleBinController;
+use App\Http\Controllers\Backend\Core\TeacherController;
 use App\Http\Controllers\Backend\Core\UserController;
 use App\Http\Controllers\Backend\DonationController;
 use App\Http\Controllers\Backend\FeeController;
@@ -69,6 +70,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
         Route::get('activities', [ActivityLogController::class,'index'])->name('ActivityLog.index');
 
         Route::resource('user', UserController::Class,['names'=>'User']);
+        Route::resource('teacher', TeacherController::Class,['names'=>'Teacher']);
         Route::get('user/{id}/status/{status}', [UserController::class,'changeStatus'])->name('User.changeStatus');
         Route::get('user/{id}/admission', [UserController::class,'print'])->name('User.print');
 

@@ -1,13 +1,13 @@
 @extends('admin.layout.master')
 @section('title')
-   Student
+    Teacher
 @endsection
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
-            <h1 class="h3 fw-bold">Student
-                @if(Auth::guard('admin')->user()->can('create User'))
-                    <a href="{{route('User.create',["type"=>"create"])}}" class="float-end rounded btn btn-sm btn-primary" ><i class="fa-solid fa-plus"></i></a>
+            <h1 class="h3 fw-bold">Teacher
+                @if(Auth::guard('admin')->user()->can('create Teacher'))
+                    <a href="{{route('Teacher.create')}}" class="float-end rounded btn btn-sm btn-primary" ><i class="fa-solid fa-plus"></i></a>
                 @endif
             </h1>
             <div class="row">
@@ -19,33 +19,29 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Name</th>
-                                    <th>Father Name</th>
-                                    <th>P.contact number</th>
-                                    <th>Group</th>
+                                    <th>Initial</th>
+                                    <th>Email</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($users as $row)
+                                @foreach($teachers as $teacher)
                                     <tr>
-                                        <td> {{ $row->username }}</td>
-                                        <td> {{ $row->details->first_name ." ".$row->details->last_name }}</td>
-                                        <td> {{ $row->details->father_name }}</td>
-                                        <td> {{ $row->details->parent_contact_number }}</td>
-                                        <td> {{ $row->group->name }}</td>
-                                        <td> <span @class(["badge", "bg-success"=>$row->status == "active" , "bg-danger"=>$row->status == "inactive" ]) >{{ ucfirst($row->status) }}</span></td>
+                                        <td> {{ $loop->index+1 }}</td>
+                                        <td> {{ $teacher->name }}</td>
+                                        <td> {{ $teacher->initial }}</td>
+                                        <td> {{ $teacher->email  }}</td>
+                                        <td> <span @class(["badge", "bg-success"=>$teacher->status == "active" , "bg-danger"=>$teacher->status == "inactive" ]) >{{ ucfirst($teacher->status) }}</span></td>
                                         <td>
                                             <div class="dropdown">
                                                 <span class="btn btn-success rounded btn-sm px-3 " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                                 </span>
                                                 <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item" href="{{route('User.print',['id'=>$row->id])}}">Print Admission Form</a></li>
-                                                    <li><a class="dropdown-item" href="{{route('User.changeStatus',['id'=>$row->id,'status'=>"active"])}}">Mark as Active</a></li>
-                                                    <li><a class="dropdown-item" href="{{route('User.changeStatus',['id'=>$row->id,'status'=>"inactive"])}}">Mark as Inactive</a></li>
-                                                    <li>
-                                                        <form method="post" action="{{ route('User.destroy', $row->id) }}">
+                                                    <li><a class="dropdown-item" href="{{route('Teacher.edit',['teacher'=>$teacher->id])}}">Edit</a></li>
+                                                   <li>
+                                                        <form method="post" action="{{ route('Teacher.destroy', $teacher->id) }}">
                                                             @csrf
                                                             @method('DELETE')
                                                             <span type="submit" class="destroy dropdown-item">Delete</span>

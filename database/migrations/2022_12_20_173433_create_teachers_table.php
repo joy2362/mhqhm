@@ -13,18 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('donors', function (Blueprint $table) {
+        Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             //add your columns name from here
-            $table->string('name',255);
-            $table->string('phone',255)->nullable();
-            $table->text('address')->nullable();
-
-
-            //mandatory fields
-            $table->userLog();
-            $table->status();
-
+            $table->string('email')->unique();
+            $table->string('name');
+            $table->string('initial')->nullable();
+            $table->string('avatar')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }
@@ -36,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('donors');
+        Schema::dropIfExists('teachers');
     }
 };
