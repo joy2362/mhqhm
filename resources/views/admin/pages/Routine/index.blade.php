@@ -30,14 +30,15 @@
                                         <td> {{ $loop->index+1 }}</td>
                                         <td> {{ $routine->name }}</td>
                                         <td> {{ $routine->academic_year }}</td>
-                                        <td> <span @class(["badge", "bg-success"=>$routine->status == "active" , "bg-danger"=>$routine->status == "inactive" ]) >{{ ucfirst($routine->status) }}</span></td>
+                                        <td> <span @class(["badge", "bg-success"   =>  $routine->status == "active" , "bg-danger"  =>   $routine->status == "inactive" ]) >{{ ucfirst($routine->status) }}</span></td>
                                         <td>
                                             <div class="dropdown">
                                                 <span class="btn btn-success rounded btn-sm px-3 " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                                 </span>
                                                 <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item" href="{{route('Routine.edit',['teacher'=>$routine->id])}}">Edit</a></li>
+                                                    <li><a class="dropdown-item" href="{{route('Routine.show',['routine' => $routine->id])}}">View</a></li>
+                                                    <li><a class="dropdown-item" href="{{route('Routine.edit',['routine' => $routine->id])}}">Edit</a></li>
                                                     <li>
                                                         <form method="post" action="{{ route('Routine.destroy', $routine->id) }}">
                                                             @csrf

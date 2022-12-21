@@ -22,7 +22,7 @@
 					<form method="post" enctype="multipart/form-data" id="addForm">
 						<div class="modal-body">
 							<ul class="alert alert-danger d-none" id="save_errorList"></ul>
-							<div class="form-group mb-3"> 
+							<div class="form-group mb-3">
 							<label for="group_id" class="form-label ">Group</label>
 							<select class="form-select" id="group_id" name="group_id"  required>
 							<option selected>Choose...</option>
@@ -65,7 +65,7 @@
 							<ul class="alert alert-danger d-none" id="edit_errorList"></ul>
 							<input type="hidden" id="edit_id" name="id" >
 
-							<div class="form-group mb-3 edit_group_id"> 
+							<div class="form-group mb-3 edit_group_id">
 								<label for="edit_group_id" class="form-label ">Group</label>
 								<select class="form-select" id="edit_group_id" name="group_id"  required>
 								<option selected>Choose...</option>
