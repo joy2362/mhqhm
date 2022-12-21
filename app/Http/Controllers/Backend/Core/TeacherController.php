@@ -7,7 +7,6 @@ use App\Http\Controllers\Base\BaseController;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use function GuzzleHttp\Promise\all;
 
 class TeacherController extends BaseController
 {

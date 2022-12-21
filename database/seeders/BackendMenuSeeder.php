@@ -182,6 +182,12 @@ class BackendMenuSeeder extends Seeder
                 'sorting' => 6,
                 'route' => 'ClassTime.index'
             ],
+            [
+                'title' => 'Routine',
+                'icon' => "fa-solid fa-calendar-days",
+                'sorting' => 7,
+                'route' => 'Routine.index'
+            ],
         ];
         $accountSub = [
             [
