@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Backend\Core;
 
 use App\Http\Controllers\Base\BaseController;
+use App\Models\ClassTime;
+use App\Models\Group;
 use App\Models\Routine;
+use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +33,10 @@ class RoutineController extends BaseController
     public function create()
     {
         $years = $this->getYear();
-        return view('admin.pages.Routine.create',["years" => $years]);
+        $teachers = Teacher::all();
+        $times = ClassTime::all();
+        $groups = Group::all();
+        return view('admin.pages.Routine.create',["years" => $years, "teachers" => $teachers ,"times" => $times , "groups" => $groups]);
     }
 
     /**

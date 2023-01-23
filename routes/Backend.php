@@ -54,11 +54,13 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
         ->middleware(['password.confirm:admin.password.confirm']);
 
     Route::group(['as'=>'admin.profile','prefix'=>'profile'],function (){
-        Route::get('/', [ProfileController::class,'profile']);
-        Route::get('/privacy', [ProfileController::class,'privacy'])->name('.privacy');
-        Route::get('/privacy/recovery', [ProfileController::class,'recovery'])->name('.recovery');
-        Route::put('/image', [ProfileController::class, 'changeProfile'])->name('.image.update');
-        Route::put('/information', [ProfileInformationController::class, 'update'])->name('.information.update');
+        Route::controller(ProfileController::class)->group(function() {
+            Route::get('/', 'profile');
+            Route::get('/privacy', 'privacy')->name('.privacy');
+            Route::get('/privacy/recovery', 'recovery')->name('.recovery');
+            Route::put('/image', 'changeProfile')->name('.image.update');
+            Route::put('/information', 'update')->name('.information.update');
+        });
     });
 
     Route::group(['middleware'=>'permission:admin'],function(){
@@ -83,8 +85,10 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
         });
 
         Route::group(['as'=>'Module','prefix'=>'module'],function (){
-            Route::get('/', [ModuleController::class,'index'])->name('.index');
-            Route::post('store', [ModuleController::class,'store'])->name('.store');
+            Route::controller(ModuleController::class)->group(function() {
+                Route::get('/', 'index')->name('.index');
+                Route::post('/store', 'store')->name('.store');
+            });
         });
         Route::get('dashboard', [DashboardController::class,'index'])->name('Dashboard.index');
 
