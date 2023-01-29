@@ -8,6 +8,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton("SystemSetting", function(){
             return  Cache::rememberForever('setting',function(){
-                return Setting::all()->pluck('value','name');
+                return Setting::all()->pluck('value','name') ?? [];
             });
         });
 
@@ -56,7 +57,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $systemSetting = App::make("SystemSetting");
+
+        $systemSetting =  DB::connection()->getPDO() ? App::make("SystemSetting") : [];
 
         // Sharing is caring
         View::share([ 'systemSetting'=> $systemSetting ]);

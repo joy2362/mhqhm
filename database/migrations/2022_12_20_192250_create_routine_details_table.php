@@ -21,14 +21,15 @@ return new class extends Migration
         Schema::create('routine_details', function (Blueprint $table) {
             $table->id();
             //add your columns name from here
-            $table->foreignIdFor(Teacher::class)->constrained()->onDelete("cascade");
-            $table->foreignIdFor(Subject::class)->constrained()->onDelete("cascade");
-            $table->foreignIdFor(Group::class)->constrained()->onDelete("cascade");
+            $table->unsignedBigInteger('subject_id')->nullable();
+            $table->unsignedBigInteger('group_id')->nullable();
             $table->foreignIdFor(ClassTime::class)->constrained()->onDelete("cascade");
             $table->foreignIdFor(Routine::class)->constrained()->onDelete("cascade");
             $table->string("note")->nullable();
             $table->boolean("is_break")->default(0);
             $table->timestamps();
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete("cascade");
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete("cascade");
         });
     }
 

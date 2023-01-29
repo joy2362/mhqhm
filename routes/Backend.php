@@ -53,6 +53,10 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
     Route::post('/two-factor-recovery-codes', [RecoveryCodeController::class, 'store'])
         ->middleware(['password.confirm:admin.password.confirm']);
 
+    Route::get('get-subject/{id}', [RoutineController::Class,'getSubject'])->name('.get-subject');
+
+
+
     Route::group(['as'=>'admin.profile','prefix'=>'profile'],function (){
         Route::controller(ProfileController::class)->group(function() {
             Route::get('/', 'profile');
@@ -62,7 +66,6 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function() {
             Route::put('/information', 'update')->name('.information.update');
         });
     });
-
     Route::group(['middleware'=>'permission:admin'],function(){
         Route::resource('admin-role', AdminRoleController::Class,['names'=>"AdminRole"]);
         Route::resource('admin', AdminController::Class,['names'=>"Admin"]);
